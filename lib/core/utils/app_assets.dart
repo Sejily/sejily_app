@@ -1,0 +1,12 @@
+class Assets {
+  Assets._();
+
+  static const String continuePersonalData =
+      'assets/images/continue_personal_data.png';
+  static const String selectedMedicalDoctor =
+      'assets/images/selected_medical_doctor.png';
+  static const String unselectedMedicalDoctor =
+      'assets/images/unselected_medical_doctor.png';
+  static const String upload = 'assets/images/upload.png';
+  static const String validationCode = 'assets/images/validation_code.png';
+}
