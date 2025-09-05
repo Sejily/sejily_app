@@ -7,6 +7,8 @@ class Assets {
       'assets/images/selected_medical_doctor.png';
   static const String unselectedMedicalDoctor =
       'assets/images/unselected_medical_doctor.png';
+  static const String unselectedPerson = 'assets/images/unselected_person.png';
+  static const String selectedPerson = 'assets/images/selected_person.png';
   static const String upload = 'assets/images/upload.png';
   static const String validationCode = 'assets/images/validation_code.png';
 }
