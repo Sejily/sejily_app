@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/features/authentication/presentation/view/register_view.dart';
+import 'package:sejily/features/authentication/presentation/view/role_selection_view.dart';
 import 'routes.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.onboarding,
+    initialLocation: Routes.selectRole,
     routes: [
       GoRoute(
         path: Routes.onboarding,
@@ -12,7 +14,7 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.selectRole,
-        builder: (context, state) => const Placeholder(),
+        builder: (context, state) => const RoleSelectionView(),
       ),
       GoRoute(
         path: Routes.login,
@@ -20,7 +22,7 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.register,
-        builder: (context, state) => const Placeholder(),
+        builder: (context, state) => const RegisterView(),
       ),
 
       GoRoute(

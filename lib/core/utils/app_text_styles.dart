@@ -3,7 +3,6 @@ import 'package:sejily/core/utils/font_weights.dart';
 
 class AppTextStyles {
   AppTextStyles._();
-
   //* Regular
   static final TextStyle regular12 = TextStyle(
     fontSize: 12,
