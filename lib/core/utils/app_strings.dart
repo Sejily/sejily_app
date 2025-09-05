@@ -99,7 +99,7 @@ class AppStrings {
       'تصفح سياسات الاستخدام والخصوصية';
 
   // REGISTRATION STRINGS
-  static const String registerNowFree = 'سجل الآن مجاناً';
+  static const String registerNowFree = 'سجل الآن مجاناً!';
   static const String enterDataToCreateAccount =
       'ادخل البيانات التالية لانشاء حساب جديد. ابدأ الآن لما محالياً!';
 
@@ -111,7 +111,7 @@ class AppStrings {
       'بالضغط على تسجيل مستخدم جديد، فأنت توافق على سياسة الاستخدام والخصوصية';
 
   static const String haveAccountAlready = 'لديك حساب بالفعل؟';
-  static const String loginHere = 'سجل دخول الان';
+  static const String loginNow = 'سجل دخول الان';
   static const String orLoginWith = 'أو تسجيل الدخول باستخدام';
 
   // OTP VERIFICATION STRINGS
@@ -139,7 +139,6 @@ class AppStrings {
   static const String congratulations = 'تهانينا!';
   static const String passwordResetSuccessDescription =
       'لقد تم تغيير كلمة مرور حسابك بنجاح، يمكنك الآن العودة وتسجيل الدخول من جديد!';
-  static const String loginNow = 'تسجيل دخول';
 
   // VALIDATION MESSAGES
   static const String fieldRequired = 'هذا الحقل مطلوب';
@@ -147,6 +146,19 @@ class AppStrings {
   static const String passwordTooShort = 'كلمة المرور قصيرة جداً';
   static const String passwordsDoNotMatch = 'كلمات المرور غير متطابقة';
   static const String invalidPhoneNumber = 'رقم الهاتف غير صحيح';
+
+  // Enhanced password validation messages
+  static const String enterPassword = 'ادخل كلمة المرور';
+  static const String enterConfirmPassword = 'ادخل تأكيد كلمة المرور';
+  static const String enterEmailAddress = 'ادخل البريد الإلكتروني';
+  static const String enterValidEmail = 'ادخل بريد إلكتروني صحيح';
+  static const String passwordMissingUppercase =
+      'كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل';
+  static const String passwordMissingLowercase =
+      'كلمة المرور يجب أن تحتوي على حرف صغير واحد على الأقل';
+  static const String passwordMissingSpecialChar =
+      'كلمة المرور يجب أن تحتوي على رمز خاص واحد على الأقل';
+  static const String enterDigit = 'ادخل الرقم';
 
   // ERROR MESSAGES
   static const String networkError = 'خطأ في الاتصال بالشبكة';

@@ -13,6 +13,7 @@ class AppColors {
   //* Black
   static final Color jetBlack = Color(0xFF343434);
   static final Color blackBlue = Color(0xFF1B132A);
+  static final Color black = Color(0xFF000000);
 
   //*White
   static final Color white = Colors.white;

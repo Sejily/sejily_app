@@ -34,10 +34,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       obscureText: widget.isObscured == true ? _obscureText : false,
       decoration: InputDecoration(
         isDense: false,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: AppColors.lightGray),

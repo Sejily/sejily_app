@@ -11,4 +11,6 @@ class Assets {
   static const String selectedPerson = 'assets/images/selected_person.png';
   static const String upload = 'assets/images/upload.png';
   static const String validationCode = 'assets/images/validation_code.png';
+  static const String google = 'assets/images/google.png';
+  static const String apple = 'assets/images/apple.png';
 }
