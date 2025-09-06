@@ -7,7 +7,6 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_validators.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
-import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
@@ -57,9 +56,7 @@ class _CompleteUserDataPageState extends ConsumerState<CompleteUserDataPage> {
     await DatePickerHelper.selectDate(context, _birthdateController, (
       dateString,
     ) {
-      setState(() {
-        // Date is already set in the controller by the helper
-      });
+      setState(() {});
     });
   }
 
@@ -76,7 +73,7 @@ class _CompleteUserDataPageState extends ConsumerState<CompleteUserDataPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomAppBar(),
+                  const SizedBox(height: 50),
                   const StepProgressBar(),
                   const SizedBox(height: 17),
                   Text(

@@ -5,6 +5,8 @@ import 'package:sejily/features/authentication/presentation/view/data_review_pag
 import 'package:sejily/features/authentication/presentation/view/emergency_contact_page.dart';
 import 'package:sejily/features/authentication/presentation/view/forget_password_view.dart';
 import 'package:sejily/features/authentication/presentation/view/login_view.dart';
+import 'package:sejily/features/authentication/presentation/view/otp_verification_view.dart';
+import 'package:sejily/features/authentication/presentation/view/register_view.dart';
 import 'package:sejily/features/authentication/presentation/view/reset_password_view.dart';
 import 'package:sejily/features/authentication/presentation/view/role_selection_view.dart';
 import 'package:sejily/features/authentication/presentation/view/success_reset_view.dart';
@@ -34,12 +36,20 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.register,
-        builder: (context, state) => const Placeholder(),
+        builder: (context, state) => const RegisterView(),
       ),
 
       GoRoute(
         path: Routes.verifyOtp,
         builder: (context, state) => const OtpPage(),
+      ),
+
+      GoRoute(
+        path: Routes.registerOtpVerification,
+        builder: (context, state) {
+          final email = state.extra as String;
+          return OtpVerificationView(email: email);
+        },
       ),
       GoRoute(
         path: Routes.forgetPassword,

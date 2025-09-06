@@ -6,7 +6,6 @@ import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_validators.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
-import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/features/authentication/presentation/widgets/authentication_button.dart';
@@ -45,8 +44,7 @@ class _RegisterViewState extends State<RegisterView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomAppBar(),
-                  const SizedBox(height: 17),
+                  const SizedBox(height: 40),
                   Text(
                     AppStrings.registerNowFree,
                     style: AppTextStyles.bold24.copyWith(
@@ -67,7 +65,7 @@ class _RegisterViewState extends State<RegisterView> {
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
                         context.push(
-                          Routes.verifyOtp,
+                          Routes.registerOtpVerification,
                           extra: _emailController.text,
                         );
                       }
@@ -97,9 +95,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       const SizedBox(width: 8),
                       AuthenticationButton(
-                        onTap: () {
-                          //TODO: Navigate to login page
-                        },
+                        onTap: () => context.go(Routes.login),
                         label: AppStrings.loginNow,
                       ),
                     ],
