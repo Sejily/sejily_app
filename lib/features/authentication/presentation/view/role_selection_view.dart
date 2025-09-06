@@ -80,7 +80,7 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
                     CustomButton(
                       onPressed: selectedRole != null
-                          ? () => context.push(Routes.register)
+                          ? () => context.push(Routes.login)
                           : () {},
                       text: AppStrings.next,
                     ),

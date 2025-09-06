@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
     this.child,
   });
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
   final String text;

@@ -5,6 +5,7 @@ class Routes {
   static const String selectRole = '/selectRole';
   static const String login = '/login';
   static const String register = '/register';
+  static const String forgetPassword = '/forgetPassword';
   static const String verifyOtp = '/verifyOtp';
   static const String resetPassword = '/resetPassword';
   static const String success = '/success';
