@@ -5,6 +5,7 @@ class AppColors {
 
   //* Blue
   static final Color darkBlue = Color(0xFF1e305c);
+  static final Color skyBlue = Color(0xFF7BC5DF);
 
   //* Gray
   static final Color gray = Color(0xFF7A7A7A);

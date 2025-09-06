@@ -94,6 +94,23 @@ class AppValidators {
     return null;
   }
 
+  /// National ID validation with length check (14 digits)
+  static String? nationalIdWithLengthValidator(String? value) {
+    if (value.isNullOrEmpty()) {
+      return AppStrings.fieldRequired;
+    }
+
+    if (value!.length != 14) {
+      return 'يجب أن يكون رقم الهوية 14 رقم';
+    }
+
+    if (!AppRegex.isNationalIdValid(value)) {
+      return 'رقم الهوية يجب أن يحتوي على أرقام فقط';
+    }
+
+    return null;
+  }
+
   /// OTP digit validation
   static String? otpDigitValidator(String? value) {
     if (value.isNullOrEmpty()) {

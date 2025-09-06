@@ -14,4 +14,6 @@ class Routes {
   static const String uploadPersonalPhoto = '/uploadPersonalPhoto';
   static const String uploadMedicalLicense = '/uploadMedicalLicense';
   static const String uploadHospitalAffiliation = '/uploadHospitalAffiliation';
+  static const String emergencyContact = '/emergencyContact';
+  static const String dataReview = '/dataReview';
 }
