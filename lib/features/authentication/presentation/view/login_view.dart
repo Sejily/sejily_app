@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 40),
                 Text(
                   AppStrings.email,
-                  style: AppTextStyles.semiBold16.copyWith(
+                  style: AppTextStyles.semiBold18.copyWith(
                     color: AppColors.jetBlack,
                   ),
                 ),
@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 Text(
                   AppStrings.password,
-                  style: AppTextStyles.semiBold16.copyWith(
+                  style: AppTextStyles.semiBold18.copyWith(
                     color: AppColors.jetBlack,
                   ),
                 ),

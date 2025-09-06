@@ -113,6 +113,7 @@ class AppStrings {
   static const String browseMainPage = 'تصفح الصفحة الرئيسية';
   static const String browseUsageAndPrivacyPolicies =
       'تصفح سياسات الاستخدام والخصوصية';
+  static const String verificationCodeTimeout = '00:59';
 
   // REGISTRATION STRINGS
   static const String registerNowFree = 'سجل الآن مجاناً!';

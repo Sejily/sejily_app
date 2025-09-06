@@ -20,7 +20,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
   bool _isLoading = false;
 
-  Future<void> _sendOtp() async {
+  Future<void> sendOtp() async {
     final email = _emailController.text.trim();
 
     if (email.isEmpty) {
