@@ -102,10 +102,30 @@ class AppValidators {
     return null;
   }
 
+  /// Complete OTP validation
+  static String? otpValidator(String? value) {
+    final otp = value?.trim() ?? '';
+
+    if (otp.isEmpty) {
+      return 'يرجى إدخال رمز التحقق';
+    }
+
+    if (otp.length != 6) {
+      return 'يرجى إدخال جميع الأرقام';
+    }
+    return null;
+  }
+
+  /// Check if OTP is complete for UI state (button activation)
+  static bool isOtpComplete(String? value) {
+    final otp = value?.trim() ?? '';
+    return otp.length == 6 && otp.isNotEmpty && RegExp(r'^\d+$').hasMatch(otp);
+  }
+
   /// General required field validation
-  static String? requiredFieldValidator(String? value, String fieldName) {
+  static String? requiredFieldValidator(String? value) {
     if (value.isNullOrEmpty()) {
-      return 'يرجى إدخال $fieldName';
+      return 'هذا الحقل مطلوب';
     }
     return null;
   }

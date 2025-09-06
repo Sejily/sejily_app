@@ -54,7 +54,7 @@ class AppStrings {
       '.ساعدنا في تقديم تجربة مخصصة لك';
 
   // Personal Information Fields
-  static const String fullName = 'العنوان';
+  static const String address = 'العنوان';
   static const String dateOfBirth = 'تاريخ الميلاد';
   static const String phoneNumber = 'رقم الهاتف';
   static const String gender = 'الجنس';

@@ -9,4 +9,9 @@ class Routes {
   static const String resetPassword = '/resetPassword';
   static const String success = '/success';
   static const String home = '/home';
+  static const String completeUserData = '/completeUserData';
+  static const String uploadNationalId = '/uploadNationalId';
+  static const String uploadPersonalPhoto = '/uploadPersonalPhoto';
+  static const String uploadMedicalLicense = '/uploadMedicalLicense';
+  static const String uploadHospitalAffiliation = '/uploadHospitalAffiliation';
 }

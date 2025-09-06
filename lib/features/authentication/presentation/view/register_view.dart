@@ -5,6 +5,7 @@ import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_validators.dart';
+import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
@@ -122,7 +123,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: Column(
         children: [
           // Name Field
-          _buildFieldWithLabel(
+          BuildFieldWithLabel(
             label: AppStrings.fullNameLabel,
             child: CustomTextField(
               controller: _nameController,
@@ -131,7 +132,7 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           const SizedBox(height: 12),
           // Email Field
-          _buildFieldWithLabel(
+          BuildFieldWithLabel(
             label: AppStrings.emailAddress,
             child: CustomTextField(
               controller: _emailController,
@@ -141,7 +142,7 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           const SizedBox(height: 12),
           // Password Field
-          _buildFieldWithLabel(
+          BuildFieldWithLabel(
             label: AppStrings.passwordLabel,
             child: CustomTextField(
               controller: _passwordController,
@@ -151,20 +152,6 @@ class _RegisterViewState extends State<RegisterView> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildFieldWithLabel({required String label, required Widget child}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: Text(label, style: AppTextStyles.semiBold18),
-        ),
-        const SizedBox(height: 8),
-        child,
-      ],
     );
   }
 }
