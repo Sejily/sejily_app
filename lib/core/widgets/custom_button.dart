@@ -35,7 +35,7 @@ class CustomButton extends StatelessWidget {
         foregroundColor: foregroundColor ?? AppColors.white,
         backgroundColor: backgroundColor ?? AppColors.darkBlue,
       ),
-      child: child ?? Text(text, style: style ?? AppTextStyles.semiBold16),
+      child: child ?? Text(text, style: style ?? AppTextStyles.semiBold18),
     );
   }
 }

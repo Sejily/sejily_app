@@ -20,7 +20,7 @@ class _OtpPageState extends State<OtpPage> {
   String _otpCode = "";
   bool _isLoading = false;
 
-  Future<void> _verifyOtp() async {
+  Future<void> verifyOtp() async {
     if (_otpCode.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("من فضلك أدخل رمز التحقق بالكامل")),

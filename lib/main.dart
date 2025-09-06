@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sejily/core/routes/app_router.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 
 void main() {
-  runApp(const SejilyApp());
+  runApp(const ProviderScope(child: SejilyApp()));
 }
 
 class SejilyApp extends StatelessWidget {

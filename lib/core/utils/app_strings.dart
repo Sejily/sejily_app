@@ -51,10 +51,10 @@ class AppStrings {
   // PROFILE COMPLETION STRINGS
   static const String completePersonalProfile = 'أكمل ملفك الشخصي';
   static const String helpUsProvidePersonalizedExperience =
-      '.ساعدنا في تقديم تجربة مخصصة لك';
+      'ساعدنا في معرفتك بشكل أفضل لتقديم تجربة مخصصة لك.';
 
   // Personal Information Fields
-  static const String fullName = 'العنوان';
+  static const String address = 'العنوان';
   static const String dateOfBirth = 'تاريخ الميلاد';
   static const String phoneNumber = 'رقم الهاتف';
   static const String gender = 'الجنس';
@@ -69,37 +69,54 @@ class AppStrings {
   // Profile Picture Upload
   static const String profilePictureUpload = 'صورة الهوية';
   static const String dragDropOrTapToUpload = 'اسقاط ملف أو تصفح';
-  static const String supportedFormats =
-      'jpg و jpeg و png، والحد الأقصى لحجم الملف';
-  static const String maxFileSize = '25 ميجا بايت ويجب تحميل صورة هوية واضحة';
+  static const String imageUploadCriteria =
+      'التنسيق: .jpeg ، .png & الحد الأقصى لحجم الملف: 25 ميجا بايت';
+  static const String imageUploadNationalId =
+      'التنسيق: .jpeg ، .png & الحد الأقصى لحجم الملف: 25 ميجا بايت ويرجى تحميل صورة هوية واضحه';
   static const String browseFiles = 'تصفح الملفات';
 
   // Personal Picture Upload
   static const String personalPictureUpload = 'تحميل الصورة الشخصية';
+  static const String personalPicture = 'الصورة الشخصية';
   static const String uploadPersonalPictureDescription =
-      'يرجى تحميل الملف بتنسيق jpeg و png وبالحد الأقصى للملف أقل من 25 ميجابايت.';
+      'يرجى تحميل الملف بتنسيق jpeg و png والحد الأقصى \nللملف أقل من 25 ميجابايت.';
 
   // EMERGENCY CONTACT STRINGS
   static const String addEmergencyContact = 'اضف جهة طوارئ';
   static const String addEmergencyContactDescription =
-      '.اضف جهة طوارئ .. وأشل آمنا';
+      'اضف جهة طوارئ .. و ابقي آمنا.';
 
   static const String emergencyContactName = 'اسم جهة الطوارئ';
   static const String emergencyContactPhone = 'رقم هاتف جهة الطوارئ';
   static const String relationshipToEmergencyContact = 'صلة القرابة';
   static const String relative = 'قريب';
   static const String addAnotherContact = 'اضف جهة أخرى';
+  static const String chooseRelationShip = 'اختر صلة القرابة';
+  static const List<String> relationshipOptions = [
+    'الأب/الأم',
+    'الابن/الابنة',
+    'الزوج/الزوجة',
+    'الأخ/الأخت',
+    'العم/العمة',
+    'الخال/الخالة',
+    'الجد/الجدة',
+    'صديق/زميل',
+    'طبيب',
+    'مستشفي',
+    'أخري',
+  ];
 
   // VERIFICATION STRINGS
   static const String dataUnderReview = 'بياناتك قيد المراجعة الآن!';
   static const String reviewDataDescription =
-      'فريقنا بفحص معلوماتك للتأكد من دقة وأمانك. هذا قد يستغرق حتي 48 ساعة ستصلك رسالة على البريد في حال مراجعة البيانات.';
+      'فريقنا بفحص معلوماتك للتأكد من دقة وأمانك. هذا قد\n يستغرق حتي 48 ساعة ستصلك رسالة على البريد في حال مراجعة \nالبيانات.';
   static const String browseMainPage = 'تصفح الصفحة الرئيسية';
   static const String browseUsageAndPrivacyPolicies =
       'تصفح سياسات الاستخدام والخصوصية';
+  static const String verificationCodeTimeout = '00:59';
 
   // REGISTRATION STRINGS
-  static const String registerNowFree = 'سجل الآن مجاناً';
+  static const String registerNowFree = 'سجل الآن مجاناً!';
   static const String enterDataToCreateAccount =
       'ادخل البيانات التالية لانشاء حساب جديد. ابدأ الآن لما محالياً!';
 
@@ -111,14 +128,13 @@ class AppStrings {
       'بالضغط على تسجيل مستخدم جديد، فأنت توافق على سياسة الاستخدام والخصوصية';
 
   static const String haveAccountAlready = 'لديك حساب بالفعل؟';
-  static const String loginHere = 'سجل دخول الان';
+  static const String loginNow = 'سجل دخول الان';
   static const String orLoginWith = 'أو تسجيل الدخول باستخدام';
 
   // OTP VERIFICATION STRINGS
   static const String enterVerificationCode = 'ادخل رمز التحقق';
   static const String verificationCodeSent =
       'لقد قمنا بإرسال رمز التأكيد للبريد الالكتروني التالي';
-  static const String verificationCodeTimeout = '00:59';
   static const String didntReceiveCode = 'لم تستلم رمزاً؟';
   static const String requestNewCode = 'اطلب رمز جديد';
 
@@ -139,7 +155,6 @@ class AppStrings {
   static const String congratulations = 'تهانينا!';
   static const String passwordResetSuccessDescription =
       'لقد تم تغيير كلمة مرور حسابك بنجاح، يمكنك الآن العودة وتسجيل الدخول من جديد!';
-  static const String loginNow = 'تسجيل دخول';
 
   // VALIDATION MESSAGES
   static const String fieldRequired = 'هذا الحقل مطلوب';
@@ -147,6 +162,57 @@ class AppStrings {
   static const String passwordTooShort = 'كلمة المرور قصيرة جداً';
   static const String passwordsDoNotMatch = 'كلمات المرور غير متطابقة';
   static const String invalidPhoneNumber = 'رقم الهاتف غير صحيح';
+
+  // Enhanced password validation messages
+  static const String enterPassword = 'ادخل كلمة المرور';
+  static const String enterConfirmPassword = 'ادخل تأكيد كلمة المرور';
+  static const String enterEmailAddress = 'ادخل البريد الإلكتروني';
+  static const String enterValidEmail = 'ادخل بريد إلكتروني صحيح';
+  static const String passwordMissingUppercase =
+      'كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل';
+  static const String passwordMissingLowercase =
+      'كلمة المرور يجب أن تحتوي على حرف صغير واحد على الأقل';
+  static const String passwordMissingSpecialChar =
+      'كلمة المرور يجب أن تحتوي على رمز خاص واحد على الأقل';
+  static const String enterDigit = 'ادخل الرقم';
+
+  // DOCTOR PROFILE STRINGS
+  static const List<String> specializationOptions = [
+    'الطب العام',
+    'طب الأطفال',
+    'طب النساء والولادة',
+    'جراحة عامة',
+    'طب القلب',
+    'طب الأعصاب',
+    'طب العظام',
+    'طب الجلدية',
+    'طب العيون',
+    'طب الأنف والأذن والحنجرة',
+    'طب النفسية',
+    'طب الأسنان',
+    'جراحة المخ والأعصاب',
+    'جراحة القلب',
+    'جراحة التجميل',
+    'طب الأشعة',
+    'طب التخدير',
+    'طب الطوارئ',
+    'طب الأمراض الباطنة',
+    'طب الكلى',
+    'طب الأورام',
+  ];
+  static const String completeProfessionalProfile = 'اكمل بياناتك المهنية!';
+  static const String addProfessionalInfoDescription =
+      'أضف معلوماتك لبناء ملف تعريفي كامل.';
+  static const String hospitalName = 'اسم المستشفى';
+  static const String city = 'المدينة';
+  static const String specialization = 'التخصص';
+  static const String medicalLicenseNumber = 'رقم الترخيص الطبي';
+  static const String uploadMedicalLicense = 'ارفع ترخيصك الطبي';
+  static const String enterMedicalLicenseNumber = 'ادخل رقم الترخيص الطبي';
+  static const String medicalLicenseDocument = 'بطاقة نقابة الاطباء';
+  static const String medicalLicenseUpload = 'بطاقة نقابة الاطباء';
+  static const String medicalLicenseDescription =
+      'يرجى تحميل الملف بتنسيق jpeg أو png والتأكد من أن حجم الملف أقل من 25 ميجابايت.';
 
   // ERROR MESSAGES
   static const String networkError = 'خطأ في الاتصال بالشبكة';
