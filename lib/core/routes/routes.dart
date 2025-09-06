@@ -17,4 +17,5 @@ class Routes {
   static const String uploadHospitalAffiliation = '/uploadHospitalAffiliation';
   static const String emergencyContact = '/emergencyContact';
   static const String dataReview = '/dataReview';
+  static const String registerOtpVerification = '/registerOtpVerification';
 }
