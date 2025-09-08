@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -6,75 +7,52 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/routes/routes.dart';
-import 'package:sejily/core/constants/api_endpoints.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:sejily/core/newtorking/dio_factory.dart';
 import 'package:sejily/features/authentication/presentation/widgets/social_login_section.dart';
+import '../manager/providers/login_provider.dart';
+import '../manager/providers/progress_provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final storage = const FlutterSecureStorage();
 
-  final bool _obscurePassword = true;
-  bool _isLoading = false;
-
-  Future<void> _login() async {
+  void _login() {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
-
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("من فضلك أدخل البريد وكلمة المرور")),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    try {
-      final dio = DioFactory.getDio();
-      final response = await dio.post(
-        ApiEndpoints.login,
-        data: {"email": email, "password": password},
-      );
-
-      final data = response.data;
-
-      if (response.statusCode == 200 && data["success"] == true) {
-        final accessToken = data["data"]["accessToken"];
-        final refreshToken = data["data"]["refreshToken"];
-
-        await storage.write(key: "accessToken", value: accessToken);
-        await storage.write(key: "refreshToken", value: refreshToken);
-
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text("تم تسجيل الدخول بنجاح")));
-        context.go(Routes.home);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(data["message"] ?? "فشل تسجيل الدخول")),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("خطأ في الاتصال بالسيرفر")));
-    }
-
-    setState(() => _isLoading = false);
+    ref.read(loginNotifierProvider.notifier).login(email, password);
   }
 
   @override
   Widget build(BuildContext context) {
+    final loginState = ref.watch(loginNotifierProvider);
+
+    ref.listen<LoginState>(loginNotifierProvider, (prev, next) {
+      if (next.result != null) {
+        if (next.result!.error != null) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(next.result!.error!.message)));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("تم تسجيل الدخول بنجاح")),
+          );
+
+          ref.read(progressProvider.notifier).reset();
+          ref
+              .read(progressProvider.notifier)
+              .updateProgressForRoute(Routes.completeUserData);
+
+          context.go(Routes.home);
+        }
+      }
+    });
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -85,7 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 40),
               Text(AppStrings.welcomeBack, style: AppTextStyles.bold24),
               const SizedBox(height: 8),
-
               Text(
                 AppStrings.enterNextData,
                 style: AppTextStyles.regular16.copyWith(color: AppColors.gray),
@@ -103,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 24),
-
               Text(
                 AppStrings.password,
                 style: AppTextStyles.semiBold18.copyWith(
@@ -113,18 +89,16 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 8),
               CustomTextField(
                 controller: _passwordController,
-                isObscured: _obscurePassword,
+                isObscured: true,
               ),
-
               const SizedBox(height: 30),
               CustomButton(
-                onPressed: _isLoading ? null : _login,
+                onPressed: loginState.isLoading ? null : _login,
                 text: AppStrings.login,
-                child: _isLoading
+                child: loginState.isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
                     : null,
               ),
-
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () => context.go(Routes.forgetPassword),
@@ -136,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -152,15 +125,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: Text(
-                      AppStrings.registerNow,
-                      style: AppTextStyles.regular14,
-                    ),
+                    child: Text(AppStrings.registerNow),
                   ),
                 ],
               ),
               const SizedBox(height: 40),
-              SocialLoginSection(),
+              const SocialLoginSection(),
             ],
           ),
         ),

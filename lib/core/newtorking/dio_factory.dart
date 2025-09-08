@@ -8,40 +8,44 @@ class DioFactory {
   static final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   static Dio getDio() {
-    Duration defaultTimeout = const Duration(seconds: 8);
+    final baseUrl = dotenv.env['BASE_URL'] ?? '';
+    Duration defaultTimeout = const Duration(seconds: 15);
     final dio = Dio(
       BaseOptions(
-        baseUrl: dotenv.env['BASE_URL'] ?? '',
+        baseUrl: baseUrl,
         connectTimeout: defaultTimeout,
         receiveTimeout: defaultTimeout,
         headers: {"Content-Type": "application/json"},
       ),
     );
-    _addInterceptors(dio);
-    return dio;
-  }
 
-  static void _addInterceptors(Dio dio) {
-    dio.interceptors.addAll([
+    dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final token = await _storage.read(key: "accessToken");
-          if (token != null) {
+          if (token != null && token.isNotEmpty) {
             options.headers["Authorization"] = "Bearer $token";
           }
           return handler.next(options);
         },
+        onError: (err, handler) async {
+          return handler.next(err);
+        },
       ),
-      if (kDebugMode)
+    );
+
+    if (kDebugMode) {
+      dio.interceptors.add(
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
           responseBody: true,
-          responseHeader: false,
           error: true,
           compact: true,
-          maxWidth: 90,
         ),
-    ]);
+      );
+    }
+
+    return dio;
   }
 }

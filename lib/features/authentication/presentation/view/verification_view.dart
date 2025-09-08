@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/utils/app_colors.dart';
@@ -6,59 +7,49 @@ import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/routes/routes.dart';
-import 'package:sejily/core/constants/api_endpoints.dart';
-import 'package:sejily/core/newtorking/dio_factory.dart';
+import '../manager/providers/progress_provider.dart';
+import '../manager/providers/verification_notifier.dart';
 
-class OtpPage extends StatefulWidget {
-  const OtpPage({super.key});
+class OtpPage extends ConsumerStatefulWidget {
+  final String email;
+
+  const OtpPage({super.key, required this.email});
 
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  ConsumerState<OtpPage> createState() => _OtpPageState();
 }
 
-class _OtpPageState extends State<OtpPage> {
+class _OtpPageState extends ConsumerState<OtpPage> {
   String _otpCode = "";
-  bool _isLoading = false;
 
-  Future<void> verifyOtp() async {
-    if (_otpCode.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("من فضلك أدخل رمز التحقق بالكامل")),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    try {
-      final dio = DioFactory.getDio();
-      final response = await dio.post(
-        ApiEndpoints.verifyOtp,
-        data: {"otp": _otpCode},
-      );
-
-      final data = response.data;
-
-      if (response.statusCode == 200 && data["success"] == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("تم التحقق من الرمز بنجاح ")),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(data["message"] ?? "رمز التحقق غير صحيح")),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("خطأ في الاتصال بالسيرفر")));
-    }
-
-    setState(() => _isLoading = false);
+  void _verifyOtp() {
+    ref.read(otpNotifierProvider.notifier).verifyOtp(widget.email, _otpCode);
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(otpNotifierProvider);
+
+    ref.listen<OtpState>(otpNotifierProvider, (prev, next) {
+      if (next.result != null) {
+        if (next.result!.error != null) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(next.result!.error!.message)));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("تم التحقق من الرمز بنجاح")),
+          );
+
+          ref
+              .read(progressProvider.notifier)
+              .updateProgressForRoute(Routes.resetPassword);
+
+          context.go(Routes.resetPassword);
+        }
+      }
+    });
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -83,7 +74,6 @@ class _OtpPageState extends State<OtpPage> {
                       ),
                     ),
                     const SizedBox(height: 8),
-
                     Text(
                       AppStrings.verificationCodeSent,
                       style: AppTextStyles.regular14.copyWith(
@@ -92,9 +82,8 @@ class _OtpPageState extends State<OtpPage> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 4),
-
                     Text(
-                      "",
+                      widget.email,
                       style: AppTextStyles.medium14.copyWith(
                         color: Colors.black87,
                       ),
@@ -122,7 +111,6 @@ class _OtpPageState extends State<OtpPage> {
                     ),
 
                     const SizedBox(height: 12),
-
                     Text(
                       AppStrings.verificationCodeTimeout,
                       style: AppTextStyles.medium14.copyWith(
@@ -130,7 +118,6 @@ class _OtpPageState extends State<OtpPage> {
                       ),
                     ),
                     const SizedBox(height: 6),
-
                     Text(
                       "${AppStrings.didntReceiveCode} ${AppStrings.requestNewCode}",
                       style: AppTextStyles.regular14.copyWith(
@@ -140,9 +127,9 @@ class _OtpPageState extends State<OtpPage> {
 
                     const SizedBox(height: 20),
                     CustomButton(
-                      onPressed: () => context.go(Routes.resetPassword),
+                      onPressed: state.isLoading ? null : _verifyOtp,
                       text: AppStrings.verify,
-                      child: _isLoading
+                      child: state.isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
                           : null,
                     ),

@@ -41,7 +41,10 @@ class AppRouter {
 
       GoRoute(
         path: Routes.verifyOtp,
-        builder: (context, state) => const OtpPage(),
+        builder: (context, state) {
+          final email = state.extra as String;
+          return OtpPage(email: email);
+        },
       ),
 
       GoRoute(

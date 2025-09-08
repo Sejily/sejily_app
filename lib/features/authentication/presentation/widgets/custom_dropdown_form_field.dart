@@ -25,7 +25,6 @@ class CustomDropdownFormField extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: DropdownButtonFormField<String>(
-        initialValue: value,
         dropdownColor: AppColors.white,
         decoration: InputDecoration(
           hintText: hintText,
