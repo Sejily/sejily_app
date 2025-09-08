@@ -14,7 +14,14 @@ import '../manager/providers/reset_notifier.dart';
 import '../manager/providers/progress_provider.dart';
 
 class ResetPasswordScreen extends ConsumerStatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final String email;
+  final String otp;
+
+  const ResetPasswordScreen({
+    super.key,
+    required this.email,
+    required this.otp,
+  });
 
   @override
   ConsumerState<ResetPasswordScreen> createState() =>
@@ -27,34 +34,43 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void _onResetPressed() {
+  void _resetPassword() {
     if (!_formKey.currentState!.validate()) return;
 
     ref
-        .read(resetPasswordProvider.notifier)
+        .read(resetPasswordNotifierProvider.notifier)
         .resetPassword(
-          newPassword: _newPasswordController.text.trim(),
-          confirmPassword: _confirmPasswordController.text.trim(),
+          widget.email,
+          widget.otp,
+          _newPasswordController.text.trim(),
+          _confirmPasswordController.text.trim(),
         );
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(resetPasswordProvider);
+    final state = ref.watch(resetPasswordNotifierProvider);
 
-    ref.listen<ResetPasswordState>(resetPasswordProvider, (prev, next) {
-      if (next.error != null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(next.error!)));
-      } else if (next.success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("تم تغيير كلمة المرور بنجاح")),
-        );
-        ref
-            .read(progressProvider.notifier)
-            .updateProgressForRoute(Routes.success);
-        context.go(Routes.success);
+    ref.listen<ResetPasswordState>(resetPasswordNotifierProvider, (
+      previous,
+      next,
+    ) {
+      if (next.result != null) {
+        if (next.result!.error != null) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(next.result!.error!.message)));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("تم تغيير كلمة المرور بنجاح")),
+          );
+
+          ref
+              .read(progressProvider.notifier)
+              .updateProgressForRoute(Routes.success);
+
+          context.go(Routes.success);
+        }
       }
     });
 
@@ -128,7 +144,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: CustomButton(
-                          onPressed: state.isLoading ? null : _onResetPressed,
+                          onPressed: state.isLoading ? null : _resetPassword,
                           text: AppStrings.changePassword,
                           child: state.isLoading
                               ? const CircularProgressIndicator(

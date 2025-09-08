@@ -45,7 +45,10 @@ class _OtpPageState extends ConsumerState<OtpPage> {
               .read(progressProvider.notifier)
               .updateProgressForRoute(Routes.resetPassword);
 
-          context.go(Routes.resetPassword);
+          context.go(
+            Routes.resetPassword,
+            extra: {"email": widget.email, "otp": _otpCode},
+          );
         }
       }
     });

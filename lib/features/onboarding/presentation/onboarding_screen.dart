@@ -140,7 +140,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   CustomButton(
                     onPressed: () {
                       if (_currentPage == onboardingData.length - 1) {
-                        context.go(Routes.register);
+                        context.go(Routes.selectRole);
                       } else {
                         _nextPage();
                       }

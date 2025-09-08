@@ -1,74 +1,52 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sejily/core/result/result.dart';
-import '../../../../../core/repository/auth_repository.dart';
+import 'package:sejily/core/repository/auth_repository.dart';
+import '../../../../../core/newtorking/api_error.dart';
 import 'auth_providers.dart';
 
 class ResetPasswordState {
   final bool isLoading;
-  final bool success;
-  final String? error;
+  final Result<Map<String, dynamic>>? result;
 
-  ResetPasswordState({
-    this.isLoading = false,
-    this.success = false,
-    this.error,
-  });
+  ResetPasswordState({this.isLoading = false, this.result});
 
-  ResetPasswordState copyWith({bool? isLoading, bool? success, String? error}) {
+  ResetPasswordState copyWith({
+    bool? isLoading,
+    Result<Map<String, dynamic>>? result,
+  }) {
     return ResetPasswordState(
       isLoading: isLoading ?? this.isLoading,
-      success: success ?? this.success,
-      error: error,
+      result: result ?? this.result,
     );
   }
 }
 
 class ResetPasswordNotifier extends StateNotifier<ResetPasswordState> {
-  final AuthRepository _repo;
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  final AuthRepository repo;
+  ResetPasswordNotifier(this.repo) : super(ResetPasswordState());
 
-  ResetPasswordNotifier(this._repo) : super(ResetPasswordState());
-
-  Future<void> resetPassword({
-    required String newPassword,
-    required String confirmPassword,
-  }) async {
+  Future<void> resetPassword(
+    String email,
+    String otp,
+    String newPassword,
+    String confirmPassword,
+  ) async {
     if (newPassword != confirmPassword) {
-      state = state.copyWith(error: "كلمتا المرور غير متطابقتين");
-      return;
-    }
-
-    final email = await _storage.read(key: "email") ?? "";
-    final otp = await _storage.read(key: "otp") ?? "";
-
-    if (email.isEmpty || otp.isEmpty) {
-      state = state.copyWith(error: "حدث خطأ. يرجى إعادة المحاولة.");
-      return;
-    }
-
-    state = state.copyWith(isLoading: true, error: null, success: false);
-
-    try {
-      final Result<Map<String, dynamic>> result = await _repo.resetPassword(
-        email,
-        otp,
-        newPassword,
+      state = state.copyWith(
+        result: Result(error: ApiError(message: "كلمتا المرور غير متطابقتين")),
       );
-
-      if (result.error != null) {
-        state = state.copyWith(isLoading: false, error: result.error!.message);
-      } else {
-        state = state.copyWith(isLoading: false, success: true);
-        await _storage.delete(key: "otp");
-      }
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: "حدث خطأ غير متوقع");
+      return;
     }
+
+    state = state.copyWith(isLoading: true);
+
+    final result = await repo.resetPassword(email, otp, newPassword);
+
+    state = state.copyWith(isLoading: false, result: result);
   }
 }
 
-final resetPasswordProvider =
+final resetPasswordNotifierProvider =
     StateNotifierProvider<ResetPasswordNotifier, ResetPasswordState>((ref) {
       final repo = ref.read(authRepositoryProvider);
       return ResetPasswordNotifier(repo);
