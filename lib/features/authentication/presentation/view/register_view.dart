@@ -6,9 +6,9 @@ import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_validators.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
-import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/features/authentication/presentation/widgets/authentication_button.dart';
+import 'package:sejily/features/authentication/presentation/widgets/register_button.dart';
 import 'package:sejily/features/authentication/presentation/widgets/social_login_section.dart';
 
 class RegisterView extends StatefulWidget {
@@ -61,16 +61,11 @@ class _RegisterViewState extends State<RegisterView> {
 
                   _registerTextFields(),
                   //* Register Button
-                  CustomButton(
-                    onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        context.push(
-                          Routes.registerOtpVerification,
-                          extra: _emailController.text,
-                        );
-                      }
-                    },
-                    text: AppStrings.createNewAccount,
+                  RegisterButton(
+                    emailController: _emailController,
+                    formKey: _formKey,
+                    passwordController: _passwordController,
+                    nameController: _nameController,
                   ),
                   //* Terms and Conditions
                   Padding(

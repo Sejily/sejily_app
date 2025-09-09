@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/enums/user_role.dart';
 import 'package:sejily/core/routes/routes.dart';
+import 'package:sejily/core/services/storage/local_storage_service.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -8,15 +11,15 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 
-class RoleSelectionView extends StatefulWidget {
+class RoleSelectionView extends ConsumerStatefulWidget {
   const RoleSelectionView({super.key});
 
   @override
-  State<RoleSelectionView> createState() => _RoleSelectionViewState();
+  ConsumerState<RoleSelectionView> createState() => _RoleSelectionViewState();
 }
 
-class _RoleSelectionViewState extends State<RoleSelectionView> {
-  int? selectedRole; // 0 for user, 1 for doctor
+class _RoleSelectionViewState extends ConsumerState<RoleSelectionView> {
+  UserRole? selectedRole;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomAppBar(),
+              const CustomAppBar(),
               Text(
                 AppStrings.selectYourRole,
                 style: AppTextStyles.bold24.copyWith(
@@ -35,7 +38,6 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
                 ),
               ),
               const SizedBox(height: 8),
-              // Subtitle
               Text(
                 AppStrings.chooseYourRoleTo,
                 style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
@@ -48,9 +50,12 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
                       children: [
                         //* Doctor card
                         Expanded(
-                          child: _RoleCard(
-                            isSelected: selectedRole == 1,
-                            onTap: () => setState(() => selectedRole = 1),
+                          child: RoleCard(
+                            isSelected:
+                                selectedRole == UserRole.healthcareProvider,
+                            onTap: () => setState(
+                              () => selectedRole = UserRole.healthcareProvider,
+                            ),
                             selectedIcon: Image.asset(
                               Assets.selectedMedicalDoctor,
                             ),
@@ -60,14 +65,14 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
                             label: AppStrings.doctor,
                           ),
                         ),
+                        const SizedBox(width: 35),
 
-                        SizedBox(width: 35),
-
-                        //* User card
+                        //* Patient card
                         Expanded(
-                          child: _RoleCard(
-                            isSelected: selectedRole == 0,
-                            onTap: () => setState(() => selectedRole = 0),
+                          child: RoleCard(
+                            isSelected: selectedRole == UserRole.patient,
+                            onTap: () =>
+                                setState(() => selectedRole = UserRole.patient),
                             selectedIcon: Image.asset(Assets.selectedPerson),
                             unselectedIcon: Image.asset(
                               Assets.unselectedPerson,
@@ -80,8 +85,8 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
                     CustomButton(
                       onPressed: selectedRole != null
-                          ? () => context.push(Routes.login)
-                          : () {},
+                          ? _saveRoleAndNavigate
+                          : null,
                       text: AppStrings.next,
                     ),
                   ],
@@ -93,10 +98,19 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
       ),
     );
   }
+
+  void _saveRoleAndNavigate() {
+    if (selectedRole == null) return;
+    ref.read(storageServiceProvider).saveUserRole(selectedRole!);
+    if (mounted) {
+      context.push(Routes.register);
+    }
+  }
 }
 
-class _RoleCard extends StatelessWidget {
-  const _RoleCard({
+class RoleCard extends StatelessWidget {
+  const RoleCard({
+    super.key,
     required this.isSelected,
     required this.onTap,
     required this.selectedIcon,
@@ -127,7 +141,7 @@ class _RoleCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: constraints.maxHeight * 0.2,
+                  height: constraints.maxHeight * 0.4,
                   child: isSelected ? selectedIcon : unselectedIcon,
                 ),
                 const SizedBox(height: 16),
