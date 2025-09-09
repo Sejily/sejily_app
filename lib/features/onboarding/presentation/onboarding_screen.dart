@@ -138,17 +138,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   const SizedBox(height: 40),
                   CustomButton(
-                    onPressed: _nextPage,
+                    onPressed: () {
+                      if (_currentPage == onboardingData.length - 1) {
+                        context.go(Routes.selectRole);
+                      } else {
+                        _nextPage();
+                      }
+                    },
                     text: _currentPage == onboardingData.length - 1
-                        ? AppStrings.finish
+                        ? AppStrings.newUser
                         : AppStrings.next,
                   ),
 
                   const SizedBox(height: 12),
                   TextButton(
-                    onPressed: () => context.go(Routes.login),
+                    onPressed: () {
+                      if (_currentPage == onboardingData.length - 1) {
+                        context.go(Routes.login);
+                      } else {
+                        context.go(Routes.login);
+                      }
+                    },
                     child: Text(
-                      AppStrings.skip,
+                      _currentPage == onboardingData.length - 1
+                          ? AppStrings.login
+                          : AppStrings.skip,
                       style: AppTextStyles.regular16.copyWith(
                         color: AppColors.blackBlue,
                       ),

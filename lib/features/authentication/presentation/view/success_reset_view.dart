@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/routes/routes.dart';
+import '../manager/providers/progress_provider.dart';
 
-class SuccessResetPasswordPage extends StatelessWidget {
+class SuccessResetPasswordPage extends ConsumerWidget {
   const SuccessResetPasswordPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -38,10 +40,14 @@ class SuccessResetPasswordPage extends StatelessWidget {
               const SizedBox(height: 40),
 
               CustomButton(
-                onPressed: () => context.go(Routes.login),
+                onPressed: () {
+                  ref.read(progressProvider.notifier).reset();
+                  context.go(Routes.login);
+                },
                 text: AppStrings.loginNow,
               ),
               const SizedBox(height: 20),
+
               Text(
                 AppStrings.browseUsageAndPrivacyPolicies,
                 style: AppTextStyles.regular14.copyWith(
