@@ -1,4 +1,4 @@
-import 'package:sejily/core/helpers/extensions.dart';
+import 'package:sejily/core/helpers/string_extensions.dart';
 import 'package:sejily/core/utils/app_regex.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 
