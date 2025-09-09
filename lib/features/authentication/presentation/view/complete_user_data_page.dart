@@ -9,8 +9,8 @@ import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/auth_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/registration_provider.dart';
 import 'package:sejily/features/authentication/presentation/widgets/date_picker_field.dart';
 import 'package:sejily/features/authentication/presentation/widgets/phone_number_field.dart';
 import 'package:sejily/features/authentication/presentation/widgets/custom_radio_button.dart';
@@ -32,11 +32,11 @@ class _CompleteUserDataPageState extends ConsumerState<CompleteUserDataPage> {
 
   String _selectedCountryCode = '+20';
   String? _selectedGender;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    // Ensure we're on step 1 when this page loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
           .read(progressProvider.notifier)
@@ -58,6 +58,53 @@ class _CompleteUserDataPageState extends ConsumerState<CompleteUserDataPage> {
     ) {
       setState(() {});
     });
+  }
+
+  Future<void> _handleNext() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    if (_selectedGender == null) {
+      _showError(AppStrings.fieldRequired);
+      return;
+    }
+
+    if (_birthdateController.text.trim().isEmpty) {
+      _showError('${AppStrings.dateOfBirth} ${AppStrings.fieldRequired}');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      await ref
+          .read(authNotifierProvider.notifier)
+          .updateUserData(
+            address: _addressController.text.trim(),
+            dateOfBirth: _birthdateController.text.trim(),
+            phoneNumber: '$_selectedCountryCode${_phoneController.text.trim()}',
+            gender: _selectedGender!,
+          );
+
+      ref.read(progressProvider.notifier).nextStep();
+
+      if (mounted) {
+        context.push(Routes.uploadNationalId);
+      }
+    } catch (e) {
+      if (mounted) {
+        _showError(AppStrings.generalError);
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: AppColors.lightRed),
+    );
   }
 
   @override
@@ -93,36 +140,8 @@ class _CompleteUserDataPageState extends ConsumerState<CompleteUserDataPage> {
                   _buildFormFields(),
 
                   CustomButton(
-                    onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        if (_selectedGender == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(AppStrings.fieldRequired),
-                              backgroundColor: AppColors.lightRed,
-                            ),
-                          );
-                          return;
-                        }
-
-                        //* Update registration data using Riverpod
-                        ref
-                            .read(patientRegistrationProvider.notifier)
-                            .update(
-                              (state) => state.copyWith(
-                                address: _addressController.text.trim(),
-                                dateOfBirth: _birthdateController.text.trim(),
-                                phoneNumber:
-                                    '$_selectedCountryCode${_phoneController.text.trim()}',
-                                gender: _selectedGender!,
-                              ),
-                            );
-                        // Move to next step with smooth animation
-                        ref.read(progressProvider.notifier).nextStep();
-                        context.push(Routes.uploadNationalId);
-                      }
-                    },
-                    text: AppStrings.next,
+                    onPressed: _isLoading ? null : _handleNext,
+                    text: _isLoading ? AppStrings.loading : AppStrings.next,
                   ),
 
                   const SizedBox(height: 40),

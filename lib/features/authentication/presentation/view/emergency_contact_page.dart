@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -8,11 +7,13 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_validators.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
-import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/registration_provider.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/auth_provider.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
 import 'package:sejily/features/authentication/presentation/widgets/custom_dropdown_form_field.dart';
 import 'package:sejily/features/authentication/presentation/widgets/phone_number_field.dart';
+import 'package:sejily/features/authentication/presentation/widgets/registration_finish_button.dart';
+import 'package:sejily/features/authentication/presentation/widgets/step_progress_bar.dart';
 
 class EmergencyContactPage extends ConsumerStatefulWidget {
   const EmergencyContactPage({super.key});
@@ -31,38 +32,20 @@ class _EmergencyContactPageState extends ConsumerState<EmergencyContactPage> {
   String? _selectedRelationship;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(progressProvider.notifier)
+          .updateProgressForRoute(Routes.emergencyContact);
+    });
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
     super.dispose();
-  }
-
-  void _onFinish() {
-    if (_formKey.currentState?.validate() ?? false) {
-      if (_selectedRelationship == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppStrings.fieldRequired),
-            backgroundColor: AppColors.lightRed,
-          ),
-        );
-        return;
-      }
-
-      // Update registration data using Riverpod
-      ref
-          .read(patientRegistrationProvider.notifier)
-          .update(
-            (state) => state.copyWith(
-              emergencyContactName: _nameController.text.trim(),
-              emergencyContactPhone:
-                  '$_selectedCountryCode${_phoneController.text.trim()}',
-              emergencyContactRelation: _selectedRelationship!,
-            ),
-          );
-
-      context.go(Routes.dataReview);
-    }
   }
 
   @override
@@ -78,7 +61,10 @@ class _EmergencyContactPageState extends ConsumerState<EmergencyContactPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CustomAppBar(),
-                  const SizedBox(height: 17),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 17),
+                    child: StepProgressBar(),
+                  ),
                   Text(
                     AppStrings.addEmergencyContact,
                     style: AppTextStyles.bold24.copyWith(
@@ -96,7 +82,23 @@ class _EmergencyContactPageState extends ConsumerState<EmergencyContactPage> {
                   _buildFormFields(),
                   const SizedBox(height: 24),
 
-                  CustomButton(onPressed: _onFinish, text: AppStrings.finish),
+                  const SizedBox(height: 16),
+
+                  // Registration finish button
+                  RegistrationFinishButton(
+                    completeData: () async {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        await ref
+                            .read(authNotifierProvider.notifier)
+                            .updateUserData(
+                              emergencyContactName: _nameController.text.trim(),
+                              emergencyContactPhone:
+                                  '$_selectedCountryCode${_phoneController.text.trim()}',
+                              emergencyContactRelation: _selectedRelationship!,
+                            );
+                      }
+                    },
+                  ),
 
                   const SizedBox(height: 40),
                 ],
