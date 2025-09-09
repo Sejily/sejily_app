@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final dio = DioFactory.getDio();
+      final dio = DioFactory('').getDio();
       final response = await dio.post(
         ApiEndpoints.login,
         data: {"email": email, "password": password},

@@ -33,7 +33,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     setState(() => _isLoading = true);
 
     try {
-      final dio = DioFactory.getDio();
+      final dio = DioFactory('').getDio();
       final response = await dio.post(
         ApiEndpoints.forgotPassword,
         data: {"email": email},

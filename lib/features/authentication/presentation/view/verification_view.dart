@@ -31,7 +31,7 @@ class _OtpPageState extends State<OtpPage> {
     setState(() => _isLoading = true);
 
     try {
-      final dio = DioFactory.getDio();
+      final dio = DioFactory('').getDio();
       final response = await dio.post(
         ApiEndpoints.verifyOtp,
         data: {"otp": _otpCode},

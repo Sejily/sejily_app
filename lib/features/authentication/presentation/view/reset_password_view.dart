@@ -43,7 +43,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final dio = DioFactory.getDio();
+      final dio = DioFactory('').getDio();
       final response = await dio.post(
         ApiEndpoints.resetPassword,
         data: {"newPassword": newPassword},

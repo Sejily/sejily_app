@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.backgroundColor,
     this.foregroundColor,
-    required this.text,
+    this.text,
     this.style,
     this.defaultSize,
     this.child,
@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
-  final String text;
+  final String? text;
   final TextStyle? style;
   final bool? defaultSize;
   final Widget? child;
@@ -35,7 +35,8 @@ class CustomButton extends StatelessWidget {
         foregroundColor: foregroundColor ?? AppColors.white,
         backgroundColor: backgroundColor ?? AppColors.darkBlue,
       ),
-      child: child ?? Text(text, style: style ?? AppTextStyles.semiBold18),
+      child:
+          child ?? Text(text ?? '', style: style ?? AppTextStyles.semiBold18),
     );
   }
 }

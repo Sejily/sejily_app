@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/features/authentication/presentation/view/complete_user_data_page.dart';
 import 'package:sejily/features/authentication/presentation/view/data_review_page.dart';
@@ -18,8 +19,8 @@ import 'package:sejily/features/authentication/presentation/view/verification_vi
 import 'package:sejily/features/onboarding/presentation/onboarding_screen.dart';
 import 'routes.dart';
 
-class AppRouter {
-  static final GoRouter router = GoRouter(
+final routerProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
     initialLocation: Routes.onboarding,
     routes: [
       GoRoute(
@@ -103,4 +104,4 @@ class AppRouter {
       ),
     ],
   );
-}
+});

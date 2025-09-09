@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/services/storage/local_storage_service.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
@@ -7,14 +9,14 @@ import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
@@ -43,6 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeInOut,
       );
     } else {
+      ref.read(storageServiceProvider).setIsFirstTime(false);
       context.go(Routes.selectRole);
     }
   }
@@ -146,7 +149,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                   const SizedBox(height: 12),
                   TextButton(
-                    onPressed: () => context.go(Routes.login),
+                    onPressed: () {
+                      ref.read(storageServiceProvider).setIsFirstTime(false);
+                      context.go(Routes.selectRole);
+                    },
                     child: Text(
                       AppStrings.skip,
                       style: AppTextStyles.regular16.copyWith(
