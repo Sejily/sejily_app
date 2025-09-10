@@ -46,4 +46,21 @@ class AppRegex {
   // National ID validation
   static bool isNationalIdValid(String nationalId) =>
       _nationalIdRegex.hasMatch(nationalId.trim());
+
+  // Password strength validation
+  static bool isPasswordStrong(String password) {
+    return hasMinLength(password) &&
+        hasUpperCase(password) &&
+        hasLowerCase(password) &&
+        hasNumber(password) &&
+        hasSpecialCharacter(password);
+  }
+
+  // Basic password validation (minimum requirements)
+  static bool isPasswordValid(String password) {
+    return hasMinLength(password, minLength: 6) &&
+        (hasNumber(password) ||
+            hasUpperCase(password) ||
+            hasLowerCase(password));
+  }
 }

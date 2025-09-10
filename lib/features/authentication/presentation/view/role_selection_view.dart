@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/enums/user_role.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/routes/routes.dart';
-import 'package:sejily/core/services/storage/local_storage_service.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
-import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 
 class RoleSelectionView extends ConsumerStatefulWidget {
@@ -30,7 +29,7 @@ class _RoleSelectionViewState extends ConsumerState<RoleSelectionView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CustomAppBar(),
+              const SizedBox(height: 40),
               Text(
                 AppStrings.selectYourRole,
                 style: AppTextStyles.bold24.copyWith(
@@ -99,9 +98,9 @@ class _RoleSelectionViewState extends ConsumerState<RoleSelectionView> {
     );
   }
 
-  void _saveRoleAndNavigate() {
+  Future<void> _saveRoleAndNavigate() async {
     if (selectedRole == null) return;
-    ref.read(storageServiceProvider).saveUserRole(selectedRole!);
+    await storage.saveUserRole(selectedRole!);
     if (mounted) {
       context.push(Routes.register);
     }

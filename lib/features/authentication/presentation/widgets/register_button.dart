@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/routes/routes.dart';
-import 'package:sejily/core/services/storage/local_storage_service.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/features/authentication/data/models/register_request.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/auth_provider.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 
 class RegisterButton extends ConsumerStatefulWidget {
   const RegisterButton({
@@ -37,7 +37,7 @@ class _RegisterButtonState extends ConsumerState<RegisterButton> {
     }
 
     try {
-      final role = await ref.read(storageServiceProvider).getUserRole();
+      final role = storage.getUserRoleValue();
 
       if (role == null) {
         _showSnackBar(
@@ -48,7 +48,7 @@ class _RegisterButtonState extends ConsumerState<RegisterButton> {
       }
 
       await ref
-          .read(authNotifierProvider.notifier)
+          .read(registerNotifierProvider.notifier)
           .register(
             registerRequest: RegisterRequest(
               email: widget._emailController.text.trim(),
@@ -73,7 +73,7 @@ class _RegisterButtonState extends ConsumerState<RegisterButton> {
   @override
   Widget build(BuildContext context) {
     // Listen to auth state changes for navigation and error handling
-    ref.listen(authNotifierProvider, (previous, next) {
+    ref.listen(registerNotifierProvider, (previous, next) {
       next.maybeWhen(
         success: () {
           context.push(
@@ -91,7 +91,7 @@ class _RegisterButtonState extends ConsumerState<RegisterButton> {
     return CustomButton(
       onPressed: _onRegisterPressed,
       child: ref
-          .watch(authNotifierProvider)
+          .watch(registerNotifierProvider)
           .maybeWhen(
             loading: () => const CircularProgressIndicator(),
             orElse: () => Text(AppStrings.createNewAccount),

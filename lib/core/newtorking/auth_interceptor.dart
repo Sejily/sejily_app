@@ -1,36 +1,52 @@
 import 'dart:async';
 import 'dart:collection';
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sejily/core/constants/api_endpoints.dart';
-import 'package:sejily/core/routes/app_router.dart';
+import 'package:sejily/core/constants/app_constants.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/routes/routes.dart';
-import 'package:sejily/core/services/api_service.dart';
-import 'package:sejily/core/services/storage/local_storage_service.dart';
-import 'package:sejily/features/authentication/data/repository/auth_repository.dart';
+import 'package:sejily/features/authentication/data/models/tokens_model.dart';
 
 class AuthInterceptor extends Interceptor {
-  final Ref ref;
+  final String baseUrl;
+  final GoRouter _router;
 
   final Queue<RequestOptions> _requestQueue = Queue<RequestOptions>();
   final Queue<Completer<Response>> _completerQueue =
       Queue<Completer<Response>>();
 
   bool _isRefreshing = false;
+  Dio? _refreshDio;
 
-  AuthInterceptor(this.ref);
+  AuthInterceptor(this.baseUrl, this._router);
+
+  // Create a separate Dio instance for refresh token requests to avoid circular dependency
+  Dio get refreshDio {
+    _refreshDio ??= Dio(BaseOptions(baseUrl: baseUrl));
+    return _refreshDio!;
+  }
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    if (options.path.contains(ApiEndpoints.refreshToken)) {
+    List<String> requests = [
+      ApiEndpoints.refreshToken,
+      ApiEndpoints.register,
+      ApiEndpoints.login,
+      ApiEndpoints.verifyOtp,
+      ApiEndpoints.resendOtp,
+      ApiEndpoints.resetPassword,
+      ApiEndpoints.forgotPassword,
+    ];
+    if (requests.any((request) => options.path.contains(request))) {
       handler.next(options);
       return;
     }
 
-    final accessToken = await ref.read(storageServiceProvider).getAccessToken();
+    final accessToken = await storage.get(AppConstants.accessTokenKey);
     if (accessToken != null) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
@@ -46,9 +62,7 @@ class AuthInterceptor extends Interceptor {
     }
 
     try {
-      final refreshToken = await ref
-          .read(storageServiceProvider)
-          .getRefreshToken();
+      final refreshToken = await storage.get(AppConstants.refreshTokenKey);
 
       if (refreshToken == null) {
         await _clearStorageAndNavigateToLogin();
@@ -73,42 +87,34 @@ class AuthInterceptor extends Interceptor {
 
       // Start refresh process
       _isRefreshing = true;
-      final authRepository = ref.read(authRepositoryProvider);
 
-      final refreshResult = await authRepository.refreshToken(
-        refreshToken: refreshToken,
-      );
+      final refreshResult = await _performTokenRefresh(refreshToken);
 
-      await refreshResult.when(
-        onSuccess: (tokensModel) async {
-          // Save new tokens
-          await ref
-              .read(storageServiceProvider)
-              .saveTokens(
-                accessToken: tokensModel.accessToken,
-                refreshToken: tokensModel.refreshToken,
-              );
+      if (refreshResult != null) {
+        // Save new tokens
+        await storage.saveAuthTokens(
+          accessToken: refreshResult.accessToken,
+          refreshToken: refreshResult.refreshToken,
+        );
 
-          // Retry original request with new token
-          final response = await _retryRequest(
-            err.requestOptions,
-            tokensModel.accessToken,
-          );
-          handler.resolve(response);
+        // Retry original request with new token
+        final response = await _retryRequest(
+          err.requestOptions,
+          refreshResult.accessToken,
+        );
+        handler.resolve(response);
 
-          // Process queued requests
-          await _processQueuedRequests(tokensModel.accessToken);
-        },
-        onFailure: (apiError) async {
-          // Refresh failed, clear storage and navigate to login
-          await _clearStorageAndNavigateToLogin();
+        // Process queued requests
+        await _processQueuedRequests(refreshResult.accessToken);
+      } else {
+        // Refresh failed, clear storage and navigate to login
+        await _clearStorageAndNavigateToLogin();
 
-          // Fail all queued requests
-          _failQueuedRequests(err);
+        // Fail all queued requests
+        _failQueuedRequests(err);
 
-          handler.next(err);
-        },
-      );
+        handler.next(err);
+      }
     } catch (e) {
       await _clearStorageAndNavigateToLogin();
       handler.next(err);
@@ -122,8 +128,24 @@ class AuthInterceptor extends Interceptor {
     String accessToken,
   ) async {
     options.headers['Authorization'] = 'Bearer $accessToken';
-    final dio = ref.read(dioProvider);
-    return await dio.fetch(options);
+    return await refreshDio.fetch(options);
+  }
+
+  // Perform token refresh using direct HTTP call to avoid circular dependency
+  Future<TokensModel?> _performTokenRefresh(String refreshToken) async {
+    try {
+      final response = await refreshDio.post(
+        ApiEndpoints.refreshToken,
+        data: {'refreshToken': refreshToken},
+      );
+
+      if (response.statusCode == 200 && response.data != null) {
+        return TokensModel.fromJson(response.data);
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> _processQueuedRequests(String accessToken) async {
@@ -149,7 +171,7 @@ class AuthInterceptor extends Interceptor {
   }
 
   Future<void> _clearStorageAndNavigateToLogin() async {
-    await ref.read(storageServiceProvider).clearTokens();
-    ref.read(routerProvider).go(Routes.login);
+    await storage.completeLogout();
+    _router.go(Routes.login);
   }
 }

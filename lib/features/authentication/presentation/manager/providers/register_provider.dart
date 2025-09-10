@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sejily/core/constants/app_constants.dart';
+import 'package:sejily/core/enums/user_role.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/newtorking/api_error_handler.dart';
-import 'package:sejily/core/services/storage/local_storage_service.dart';
 import 'package:sejily/features/authentication/data/models/full_doctor_registration_request.dart';
 import 'package:sejily/features/authentication/data/models/full_patient_registration_request.dart';
 import 'package:sejily/features/authentication/data/models/register_request.dart';
@@ -9,8 +11,8 @@ import 'package:sejily/features/authentication/data/repository/auth_repository.d
 import 'package:sejily/features/authentication/presentation/manager/auth_state.dart';
 import 'package:sejily/core/newtorking/api_error_model.dart';
 
-class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier(this._authRepository, this._ref)
+class RegisterNotifier extends StateNotifier<AuthState> {
+  RegisterNotifier(this._authRepository, this._ref)
     : super(const AuthState.initial());
 
   final AuthRepository _authRepository;
@@ -47,12 +49,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
         onSuccess: (verifyOtpResponse) async {
           if (verifyOtpResponse.isSuccess) {
             // Save tokens using storage extension
-            await _ref
-                .read(storageServiceProvider)
-                .saveTokens(
-                  accessToken: verifyOtpResponse.accessToken,
-                  refreshToken: verifyOtpResponse.refreshToken,
-                );
+            await storage.saveAuthTokens(
+              accessToken: verifyOtpResponse.accessToken,
+              refreshToken: verifyOtpResponse.refreshToken,
+            );
             state = const AuthState.success();
           } else {
             state = AuthState.failure(
@@ -143,7 +143,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
     String? hospitalAffiliation,
     dynamic healthCareCard, // File?
   }) async {
-    final isDoctor = await _ref.read(storageServiceProvider).isDoctor();
+    final isDoctor =
+        storage.get(AppConstants.userRoleKey) ==
+        UserRole.healthcareProvider.value;
 
     if (isDoctor) {
       // Update doctor registration data
@@ -191,20 +193,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
           );
     }
   }
-
-  //* Check if user is a doctor
-  Future<bool> isDoctor() async {
-    return await _ref.read(storageServiceProvider).isDoctor();
-  }
 }
 
 //* The auth providers
-final authNotifierProvider = StateNotifierProvider<AuthNotifier, AuthState>((
-  ref,
-) {
-  final authRepository = ref.watch(authRepositoryProvider);
-  return AuthNotifier(authRepository, ref);
-});
+final registerNotifierProvider =
+    StateNotifierProvider<RegisterNotifier, AuthState>((ref) {
+      final authRepository = ref.watch(authRepositoryProvider);
+      return RegisterNotifier(authRepository, ref);
+    });
 
 final patientRegistrationProvider =
     StateProvider<FullPatientRegistrationRequest>((ref) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -8,7 +9,7 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/auth_provider.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
 import 'package:sejily/features/authentication/presentation/widgets/image_upload_section.dart';
 import 'package:sejily/features/authentication/presentation/widgets/step_progress_bar.dart';
@@ -52,12 +53,11 @@ class _UploadPersonalPhotoPageState
 
     // Update registration data
     await ref
-        .read(authNotifierProvider.notifier)
+        .read(registerNotifierProvider.notifier)
         .updateUserData(profilePicture: _selectedProfilePicture);
 
     // Check user role to determine next navigation
-    final authNotifier = ref.read(authNotifierProvider.notifier);
-    final isDoctor = await authNotifier.isDoctor();
+    final isDoctor = storage.isDoctor();
 
     ref.read(progressProvider.notifier).nextStep();
 

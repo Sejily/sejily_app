@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sejily/core/services/storage/local_storage_service.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
@@ -38,15 +38,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     },
   ];
 
-  void _nextPage() {
+  void _nextPage(String route) {
     if (_currentPage < onboardingData.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
-      ref.read(storageServiceProvider).setIsFirstTime(false);
-      context.go(Routes.selectRole);
+      storage.setIsFirstTime(false);
+      context.go(route);
     }
   }
 
@@ -141,20 +141,19 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   ),
                   const SizedBox(height: 40),
                   CustomButton(
-                    onPressed: _nextPage,
+                    onPressed: () => _nextPage(Routes.selectRole),
                     text: _currentPage == onboardingData.length - 1
-                        ? AppStrings.finish
+                        ? AppStrings.newUser
                         : AppStrings.next,
                   ),
 
                   const SizedBox(height: 12),
                   TextButton(
-                    onPressed: () {
-                      ref.read(storageServiceProvider).setIsFirstTime(false);
-                      context.go(Routes.selectRole);
-                    },
+                    onPressed: () => _nextPage(Routes.login),
                     child: Text(
-                      AppStrings.skip,
+                      _currentPage == onboardingData.length - 1
+                          ? AppStrings.login
+                          : AppStrings.skip,
                       style: AppTextStyles.regular16.copyWith(
                         color: AppColors.blackBlue,
                       ),

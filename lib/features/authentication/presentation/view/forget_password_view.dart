@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -6,61 +7,59 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/routes/routes.dart';
-import 'package:sejily/core/constants/api_endpoints.dart';
-import 'package:sejily/core/newtorking/dio_factory.dart';
+import '../manager/providers/forgot_password_notifier.dart';
+import '../manager/providers/progress_provider.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
+class ForgotPasswordPage extends ConsumerStatefulWidget {
   const ForgotPasswordPage({super.key});
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  ConsumerState<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
-  bool _isLoading = false;
 
-  Future<void> sendOtp() async {
+  void _sendOtp() {
     final email = _emailController.text.trim();
-
-    if (email.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("من فضلك أدخل البريد الإلكتروني")),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    try {
-      final dio = DioFactory('').getDio();
-      final response = await dio.post(
-        ApiEndpoints.forgotPassword,
-        data: {"email": email},
-      );
-
-      final data = response.data;
-
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("تم إرسال رمز التحقق بنجاح ")),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(data["message"] ?? "حدث خطأ ما")),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("فشل الاتصال بالسيرفر")));
-    }
-
-    setState(() => _isLoading = false);
+    ref.read(forgotPasswordNotifierProvider.notifier).sendOtp(email);
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(forgotPasswordNotifierProvider);
+
+    ref.listen<ForgotPasswordState>(forgotPasswordNotifierProvider, (
+      prev,
+      next,
+    ) {
+      if (next.result != null) {
+        next.result!.when(
+          onSuccess: (data) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("تم إرسال رمز التحقق بنجاح")),
+            );
+
+            ref
+                .read(progressProvider.notifier)
+                .updateProgressForRoute(Routes.verifyOtp);
+
+            context.push(Routes.verifyOtp, extra: _emailController.text.trim());
+          },
+          onFailure: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error.message ?? 'حدث خطأ غير متوقع، حاول مرة أخرى',
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+          },
+        );
+      }
+    });
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -72,7 +71,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Icon
                     const Icon(
                       Icons.lock_outline,
                       size: 60,
@@ -86,7 +84,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                     ),
                     const SizedBox(height: 8),
-
                     Text(
                       AppStrings.passwordResetDescription,
                       style: AppTextStyles.regular14.copyWith(
@@ -121,9 +118,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     const SizedBox(height: 20),
 
                     CustomButton(
-                      onPressed: () => context.go(Routes.verifyOtp),
+                      onPressed: state.isLoading ? null : _sendOtp,
                       text: AppStrings.sendVerificationCode,
-                      child: _isLoading
+                      child: state.isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
                           : null,
                     ),
@@ -131,6 +128,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Row(

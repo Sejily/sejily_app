@@ -5,7 +5,7 @@ import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/auth_provider.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/auth_state.dart';
 
 class VerificationButton extends ConsumerWidget {
@@ -24,11 +24,11 @@ class VerificationButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authNotifierProvider);
+    final authState = ref.watch(registerNotifierProvider);
     final isLoading = authState == const AuthState.loading();
     final isActivated = isComplete && !isLoading;
 
-    ref.listen<AuthState>(authNotifierProvider, (previous, next) {
+    ref.listen<AuthState>(registerNotifierProvider, (previous, next) {
       next.maybeWhen(
         success: () {
           // Use post frame callback to ensure navigation happens after the build
@@ -47,7 +47,7 @@ class VerificationButton extends ConsumerWidget {
       onPressed: isActivated
           ? () async {
               await ref
-                  .read(authNotifierProvider.notifier)
+                  .read(registerNotifierProvider.notifier)
                   .verifyOtp(email: email, otp: otp);
             }
           : null,

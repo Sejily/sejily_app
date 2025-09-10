@@ -8,7 +8,7 @@ class DioFactory {
   DioFactory(this.baseUrl);
 
   Dio getDio() {
-    Duration defaultTimeout = const Duration(seconds: 8);
+    Duration defaultTimeout = const Duration(seconds: 30);
     final dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
@@ -16,22 +16,16 @@ class DioFactory {
         receiveTimeout: defaultTimeout,
       ),
     );
-    _addInterceptors(dio);
-    return dio;
-  }
-
-  static void _addInterceptors(Dio dio) {
     dio.interceptors.addAll([
       if (kDebugMode)
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
           responseBody: true,
-          responseHeader: false,
           error: true,
           compact: true,
-          maxWidth: 90,
         ),
     ]);
+    return dio;
   }
 }

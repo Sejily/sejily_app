@@ -146,4 +146,27 @@ class AppValidators {
     }
     return null;
   }
+
+  /// Confirm password validation
+  static String? confirmPasswordValidator(
+    String? value,
+    String? originalPassword,
+  ) {
+    if (value.isNullOrEmpty()) {
+      return AppStrings.enterPassword;
+    }
+
+    if (value != originalPassword) {
+      return 'كلمتا المرور غير متطابقتين';
+    }
+
+    return null;
+  }
+
+  /// Create a confirm password validator function that captures the original password
+  static String? Function(String?) getConfirmPasswordValidator(
+    String originalPassword,
+  ) {
+    return (String? value) => confirmPasswordValidator(value, originalPassword);
+  }
 }

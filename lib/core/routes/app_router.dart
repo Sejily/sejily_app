@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
+import 'package:sejily/core/services/secure_storage_service.dart';
 import 'package:sejily/features/authentication/presentation/view/complete_user_data_page.dart';
 import 'package:sejily/features/authentication/presentation/view/data_review_page.dart';
 import 'package:sejily/features/authentication/presentation/view/emergency_contact_page.dart';
@@ -21,7 +23,30 @@ import 'routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: Routes.onboarding,
+    redirect: (context, state) {
+      List<String> allowedPathsForNotLoggedIn = [
+        Routes.login,
+        Routes.register,
+        Routes.completeUserData,
+        Routes.dataReview,
+        Routes.emergencyContact,
+        Routes.forgetPassword,
+        Routes.registerOtpVerification,
+        Routes.resetPassword,
+        Routes.selectRole,
+      ];
+      final isFirstTime = StorageService.instance.isFirstTime();
+      final isLoggedIn = StorageService.instance.isLoggedIn();
+      if (isFirstTime) {
+        return Routes.onboarding;
+      } else if (!isLoggedIn) {
+        final currentPath = state.matchedLocation;
+        if (!allowedPathsForNotLoggedIn.contains(currentPath)) {
+          return Routes.login;
+        }
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: Routes.onboarding,
@@ -42,7 +67,10 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       GoRoute(
         path: Routes.verifyOtp,
-        builder: (context, state) => const OtpPage(),
+        builder: (context, state) {
+          final email = state.extra as String;
+          return OtpPage(email: email);
+        },
       ),
 
       GoRoute(
@@ -59,7 +87,12 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       GoRoute(
         path: Routes.resetPassword,
-        builder: (context, state) => const ResetPasswordScreen(),
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>;
+          final email = args["email"] as String;
+          final otp = args["otp"] as String;
+          return ResetPasswordScreen(email: email, otp: otp);
+        },
       ),
 
       GoRoute(

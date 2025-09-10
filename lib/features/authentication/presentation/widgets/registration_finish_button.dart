@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/routes/routes.dart';
-import 'package:sejily/core/services/storage/local_storage_service.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/auth_provider.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/auth_state.dart';
 
 class RegistrationFinishButton extends ConsumerStatefulWidget {
@@ -27,15 +27,17 @@ class _RegistrationFinishButtonState
 
     try {
       await widget.completeData();
-      final authNotifier = ref.read(authNotifierProvider.notifier);
-      final isDoctor = await ref.read(storageServiceProvider).isDoctor();
+      final registerNotifier = ref.read(registerNotifierProvider.notifier);
+      final isDoctor = storage.isDoctor();
 
       if (isDoctor) {
         final doctorData = ref.read(doctorRegistrationProvider);
-        await authNotifier.completeDoctorRegistrationData(request: doctorData);
+        await registerNotifier.completeDoctorRegistrationData(
+          request: doctorData,
+        );
       } else {
         final patientData = ref.read(patientRegistrationProvider);
-        await authNotifier.completePatientRegistrationData(
+        await registerNotifier.completePatientRegistrationData(
           request: patientData,
         );
       }
@@ -67,7 +69,7 @@ class _RegistrationFinishButtonState
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AuthState>(authNotifierProvider, (previous, next) {
+    ref.listen<AuthState>(registerNotifierProvider, (previous, next) {
       next.when(
         initial: () {},
         loading: () {},

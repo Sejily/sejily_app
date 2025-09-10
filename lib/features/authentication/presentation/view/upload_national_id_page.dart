@@ -7,7 +7,7 @@ import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/auth_provider.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
 import 'package:sejily/features/authentication/presentation/widgets/image_upload_section.dart';
 import 'package:sejily/features/authentication/presentation/widgets/nationality_and_national_id_section.dart';
@@ -56,7 +56,7 @@ class _UploadNationalIdPageState extends ConsumerState<UploadNationalIdPage> {
 
     // Update registration data
     await ref
-        .read(authNotifierProvider.notifier)
+        .read(registerNotifierProvider.notifier)
         .updateUserData(
           nationality: _selectedNationality,
           nationalId: _nationalIdController.text,

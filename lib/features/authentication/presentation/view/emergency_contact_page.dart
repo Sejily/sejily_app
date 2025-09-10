@@ -8,7 +8,7 @@ import 'package:sejily/core/utils/app_validators.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/auth_provider.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
 import 'package:sejily/features/authentication/presentation/widgets/custom_dropdown_form_field.dart';
 import 'package:sejily/features/authentication/presentation/widgets/phone_number_field.dart';
@@ -89,7 +89,7 @@ class _EmergencyContactPageState extends ConsumerState<EmergencyContactPage> {
                     completeData: () async {
                       if (_formKey.currentState?.validate() ?? false) {
                         await ref
-                            .read(authNotifierProvider.notifier)
+                            .read(registerNotifierProvider.notifier)
                             .updateUserData(
                               emergencyContactName: _nameController.text.trim(),
                               emergencyContactPhone:

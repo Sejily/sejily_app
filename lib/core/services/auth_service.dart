@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,20 +7,18 @@ import 'package:sejily/core/constants/api_endpoints.dart';
 import 'package:sejily/features/authentication/data/models/tokens_model.dart';
 import 'package:sejily/core/newtorking/auth_interceptor.dart';
 import 'package:sejily/core/newtorking/dio_factory.dart';
+import 'package:sejily/core/routes/app_router.dart';
 import 'package:sejily/features/authentication/data/models/register_request.dart';
 import 'package:sejily/features/authentication/data/models/verify_otp_request.dart';
 import 'package:sejily/features/authentication/data/models/verify_otp_response.dart';
 import 'package:sejily/features/authentication/data/models/resend_otp_request.dart';
+import 'package:sejily/features/authentication/data/models/login_response.dart';
 
-part 'api_service.g.dart';
+part 'auth_service.g.dart';
 
 @RestApi()
-abstract class ApiService {
-  factory ApiService(
-    Dio dio, {
-    String? baseUrl,
-    ParseErrorLogger? errorLogger,
-  }) = _ApiService;
+abstract class AuthService {
+  factory AuthService(Dio dio, {String? baseUrl}) = _AuthService;
 
   @POST(ApiEndpoints.register)
   Future<void> register({@Body() required RegisterRequest registerRequest});
@@ -69,17 +66,27 @@ abstract class ApiService {
   });
 
   @POST(ApiEndpoints.refreshToken)
-  Future<TokensModel> refreshToken({@Body() required String refreshToken});
+  Future<TokensModel> refreshToken(@Body() Map<String, dynamic> body);
+
+  @POST(ApiEndpoints.login)
+  Future<LoginResponse> login(@Body() Map<String, dynamic> body);
+
+  @POST(ApiEndpoints.forgotPassword)
+  Future<void> forgotPassword(@Body() Map<String, dynamic> body);
+
+  @POST(ApiEndpoints.resetPassword)
+  Future<void> resetPassword(@Body() Map<String, dynamic> body);
 }
 
 final dioProvider = Provider<Dio>((ref) {
   final baseUrl = dotenv.env['BASE_URL'] ?? '';
   final dio = DioFactory(baseUrl).getDio();
-  dio.interceptors.add(AuthInterceptor(ref));
+  final router = ref.watch(routerProvider);
+  dio.interceptors.add(AuthInterceptor(baseUrl, router));
   return dio;
 });
 
-final apiServiceProvider = Provider<ApiService>((ref) {
+final authServiceProvider = Provider<AuthService>((ref) {
   final dio = ref.watch(dioProvider);
-  return ApiService(dio);
+  return AuthService(dio);
 });
