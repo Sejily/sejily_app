@@ -18,7 +18,7 @@ class FullDoctorRegistrationRequest {
   // Images
   File? profilePicture;
   File? idPicture;
-  File? licensePicture;
+  File? healthCareCard;
 
   FullDoctorRegistrationRequest({
     this.nationality,
@@ -33,7 +33,7 @@ class FullDoctorRegistrationRequest {
     this.hospitalAffiliation,
     this.profilePicture,
     this.idPicture,
-    this.licensePicture,
+    this.healthCareCard,
   });
 
   FullDoctorRegistrationRequest copyWith({
@@ -49,7 +49,7 @@ class FullDoctorRegistrationRequest {
     String? hospitalAffiliation,
     File? profilePicture,
     File? idPicture,
-    File? licensePicture,
+    File? healthCareCard,
   }) {
     return FullDoctorRegistrationRequest(
       nationality: nationality ?? this.nationality,
@@ -64,7 +64,7 @@ class FullDoctorRegistrationRequest {
       hospitalAffiliation: hospitalAffiliation ?? this.hospitalAffiliation,
       profilePicture: profilePicture ?? this.profilePicture,
       idPicture: idPicture ?? this.idPicture,
-      licensePicture: licensePicture ?? this.licensePicture,
+      healthCareCard: healthCareCard ?? this.healthCareCard,
     );
   }
 }

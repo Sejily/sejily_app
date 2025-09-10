@@ -7,8 +7,8 @@ import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/registration_provider.dart';
 import 'package:sejily/features/authentication/presentation/widgets/image_upload_section.dart';
 import 'package:sejily/features/authentication/presentation/widgets/nationality_and_national_id_section.dart';
 import 'dart:io';
@@ -46,15 +46,7 @@ class _UploadNationalIdPageState extends ConsumerState<UploadNationalIdPage> {
     super.dispose();
   }
 
-  void _onNationalityChanged(String nationality) {
-    setState(() => _selectedNationality = nationality);
-  }
-
-  void _onImageSelected(File? image) {
-    setState(() => _selectedImage = image);
-  }
-
-  void _onSubmit() {
+  void _onSubmit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
     if (_selectedImage == null) {
@@ -62,20 +54,20 @@ class _UploadNationalIdPageState extends ConsumerState<UploadNationalIdPage> {
       return;
     }
 
-    //* Updating regstration data using riverpod
-    ref
-        .read(patientRegistrationProvider.notifier)
-        .update(
-          (state) => state.copyWith(
-            nationality: _selectedNationality,
-            nationalId: _nationalIdController.text,
-            idPicture: _selectedImage,
-          ),
+    // Update registration data
+    await ref
+        .read(registerNotifierProvider.notifier)
+        .updateUserData(
+          nationality: _selectedNationality,
+          nationalId: _nationalIdController.text,
+          idPicture: _selectedImage,
         );
-    // Move to next step with smooth animation
+
     ref.read(progressProvider.notifier).nextStep();
 
-    context.push(Routes.uploadPersonalPhoto);
+    if (mounted) {
+      context.push(Routes.uploadPersonalPhoto);
+    }
   }
 
   void _showError(String message) {
@@ -146,13 +138,14 @@ class _UploadNationalIdPageState extends ConsumerState<UploadNationalIdPage> {
         children: [
           NationalityAndNationalIdSection(
             selectedNationality: _selectedNationality,
-            onNationalityChanged: _onNationalityChanged,
+            onNationalityChanged: (nationality) =>
+                setState(() => _selectedNationality = nationality),
             nationalIdController: _nationalIdController,
           ),
           const SizedBox(height: 20),
           ImageUploadSection(
             selectedImage: _selectedImage,
-            onImageSelected: _onImageSelected,
+            onImageSelected: (image) => setState(() => _selectedImage = image),
             onError: _showError,
           ),
         ],

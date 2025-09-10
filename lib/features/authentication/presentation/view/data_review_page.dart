@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
@@ -23,7 +25,7 @@ class DataReviewPage extends StatelessWidget {
 
               CustomButton(
                 onPressed: () {
-                  //TODO: Navigate to home page
+                  context.go(Routes.home);
                 },
                 text: AppStrings.browseMainPage,
               ),

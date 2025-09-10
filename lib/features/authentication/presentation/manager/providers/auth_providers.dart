@@ -1,20 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dio/dio.dart';
-import 'package:sejily/core/result/result.dart';
-import '../../../../../core/newtorking/dio_factory.dart';
-import '../../../../../core/repository/auth_repository.dart';
-import '../../../data/auth_api.dart';
-
-final dioProvider = Provider<Dio>((ref) => DioFactory.getDio());
-final authApiProvider = Provider<AuthApi>(
-  (ref) => AuthApi(ref.read(dioProvider)),
-);
-final authRepositoryProvider = Provider<AuthRepository>(
-  (ref) => AuthRepository(ref.read(authApiProvider)),
-);
+import 'package:sejily/core/newtorking/api_result.dart';
+import 'package:sejily/features/authentication/data/models/login_response.dart';
+import 'package:sejily/features/authentication/data/repository/auth_repository.dart';
 
 final loginProvider = FutureProvider.family
-    .autoDispose<Result<Map<String, dynamic>>, Map<String, String>>((
+    .autoDispose<ApiResult<LoginResponse>, Map<String, String>>((
       ref,
       credentials,
     ) async {

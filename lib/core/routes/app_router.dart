@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
+import 'package:sejily/core/services/secure_storage_service.dart';
 import 'package:sejily/features/authentication/presentation/view/complete_user_data_page.dart';
 import 'package:sejily/features/authentication/presentation/view/data_review_page.dart';
 import 'package:sejily/features/authentication/presentation/view/emergency_contact_page.dart';
@@ -18,9 +21,32 @@ import 'package:sejily/features/authentication/presentation/view/verification_vi
 import 'package:sejily/features/onboarding/presentation/onboarding_screen.dart';
 import 'routes.dart';
 
-class AppRouter {
-  static final GoRouter router = GoRouter(
-    initialLocation: Routes.onboarding,
+final routerProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    redirect: (context, state) {
+      List<String> allowedPathsForNotLoggedIn = [
+        Routes.login,
+        Routes.register,
+        Routes.completeUserData,
+        Routes.dataReview,
+        Routes.emergencyContact,
+        Routes.forgetPassword,
+        Routes.registerOtpVerification,
+        Routes.resetPassword,
+        Routes.selectRole,
+      ];
+      final isFirstTime = StorageService.instance.isFirstTime();
+      final isLoggedIn = StorageService.instance.isLoggedIn();
+      if (isFirstTime) {
+        return Routes.onboarding;
+      } else if (!isLoggedIn) {
+        final currentPath = state.matchedLocation;
+        if (!allowedPathsForNotLoggedIn.contains(currentPath)) {
+          return Routes.login;
+        }
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: Routes.onboarding,
@@ -111,4 +137,4 @@ class AppRouter {
       ),
     ],
   );
-}
+});

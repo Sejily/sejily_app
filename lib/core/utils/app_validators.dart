@@ -1,4 +1,4 @@
-import 'package:sejily/core/helpers/extensions.dart';
+import 'package:sejily/core/helpers/string_extensions.dart';
 import 'package:sejily/core/utils/app_regex.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 
@@ -145,5 +145,28 @@ class AppValidators {
       return 'هذا الحقل مطلوب';
     }
     return null;
+  }
+
+  /// Confirm password validation
+  static String? confirmPasswordValidator(
+    String? value,
+    String? originalPassword,
+  ) {
+    if (value.isNullOrEmpty()) {
+      return AppStrings.enterPassword;
+    }
+
+    if (value != originalPassword) {
+      return 'كلمتا المرور غير متطابقتين';
+    }
+
+    return null;
+  }
+
+  /// Create a confirm password validator function that captures the original password
+  static String? Function(String?) getConfirmPasswordValidator(
+    String originalPassword,
+  ) {
+    return (String? value) => confirmPasswordValidator(value, originalPassword);
   }
 }

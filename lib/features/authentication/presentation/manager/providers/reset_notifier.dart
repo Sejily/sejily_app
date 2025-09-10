@@ -1,19 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sejily/core/result/result.dart';
-import 'package:sejily/core/repository/auth_repository.dart';
-import '../../../../../core/newtorking/api_error.dart';
-import 'auth_providers.dart';
+import 'package:sejily/core/newtorking/api_error_model.dart';
+import 'package:sejily/core/newtorking/api_result.dart';
+import 'package:sejily/features/authentication/data/repository/auth_repository.dart';
 
 class ResetPasswordState {
   final bool isLoading;
-  final Result<Map<String, dynamic>>? result;
+  final ApiResult<void>? result;
 
   ResetPasswordState({this.isLoading = false, this.result});
 
-  ResetPasswordState copyWith({
-    bool? isLoading,
-    Result<Map<String, dynamic>>? result,
-  }) {
+  ResetPasswordState copyWith({bool? isLoading, ApiResult<void>? result}) {
     return ResetPasswordState(
       isLoading: isLoading ?? this.isLoading,
       result: result ?? this.result,
@@ -33,12 +29,14 @@ class ResetPasswordNotifier extends StateNotifier<ResetPasswordState> {
   ) async {
     if (newPassword != confirmPassword) {
       state = state.copyWith(
-        result: Result(error: ApiError(message: "كلمتا المرور غير متطابقتين")),
+        result: ApiFailure(
+          ApiErrorModel(message: "كلمتا المرور غير متطابقتين"),
+        ),
       );
       return;
     }
 
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true, result: null);
 
     final result = await repo.resetPassword(email, otp, newPassword);
 

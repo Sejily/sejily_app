@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
+import 'package:sejily/core/utils/app_validators.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
-import 'package:sejily/core/utils/app_validators.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/routes/routes.dart';
 import '../manager/providers/reset_notifier.dart';
@@ -56,21 +56,30 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
       next,
     ) {
       if (next.result != null) {
-        if (next.result!.error != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(next.result!.error!.message)));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("تم تغيير كلمة المرور بنجاح")),
-          );
+        next.result!.when(
+          onSuccess: (data) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("تم تغيير كلمة المرور بنجاح")),
+            );
 
-          ref
-              .read(progressProvider.notifier)
-              .updateProgressForRoute(Routes.success);
+            ref
+                .read(progressProvider.notifier)
+                .updateProgressForRoute(Routes.success);
 
-          context.go(Routes.success);
-        }
+            context.go(Routes.success);
+          },
+          onFailure: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error.message ??
+                      'حدث خطأ في تغيير كلمة المرور، حاول مرة أخرى',
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+          },
+        );
       }
     });
 
@@ -136,7 +145,11 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                           child: CustomTextField(
                             controller: _confirmPasswordController,
                             isObscured: true,
-                            validator: AppValidators.newPasswordValidator,
+                            validator: (value) =>
+                                AppValidators.confirmPasswordValidator(
+                                  value,
+                                  _newPasswordController.text,
+                                ),
                           ),
                         ),
                       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -8,11 +7,11 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_validators.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
-import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/features/authentication/presentation/widgets/image_upload_section.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/registration_provider.dart';
+import 'package:sejily/features/authentication/presentation/widgets/registration_finish_button.dart';
 import 'package:sejily/features/authentication/presentation/widgets/step_progress_bar.dart';
 import 'dart:io';
 
@@ -33,7 +32,6 @@ class _UploadMedicalLicensePageState
   @override
   void initState() {
     super.initState();
-    // Ensure we're on step 5 (final step) when this page loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
           .read(progressProvider.notifier)
@@ -45,32 +43,6 @@ class _UploadMedicalLicensePageState
   void dispose() {
     medicalLicenseNumberController.dispose();
     super.dispose();
-  }
-
-  void _onContinuePressed() {
-    if (formKey.currentState?.validate() == true) {
-      // Save medical license data to registration provider
-      ref
-          .read(doctorRegistrationProvider.notifier)
-          .update(
-            (state) => state.copyWith(
-              licenseNumber: medicalLicenseNumberController.text.trim(),
-              licensePicture: _selectedMedicalLicenseImage,
-            ),
-          );
-
-      //TODO: Register Doctor logic
-
-      // Move to final step with smooth animation
-      ref.read(progressProvider.notifier).nextStep();
-      context.go(Routes.dataReview);
-    }
-  }
-
-  void _onImageSelected(File? file) {
-    setState(() {
-      _selectedMedicalLicenseImage = file;
-    });
   }
 
   void _onImageError(String error) {
@@ -95,9 +67,10 @@ class _UploadMedicalLicensePageState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const CustomAppBar(),
-                const SizedBox(height: 17),
-                const StepProgressBar(),
-                const SizedBox(height: 17),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 17),
+                  child: const StepProgressBar(),
+                ),
                 Text(
                   AppStrings.completeProfessionalProfile,
                   style: AppTextStyles.bold24.copyWith(
@@ -144,7 +117,9 @@ class _UploadMedicalLicensePageState
                                 const SizedBox(height: 12),
                                 ImageUploadSection(
                                   selectedImage: _selectedMedicalLicenseImage,
-                                  onImageSelected: _onImageSelected,
+                                  onImageSelected: (image) => setState(() {
+                                    _selectedMedicalLicenseImage = image;
+                                  }),
                                   onError: _onImageError,
                                 ),
                               ],
@@ -153,9 +128,20 @@ class _UploadMedicalLicensePageState
 
                           const SizedBox(height: 40),
 
-                          CustomButton(
-                            text: AppStrings.finish,
-                            onPressed: _onContinuePressed,
+                          RegistrationFinishButton(
+                            completeData: () async {
+                              if (formKey.currentState?.validate() == true) {
+                                await ref
+                                    .read(registerNotifierProvider.notifier)
+                                    .updateUserData(
+                                      licenseNumber:
+                                          medicalLicenseNumberController.text
+                                              .trim(),
+                                      healthCareCard:
+                                          _selectedMedicalLicenseImage,
+                                    );
+                              }
+                            },
                           ),
                         ],
                       ),

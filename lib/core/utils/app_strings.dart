@@ -2,9 +2,9 @@ class AppStrings {
   AppStrings._();
   // ONBOARDING STRINGS
   static const String onboardingTitle1 =
-      '.طريقك إلى رعاية صحية أذكى وأكثر أمانًا';
+      'طريقك إلى رعاية صحية أذكى وأكثر أمانًا.';
   static const String onboardingSubtitle1 =
-      '.إحفظ سجلك الطبي، تتبع صحتك، وشارك بياناتك مع طبيبك بثقة تامة';
+      'إحفظ سجلك الطبي، تتبع صحتك، وشارك بياناتك مع طبيبك بثقة تامة.';
 
   static const String onBoardingTitle2 =
       'بياناتك الطبية بين يديك... ومشفرة بأقوي التقنيات!';
@@ -12,9 +12,9 @@ class AppStrings {
       'لا داعي للقلق بعد الآن - خصوصيتك هي أولويتنا';
 
   static const String onBoardingTitle3 =
-      '.كل ما تحتاجه لصحتك في مكان واحد... و بضغطة واحدة';
+      'كل ما تحتاجه لصحتك في مكان واحد... و بضغطة واحدة.';
   static const String onBoardingSubtitle3 =
-      '!ارفع ملفك الطبي, و دع الذكاء الاصطناعي ينظمه لك';
+      'ارفع ملفك الطبي, و دع الذكاء الاصطناعي ينظمه لك!';
 
   // NAVIGATION & COMMON ACTIONS
   static const String next = 'التالي';
@@ -25,6 +25,9 @@ class AppStrings {
   static const String cancel = 'إلغاء';
   static const String confirm = 'تأكيد';
   static const String verify = 'تحقق';
+  static const String saveContactInfo = 'حفظ بيانات الاتصال';
+  static const String loading = 'تحميل...';
+  static const String checking = 'جاري التحقق...';
 
   // USER ROLE SELECTION
   static const String selectYourRole = 'حدد دورك';
@@ -36,7 +39,7 @@ class AppStrings {
   // AUTHENTICATION STRINGS
   static const String newUser = 'مستخدم جديد';
   static const String login = 'تسجيل الدخول';
-  static const String welcomeBack = '!أهلا بعودتك';
+  static const String welcomeBack = 'أهلا بعودتك!';
   static const String enterNextData =
       '!ادخل البيانات التالية لتتمكن من الوصول إلي حسابك';
   static const String email = 'البريد الإلكتروني';
@@ -155,6 +158,12 @@ class AppStrings {
   static const String congratulations = 'تهانينا!';
   static const String passwordResetSuccessDescription =
       'لقد تم تغيير كلمة مرور حسابك بنجاح، يمكنك الآن العودة وتسجيل الدخول من جديد!';
+  static const String registrationCompletedSuccessfully =
+      'تم إتمام التسجيل بنجاح!';
+  static const String completingRegistration = 'جاري إتمام التسجيل...';
+  static const String emergencyContactSaved = 'تم حفظ بيانات الاتصال الطارئ!';
+  static const String registrationFailed = 'فشل في إتمام التسجيل';
+  static const String generalError = 'حدث خطأ. يرجى المحاولة مرة أخرى.';
 
   // VALIDATION MESSAGES
   static const String fieldRequired = 'هذا الحقل مطلوب';
@@ -214,9 +223,50 @@ class AppStrings {
   static const String medicalLicenseDescription =
       'يرجى تحميل الملف بتنسيق jpeg أو png والتأكد من أن حجم الملف أقل من 25 ميجابايت.';
 
-  // ERROR MESSAGES
-  static const String networkError = 'خطأ في الاتصال بالشبكة';
-  static const String serverError = 'خطأ في الخادم';
-  static const String unknownError = 'حدث خطأ غير معروف';
-  static const String uploadFailed = 'فشل في رفع الملف';
+  // API ERROR MESSAGES
+  static const String connectionTimeoutError =
+      'انتهت مهلة الاتصال. يرجى المحاولة مرة أخرى';
+  static const String sendTimeoutError =
+      'انتهت مهلة الإرسال. يرجى المحاولة مرة أخرى';
+  static const String receiveTimeoutError =
+      'انتهت مهلة الاستقبال. يرجى المحاولة مرة أخرى';
+  static const String badCertificateError = 'شهادة الأمان غير صحيحة';
+  static const String cancelledRequestError = 'تم إلغاء الطلب';
+  static const String connectionErrorMsg =
+      'لا يوجد اتصال بالإنترنت. يرجى التحقق من الاتصال والمحاولة مرة أخرى';
+  static const String unexpectedError =
+      'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى';
+
+  // HTTP STATUS ERROR MESSAGES
+  static const String badRequestError = 'يرجى التحقق من البيانات المدخلة';
+  static const String unauthorizedError =
+      'غير مخول للوصول. يرجى تسجيل الدخول مرة أخرى';
+  static const String forbiddenError = 'ممنوع الوصول إلى هذا المورد';
+  static const String notFoundError = 'المورد المطلوب غير موجود';
+  static const String conflictError =
+      'تعارض في البيانات. يرجى المحاولة مرة أخرى';
+  static const String internalServerError =
+      'خطأ داخلي في الخادم. يرجى المحاولة لاحقاً';
+  static const String serviceUnavailableError =
+      'الخدمة غير متاحة حالياً. يرجى المحاولة لاحقاً';
+
+  // COMMON FIELD VALIDATION ERRORS (Arabic translations for common API validation messages)
+  static const String emailInvalidError = 'البريد الإلكتروني غير صحيح';
+  static const String passwordRequiredError = 'كلمة المرور مطلوبة';
+  static const String phoneInvalidError = 'رقم الهاتف غير صحيح';
+  static const String accountExistsError =
+      'يوجد حساب مرتبط بهذا البريد الإلكتروني بالفعل';
+  static const String accountNotFoundError =
+      'لم يتم العثور على حساب بهذا البريد الإلكتروني';
+  static const String invalidCredentialsError =
+      'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+  static const String accountNotVerifiedError =
+      'الحساب غير مفعل. يرجى التحقق من بريدك الإلكتروني';
+  static const String verificationCodeInvalidError = 'رمز التحقق غير صحيح';
+  static const String verificationCodeExpiredError = 'انتهت صلاحية رمز التحقق';
+  static const String uploadFailed = 'فشل في رفع الملف. يرجى المحاولة مرة أخرى';
+  static const String fileSizeExceededError =
+      'حجم الملف كبير جداً. الحد الأقصى 25 ميجابايت';
+  static const String fileTypeNotSupportedError =
+      'نوع الملف غير مدعوم. يرجى استخدام صور بصيغة JPEG أو PNG';
 }

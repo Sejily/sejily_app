@@ -1,16 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sejily/core/result/result.dart';
-import 'package:sejily/core/repository/auth_repository.dart';
-import '../../../../../core/newtorking/api_error.dart';
-import 'auth_providers.dart';
+import 'package:sejily/core/newtorking/api_error_model.dart';
+import 'package:sejily/core/newtorking/api_result.dart';
+import 'package:sejily/features/authentication/data/repository/auth_repository.dart';
+import 'package:sejily/features/authentication/data/models/login_response.dart';
 
 class LoginState {
   final bool isLoading;
-  final Result<Map<String, dynamic>>? result;
+  final ApiResult<LoginResponse>? result;
 
   LoginState({this.isLoading = false, this.result});
 
-  LoginState copyWith({bool? isLoading, Result<Map<String, dynamic>>? result}) {
+  LoginState copyWith({bool? isLoading, ApiResult<LoginResponse>? result}) {
     return LoginState(
       isLoading: isLoading ?? this.isLoading,
       result: result ?? this.result,
@@ -25,14 +25,14 @@ class LoginNotifier extends StateNotifier<LoginState> {
   Future<void> login(String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
       state = state.copyWith(
-        result: Result(
-          error: ApiError(message: "من فضلك أدخل البريد وكلمة المرور"),
+        result: ApiFailure(
+          ApiErrorModel(message: "من فضلك أدخل البريد وكلمة المرور"),
         ),
       );
       return;
     }
 
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true, result: null);
 
     final result = await repo.login(email, password);
 
