@@ -39,7 +39,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       final isLoggedIn = StorageService.instance.isLoggedIn();
       if (isFirstTime) {
         return Routes.onboarding;
-      } else if (!isLoggedIn) {
+      }
+      if (!isLoggedIn && !isFirstTime) {
         final currentPath = state.matchedLocation;
         if (!allowedPathsForNotLoggedIn.contains(currentPath)) {
           return Routes.login;

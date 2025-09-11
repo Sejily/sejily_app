@@ -1,13 +1,10 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sejily/core/constants/api_endpoints.dart';
 import 'package:sejily/features/authentication/data/models/tokens_model.dart';
-import 'package:sejily/core/newtorking/auth_interceptor.dart';
 import 'package:sejily/core/newtorking/dio_factory.dart';
-import 'package:sejily/core/routes/app_router.dart';
 import 'package:sejily/features/authentication/data/models/register_request.dart';
 import 'package:sejily/features/authentication/data/models/verify_otp_request.dart';
 import 'package:sejily/features/authentication/data/models/verify_otp_response.dart';
@@ -18,7 +15,7 @@ part 'auth_service.g.dart';
 
 @RestApi()
 abstract class AuthService {
-  factory AuthService(Dio dio, {String? baseUrl}) = _AuthService;
+  factory AuthService(Dio dio) = _AuthService;
 
   @POST(ApiEndpoints.register)
   Future<void> register({@Body() required RegisterRequest registerRequest});
@@ -77,14 +74,6 @@ abstract class AuthService {
   @POST(ApiEndpoints.resetPassword)
   Future<void> resetPassword(@Body() Map<String, dynamic> body);
 }
-
-final dioProvider = Provider<Dio>((ref) {
-  final baseUrl = dotenv.env['BASE_URL'] ?? '';
-  final dio = DioFactory(baseUrl).getDio();
-  final router = ref.watch(routerProvider);
-  dio.interceptors.add(AuthInterceptor(baseUrl, router));
-  return dio;
-});
 
 final authServiceProvider = Provider<AuthService>((ref) {
   final dio = ref.watch(dioProvider);

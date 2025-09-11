@@ -1,177 +1,72 @@
-import 'dart:async';
-import 'dart:collection';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sejily/core/constants/api_endpoints.dart';
-import 'package:sejily/core/constants/app_constants.dart';
-import 'package:sejily/core/helpers/storage_extension.dart';
+import 'package:sejily/core/routes/app_router.dart';
 import 'package:sejily/core/routes/routes.dart';
-import 'package:sejily/features/authentication/data/models/tokens_model.dart';
+import 'package:sejily/core/services/token_service.dart';
 
-class AuthInterceptor extends Interceptor {
-  final String baseUrl;
-  final GoRouter _router;
+final authInterceptorProvider = Provider.family<AuthInterceptor, Dio>((
+  ref,
+  dio,
+) {
+  final tokenService = ref.watch(tokenServiceProvider(dio));
+  final router = ref.watch(routerProvider);
 
-  final Queue<RequestOptions> _requestQueue = Queue<RequestOptions>();
-  final Queue<Completer<Response>> _completerQueue =
-      Queue<Completer<Response>>();
+  return AuthInterceptor(tokenService, dio, router);
+});
 
-  bool _isRefreshing = false;
-  Dio? _refreshDio;
+final class AuthInterceptor extends Interceptor {
+  final TokenService _tokenService;
+  final Dio _dio;
+  final GoRouter router;
 
-  AuthInterceptor(this.baseUrl, this._router);
-
-  // Create a separate Dio instance for refresh token requests to avoid circular dependency
-  Dio get refreshDio {
-    _refreshDio ??= Dio(BaseOptions(baseUrl: baseUrl));
-    return _refreshDio!;
-  }
+  AuthInterceptor(this._tokenService, this._dio, this.router);
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    List<String> requests = [
-      ApiEndpoints.refreshToken,
-      ApiEndpoints.register,
-      ApiEndpoints.login,
-      ApiEndpoints.verifyOtp,
-      ApiEndpoints.resendOtp,
-      ApiEndpoints.resetPassword,
-      ApiEndpoints.forgotPassword,
-    ];
-    if (requests.any((request) => options.path.contains(request))) {
-      handler.next(options);
-      return;
-    }
-
-    final accessToken = await storage.get(AppConstants.accessTokenKey);
+    final accessToken = await _tokenService.getAccessToken();
     if (accessToken != null) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
 
-    handler.next(options);
+    super.onRequest(options, handler);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode != 401 && err.response?.statusCode != 403) {
-      handler.next(err);
-      return;
-    }
+    List<String> routes = [
+      Routes.login,
+      Routes.register,
+      Routes.forgetPassword,
+      Routes.resetPassword,
+    ];
 
-    try {
-      final refreshToken = await storage.get(AppConstants.refreshTokenKey);
-
-      if (refreshToken == null) {
-        await _clearStorageAndNavigateToLogin();
-        handler.next(err);
-        return;
-      }
-
-      // If already refreshing, queue the request
-      if (_isRefreshing) {
-        final completer = Completer<Response>();
-        _requestQueue.add(err.requestOptions);
-        _completerQueue.add(completer);
-
-        try {
-          final response = await completer.future;
-          handler.resolve(response);
-        } catch (e) {
-          handler.next(err);
-        }
-        return;
-      }
-
-      // Start refresh process
-      _isRefreshing = true;
-
-      final refreshResult = await _performTokenRefresh(refreshToken);
-
-      if (refreshResult != null) {
-        // Save new tokens
-        await storage.saveAuthTokens(
-          accessToken: refreshResult.accessToken,
-          refreshToken: refreshResult.refreshToken,
-        );
-
-        // Retry original request with new token
-        final response = await _retryRequest(
-          err.requestOptions,
-          refreshResult.accessToken,
-        );
-        handler.resolve(response);
-
-        // Process queued requests
-        await _processQueuedRequests(refreshResult.accessToken);
-      } else {
-        // Refresh failed, clear storage and navigate to login
-        await _clearStorageAndNavigateToLogin();
-
-        // Fail all queued requests
-        _failQueuedRequests(err);
-
-        handler.next(err);
-      }
-    } catch (e) {
-      await _clearStorageAndNavigateToLogin();
-      handler.next(err);
-    } finally {
-      _isRefreshing = false;
-    }
-  }
-
-  Future<Response> _retryRequest(
-    RequestOptions options,
-    String accessToken,
-  ) async {
-    options.headers['Authorization'] = 'Bearer $accessToken';
-    return await refreshDio.fetch(options);
-  }
-
-  // Perform token refresh using direct HTTP call to avoid circular dependency
-  Future<TokensModel?> _performTokenRefresh(String refreshToken) async {
-    try {
-      final response = await refreshDio.post(
-        ApiEndpoints.refreshToken,
-        data: {'refreshToken': refreshToken},
-      );
-
-      if (response.statusCode == 200 && response.data != null) {
-        return TokensModel.fromJson(response.data);
-      }
-      return null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<void> _processQueuedRequests(String accessToken) async {
-    while (_requestQueue.isNotEmpty && _completerQueue.isNotEmpty) {
-      final request = _requestQueue.removeFirst();
-      final completer = _completerQueue.removeFirst();
+    if (!routes.contains(err.requestOptions.path) &&
+        (err.response?.statusCode == 401 || err.response?.statusCode == 403)) {
+      final token = await _tokenService.getRefreshToken();
 
       try {
-        final response = await _retryRequest(request, accessToken);
-        completer.complete(response);
-      } catch (e) {
-        completer.completeError(e);
+        final result = await _tokenService.refreshToken(token);
+
+        final accesToken = result.accessToken;
+        final refreshToken = result.refreshToken;
+
+        // save new access token and refresh token to secure storage
+        await _tokenService.saveToken(accesToken, refreshToken);
+
+        final options = err.requestOptions;
+        options.headers['Authorization'] = 'Bearer $accesToken';
+        return handler.resolve(await _dio.fetch(options));
+      } on DioException catch (_) {
+        await _tokenService.clearToken();
+        router.go(Routes.login);
+        return handler.next(err);
+      } finally {
+        handler.next(err);
       }
     }
-  }
-
-  void _failQueuedRequests(DioException originalError) {
-    while (_completerQueue.isNotEmpty) {
-      final completer = _completerQueue.removeFirst();
-      completer.completeError(originalError);
-    }
-    _requestQueue.clear();
-  }
-
-  Future<void> _clearStorageAndNavigateToLogin() async {
-    await storage.completeLogout();
-    _router.go(Routes.login);
   }
 }

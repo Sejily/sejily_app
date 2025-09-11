@@ -17,7 +17,16 @@ class StorageService {
 
     await Hive.initFlutter();
     _box = await Hive.openBox(AppConstants.storageBoxName);
-    _secureStorage = const FlutterSecureStorage();
+
+    const androidOptions = AndroidOptions(encryptedSharedPreferences: true);
+    const iosOptions = IOSOptions(
+      accessibility: KeychainAccessibility.first_unlock,
+    );
+
+    _secureStorage = const FlutterSecureStorage(
+      aOptions: androidOptions,
+      iOptions: iosOptions,
+    );
     _initialized = true;
   }
 
@@ -39,7 +48,6 @@ class StorageService {
   }
 
   //* Secure Storage
-
   Future<void> saveSecure(String key, String value) async {
     await _secureStorage.write(key: key, value: value);
   }

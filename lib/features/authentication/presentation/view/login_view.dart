@@ -42,10 +42,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             );
 
             ref.read(progressProvider.notifier).reset();
-            ref
-                .read(progressProvider.notifier)
-                .updateProgressForRoute(Routes.completeUserData);
-
             storage.setLoggedIn(true);
             context.go(Routes.home);
           },
