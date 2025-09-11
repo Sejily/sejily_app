@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
@@ -7,14 +9,14 @@ import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
@@ -36,14 +38,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
   ];
 
-  void _nextPage() {
+  void _nextPage(String route) {
     if (_currentPage < onboardingData.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
-      context.go(Routes.selectRole);
+      storage.setIsFirstTime(false);
+      context.go(route);
     }
   }
 
@@ -138,13 +141,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   const SizedBox(height: 40),
                   CustomButton(
-                    onPressed: () {
-                      if (_currentPage == onboardingData.length - 1) {
-                        context.go(Routes.selectRole);
-                      } else {
-                        _nextPage();
-                      }
-                    },
+                    onPressed: () => _nextPage(Routes.selectRole),
                     text: _currentPage == onboardingData.length - 1
                         ? AppStrings.newUser
                         : AppStrings.next,
@@ -152,13 +149,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                   const SizedBox(height: 12),
                   TextButton(
-                    onPressed: () {
-                      if (_currentPage == onboardingData.length - 1) {
-                        context.go(Routes.login);
-                      } else {
-                        context.go(Routes.login);
-                      }
-                    },
+                    onPressed: () => _nextPage(Routes.login),
                     child: Text(
                       _currentPage == onboardingData.length - 1
                           ? AppStrings.login

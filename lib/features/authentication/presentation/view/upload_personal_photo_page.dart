@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -8,8 +9,8 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
+import 'package:sejily/features/authentication/presentation/manager/providers/register_provider.dart';
 import 'package:sejily/features/authentication/presentation/manager/providers/progress_provider.dart';
-import 'package:sejily/features/authentication/presentation/manager/providers/registration_provider.dart';
 import 'package:sejily/features/authentication/presentation/widgets/image_upload_section.dart';
 import 'package:sejily/features/authentication/presentation/widgets/step_progress_bar.dart';
 import 'dart:io';
@@ -29,17 +30,10 @@ class _UploadPersonalPhotoPageState
   @override
   void initState() {
     super.initState();
-    // Ensure we're on step 3 when this page loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
           .read(progressProvider.notifier)
           .updateProgressForRoute(Routes.uploadPersonalPhoto);
-    });
-  }
-
-  void _onImageSelected(File? image) {
-    setState(() {
-      _selectedProfilePicture = image;
     });
   }
 
@@ -51,22 +45,29 @@ class _UploadPersonalPhotoPageState
     );
   }
 
-  void _onContinue() {
+  void _onContinue() async {
     if (_selectedProfilePicture == null) {
       _showError('يرجى تحميل الصورة الشخصية');
       return;
     }
 
-    // Update registration data using Riverpod
-    ref
-        .read(patientRegistrationProvider.notifier)
-        .update(
-          (state) => state.copyWith(profilePicture: _selectedProfilePicture),
-        );
+    // Update registration data
+    await ref
+        .read(registerNotifierProvider.notifier)
+        .updateUserData(profilePicture: _selectedProfilePicture);
 
-    // Move to next step with smooth animation
+    // Check user role to determine next navigation
+    final isDoctor = storage.isDoctor();
+
     ref.read(progressProvider.notifier).nextStep();
-    context.push(Routes.uploadHospitalAffiliation);
+
+    if (mounted) {
+      if (isDoctor) {
+        context.push(Routes.uploadHospitalAffiliation);
+      } else {
+        context.push(Routes.emergencyContact);
+      }
+    }
   }
 
   @override
@@ -78,7 +79,6 @@ class _UploadPersonalPhotoPageState
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.white,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -87,9 +87,10 @@ class _UploadPersonalPhotoPageState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CustomAppBar(),
-                  const SizedBox(height: 17),
-                  const StepProgressBar(),
-                  const SizedBox(height: 17),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 17),
+                    child: const StepProgressBar(),
+                  ),
                   Text(
                     AppStrings.completePersonalProfile,
                     style: AppTextStyles.bold24.copyWith(
@@ -124,7 +125,9 @@ class _UploadPersonalPhotoPageState
                               const SizedBox(height: 16),
                               ImageUploadSection(
                                 selectedImage: _selectedProfilePicture,
-                                onImageSelected: _onImageSelected,
+                                onImageSelected: (image) => setState(() {
+                                  _selectedProfilePicture = image;
+                                }),
                                 onError: _showError,
                               ),
                             ],

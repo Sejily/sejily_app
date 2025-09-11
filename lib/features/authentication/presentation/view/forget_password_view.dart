@@ -34,21 +34,29 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
       next,
     ) {
       if (next.result != null) {
-        if (next.result!.error != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(next.result!.error!.message)));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("تم إرسال رمز التحقق بنجاح")),
-          );
+        next.result!.when(
+          onSuccess: (data) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("تم إرسال رمز التحقق بنجاح")),
+            );
 
-          ref
-              .read(progressProvider.notifier)
-              .updateProgressForRoute(Routes.verifyOtp);
+            ref
+                .read(progressProvider.notifier)
+                .updateProgressForRoute(Routes.verifyOtp);
 
-          context.push(Routes.verifyOtp, extra: _emailController.text.trim());
-        }
+            context.push(Routes.verifyOtp, extra: _emailController.text.trim());
+          },
+          onFailure: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error.message ?? 'حدث خطأ غير متوقع، حاول مرة أخرى',
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+          },
+        );
       }
     });
 

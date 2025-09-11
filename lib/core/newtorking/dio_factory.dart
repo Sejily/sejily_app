@@ -1,51 +1,31 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:sejily/core/newtorking/auth_interceptor.dart';
 
-class DioFactory {
-  static final FlutterSecureStorage _storage = const FlutterSecureStorage();
+final dioProvider = Provider<Dio>((ref) {
+  final baseUrl = dotenv.env['BASE_URL'] ?? '';
+  final options = BaseOptions(
+    baseUrl: baseUrl,
+    connectTimeout: const Duration(seconds: 30),
+    receiveTimeout: const Duration(seconds: 30),
+  );
 
-  static Dio getDio() {
-    final baseUrl = dotenv.env['BASE_URL'] ?? '';
-    Duration defaultTimeout = const Duration(seconds: 15);
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: baseUrl,
-        connectTimeout: defaultTimeout,
-        receiveTimeout: defaultTimeout,
-        headers: {"Content-Type": "application/json"},
+  final dio = Dio(options);
+  final authInterceptor = ref.watch(authInterceptorProvider(dio));
+
+  dio.interceptors.addAll([
+    authInterceptor,
+    if (kDebugMode)
+      PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        error: true,
+        compact: true,
       ),
-    );
-
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          final token = await _storage.read(key: "accessToken");
-          if (token != null && token.isNotEmpty) {
-            options.headers["Authorization"] = "Bearer $token";
-          }
-          return handler.next(options);
-        },
-        onError: (err, handler) async {
-          return handler.next(err);
-        },
-      ),
-    );
-
-    if (kDebugMode) {
-      dio.interceptors.add(
-        PrettyDioLogger(
-          requestHeader: true,
-          requestBody: true,
-          responseBody: true,
-          error: true,
-          compact: true,
-        ),
-      );
-    }
-
-    return dio;
-  }
-}
+  ]);
+  return dio;
+});

@@ -41,10 +41,9 @@ class ProgressNotifier extends StateNotifier<int> {
     Routes.uploadPersonalPhoto: 3,
     Routes.uploadHospitalAffiliation: 4,
     Routes.uploadMedicalLicense: 5,
-    Routes.dataReview: 6,
+    Routes.emergencyContact: 5,
   };
 
-  // Update progress based on route (handles both forward and backward navigation)
   void updateProgressForRoute(String route) {
     final step = _routeStepMap[route];
     if (step != null) {

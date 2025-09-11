@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
@@ -34,22 +35,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     ref.listen<LoginState>(loginNotifierProvider, (prev, next) {
       if (next.result != null) {
-        if (next.result!.error != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(next.result!.error!.message)));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("تم تسجيل الدخول بنجاح")),
-          );
+        next.result!.when(
+          onSuccess: (data) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("تم تسجيل الدخول بنجاح")),
+            );
 
-          ref.read(progressProvider.notifier).reset();
-          ref
-              .read(progressProvider.notifier)
-              .updateProgressForRoute(Routes.completeUserData);
-
-          context.go(Routes.home);
-        }
+            ref.read(progressProvider.notifier).reset();
+            storage.setLoggedIn(true);
+            context.go(Routes.home);
+          },
+          onFailure: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error.message ?? 'حدث خطأ في تسجيل الدخول، حاول مرة أخرى',
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+          },
+        );
       }
     });
 
@@ -118,7 +124,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     style: AppTextStyles.regular14,
                   ),
                   OutlinedButton(
-                    onPressed: () => context.go(Routes.register),
+                    onPressed: () => context.go(Routes.selectRole),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size(205, 45),
                       shape: RoundedRectangleBorder(

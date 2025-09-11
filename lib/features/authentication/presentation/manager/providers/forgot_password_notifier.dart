@@ -1,19 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sejily/core/result/result.dart';
-import 'package:sejily/core/repository/auth_repository.dart';
-import '../../../../../core/newtorking/api_error.dart';
-import 'auth_providers.dart';
+import 'package:sejily/core/newtorking/api_error_model.dart';
+import 'package:sejily/core/newtorking/api_result.dart';
+import 'package:sejily/features/authentication/data/repository/auth_repository.dart';
 
 class ForgotPasswordState {
   final bool isLoading;
-  final Result<Map<String, dynamic>>? result;
+  final ApiResult<void>? result;
 
   ForgotPasswordState({this.isLoading = false, this.result});
 
-  ForgotPasswordState copyWith({
-    bool? isLoading,
-    Result<Map<String, dynamic>>? result,
-  }) {
+  ForgotPasswordState copyWith({bool? isLoading, ApiResult<void>? result}) {
     return ForgotPasswordState(
       isLoading: isLoading ?? this.isLoading,
       result: result ?? this.result,
@@ -28,14 +24,14 @@ class ForgotPasswordNotifier extends StateNotifier<ForgotPasswordState> {
   Future<void> sendOtp(String email) async {
     if (email.isEmpty) {
       state = state.copyWith(
-        result: Result(
-          error: ApiError(message: "من فضلك أدخل البريد الإلكتروني"),
+        result: ApiResult.failure(
+          ApiErrorModel(message: "من فضلك أدخل البريد الإلكتروني"),
         ),
       );
       return;
     }
 
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true, result: null);
 
     final result = await repo.forgotPassword(email);
 

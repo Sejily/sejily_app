@@ -32,24 +32,32 @@ class _OtpPageState extends ConsumerState<OtpPage> {
 
     ref.listen<OtpState>(otpNotifierProvider, (prev, next) {
       if (next.result != null) {
-        if (next.result!.error != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(next.result!.error!.message)));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("تم التحقق من الرمز بنجاح")),
-          );
+        next.result!.when(
+          onSuccess: (data) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("تم التحقق من الرمز بنجاح")),
+            );
 
-          ref
-              .read(progressProvider.notifier)
-              .updateProgressForRoute(Routes.resetPassword);
+            ref
+                .read(progressProvider.notifier)
+                .updateProgressForRoute(Routes.resetPassword);
 
-          context.go(
-            Routes.resetPassword,
-            extra: {"email": widget.email, "otp": _otpCode},
-          );
-        }
+            context.go(
+              Routes.resetPassword,
+              extra: {"email": widget.email, "otp": _otpCode},
+            );
+          },
+          onFailure: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error.message ?? 'رمز التحقق غير صحيح، حاول مرة أخرى',
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+          },
+        );
       }
     });
 

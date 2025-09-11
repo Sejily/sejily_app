@@ -5,20 +5,10 @@ import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 
 class OtpInputField extends StatelessWidget {
-  const OtpInputField({
-    super.key,
-    required this.controller,
-    required this.onChanged,
-    required this.onCompleted,
-    this.length = 6,
-    this.hasError = false,
-  });
+  const OtpInputField({super.key, required this.controller, this.length = 6});
 
   final TextEditingController controller;
-  final ValueChanged<String> onChanged;
-  final ValueChanged<String> onCompleted;
   final int length;
-  final bool hasError;
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +56,9 @@ class OtpInputField extends StatelessWidget {
         submittedPinTheme: submittedPinTheme,
         focusedPinTheme: focusedPinTheme,
         errorPinTheme: errorPinTheme,
-        forceErrorState: hasError,
         pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        onChanged: onChanged,
-        onCompleted: onCompleted,
         cursor: Container(width: 2, height: 20, color: AppColors.darkBlue),
         autofocus: true,
         showCursor: true,

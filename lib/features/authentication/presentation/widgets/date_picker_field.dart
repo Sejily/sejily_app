@@ -25,7 +25,7 @@ class DatePickerField extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Text(
-            controller.text.isEmpty ? '20/11/2004' : controller.text,
+            controller.text.isEmpty ? '1990-01-01' : controller.text,
             style: controller.text.isEmpty
                 ? AppTextStyles.regular16.copyWith(color: AppColors.gray)
                 : AppTextStyles.medium16.copyWith(color: AppColors.jetBlack),
@@ -64,7 +64,7 @@ class DatePickerHelper {
 
     if (picked != null) {
       final formattedDate =
-          '${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}';
+          '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
       controller.text = formattedDate;
       onDateSelected(formattedDate);
     }

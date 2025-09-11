@@ -1,11 +1,13 @@
+import 'package:sejily/core/newtorking/api_error_model.dart';
+
 class ApiResult<T> {
   ApiResult._();
   factory ApiResult.success(T data) = ApiSuccess<T>;
-  factory ApiResult.failure(String errorMsg) = ApiFailure<T>;
+  factory ApiResult.failure(ApiErrorModel errorMsg) = ApiFailure<T>;
 
   dynamic when({
     required Function(T data) onSuccess,
-    required Function(String errorMsg) onFailure,
+    required Function(ApiErrorModel errorMsg) onFailure,
   }) {
     if (this is ApiSuccess<T>) {
       return onSuccess((this as ApiSuccess<T>).data);
@@ -21,6 +23,6 @@ class ApiSuccess<T> extends ApiResult<T> {
 }
 
 class ApiFailure<T> extends ApiResult<T> {
-  final String error;
+  final ApiErrorModel error;
   ApiFailure(this.error) : super._();
 }
