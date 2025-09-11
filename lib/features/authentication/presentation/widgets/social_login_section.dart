@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/features/authentication/presentation/widgets/authentication_button.dart';
+
+import '../../../../core/routes/routes.dart';
 
 class SocialLoginSection extends StatelessWidget {
   const SocialLoginSection({super.key});
@@ -30,9 +33,7 @@ class SocialLoginSection extends StatelessWidget {
           children: [
             Expanded(
               child: AuthenticationButton(
-                onTap: () {
-                  //TODO: Handle google login
-                },
+                onTap: () => context.go(Routes.home),
                 label: AppStrings.google,
                 icon: Image.asset(Assets.google),
               ),

@@ -4,6 +4,7 @@ import 'package:sejily/features/authentication/presentation/view/complete_user_d
 import 'package:sejily/features/authentication/presentation/view/data_review_page.dart';
 import 'package:sejily/features/authentication/presentation/view/emergency_contact_page.dart';
 import 'package:sejily/features/authentication/presentation/view/forget_password_view.dart';
+import 'package:sejily/features/home_user/file_upload/presentation/view/home_user_view.dart';
 import 'package:sejily/features/authentication/presentation/view/login_view.dart';
 import 'package:sejily/features/authentication/presentation/view/otp_verification_view.dart';
 import 'package:sejily/features/authentication/presentation/view/register_view.dart';
@@ -15,7 +16,11 @@ import 'package:sejily/features/authentication/presentation/view/upload_personal
 import 'package:sejily/features/authentication/presentation/view/upload_hospital_affiliation_page.dart';
 import 'package:sejily/features/authentication/presentation/view/upload_medical_license_page.dart';
 import 'package:sejily/features/authentication/presentation/view/verification_view.dart';
+import 'package:sejily/features/home_user/profile/presention/view/edit_profile_view.dart';
+import 'package:sejily/features/home_user/profile/presention/view/medical_complete_screen.dart';
+import 'package:sejily/features/home_user/profile/presention/view/profile_view.dart';
 import 'package:sejily/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:sejily/core/widgets/custom_bottom_navbar.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -38,7 +43,6 @@ class AppRouter {
         path: Routes.register,
         builder: (context, state) => const RegisterView(),
       ),
-
       GoRoute(
         path: Routes.verifyOtp,
         builder: (context, state) {
@@ -46,7 +50,6 @@ class AppRouter {
           return OtpPage(email: email);
         },
       ),
-
       GoRoute(
         path: Routes.registerOtpVerification,
         builder: (context, state) {
@@ -58,7 +61,6 @@ class AppRouter {
         path: Routes.forgetPassword,
         builder: (context, state) => const ForgotPasswordPage(),
       ),
-
       GoRoute(
         path: Routes.resetPassword,
         builder: (context, state) {
@@ -68,31 +70,69 @@ class AppRouter {
           return ResetPasswordScreen(email: email, otp: otp);
         },
       ),
-
       GoRoute(
         path: Routes.success,
         builder: (context, state) => const SuccessResetPasswordPage(),
       ),
+
+      ShellRoute(
+        builder: (context, state, child) {
+          final String location = state.uri.toString();
+
+          int currentIndex = 0;
+          if (location.startsWith(Routes.home)) {
+            currentIndex = 0;
+          } else if (location.startsWith(Routes.profile)) {
+            currentIndex = 2;
+          }
+          return Scaffold(
+            body: child,
+            bottomNavigationBar: CustomBottomNavBar(currentIndex: currentIndex),
+          );
+        },
+        routes: [
+          GoRoute(
+            path: Routes.home,
+            builder: (context, state) => const UploadFilePage(),
+          ),
+          GoRoute(
+            path: Routes.profile,
+            builder: (context, state) => const ProfilePage(),
+          ),
+        ],
+      ),
       GoRoute(
-        path: Routes.home,
+        path: Routes.completeProfile,
+        builder: (context, state) => const MedicalInfoScreen(),
+      ),
+      GoRoute(
+        path: Routes.editProfile,
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      GoRoute(
+        path: Routes.notifications,
         builder: (context, state) => const Placeholder(),
       ),
-
+      GoRoute(
+        path: Routes.help,
+        builder: (context, state) => const Placeholder(),
+      ),
+      GoRoute(
+        path: Routes.terms,
+        builder: (context, state) => const Placeholder(),
+      ),
       GoRoute(
         path: Routes.completeUserData,
         builder: (context, state) => const CompleteUserDataPage(),
       ),
-
       GoRoute(
         path: Routes.uploadNationalId,
         builder: (context, state) => const UploadNationalIdPage(),
       ),
-
       GoRoute(
         path: Routes.uploadPersonalPhoto,
         builder: (context, state) => const UploadPersonalPhotoPage(),
       ),
-
       GoRoute(
         path: Routes.uploadMedicalLicense,
         builder: (context, state) => const UploadMedicalLicensePage(),

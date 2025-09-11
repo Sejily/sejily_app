@@ -53,6 +53,35 @@ class AppStrings {
   static const String helpUsProvidePersonalizedExperience =
       'ساعدنا في معرفتك بشكل أفضل لتقديم تجربة مخصصة لك.';
 
+  // PROFILE STRINGS
+  static const String completeProfile = 'اكمال بياناتك الشخصية';
+  static const String helpUsProvidePersonal =
+      'تنبيه\nبرجاء اكمل بياناتك الشخصية لمتابعة حالتك بكفائة ولضمان افضل تجربة.';
+  static const String editProfile = 'تعديل ملفك الشخصي';
+  static const String emergency = 'جهات الطؤاري';
+  static const String notification = 'الاشعارات';
+  static const String help = 'المساعده والدعم';
+  static const String terms = 'الشروط والاحكام';
+  static const String logout = 'تسجيل الخروج';
+  static const String medicalState = 'الحاله الطبيه';
+  static const String sensitive = 'الحساسيه';
+  static const String height = 'الطول';
+  static const String weight = 'الوزن';
+  static const String bloodType = 'فصيله الدم';
+  static const String saveChanges = 'حفظ التغييرات';
+
+  // BLOOD TYPE OPTIONS
+  static const List<String> bloodTypes = [
+    '+A',
+    '-A',
+    '+B',
+    '-B',
+    '+O',
+    '-O',
+    '+AB',
+    '-AB',
+  ];
+
   // Personal Information Fields
   static const String address = 'العنوان';
   static const String dateOfBirth = 'تاريخ الميلاد';
@@ -80,6 +109,15 @@ class AppStrings {
   static const String personalPicture = 'الصورة الشخصية';
   static const String uploadPersonalPictureDescription =
       'يرجى تحميل الملف بتنسيق jpeg و png والحد الأقصى \nللملف أقل من 25 ميجابايت.';
+
+  // Home User Upload
+  static const String welcome = 'اهلا';
+  static const String uploadFile = 'تحميل الملف';
+  static const String browse = 'تصفح';
+  static const String warning =
+      'تنبيه\nبرجاء ادخال معلوماتك الطبية بالترتيب حسب التاريخ وفي حالة ادخال صور برجاء التقاط صور واضحة.';
+  static const String uploadfileDescription =
+      'التنسيق: doc , docx , pdf & الحد الأقصى لحجم الملف: 25 ميجا بايت';
 
   // EMERGENCY CONTACT STRINGS
   static const String addEmergencyContact = 'اضف جهة طوارئ';
@@ -214,9 +252,19 @@ class AppStrings {
   static const String medicalLicenseDescription =
       'يرجى تحميل الملف بتنسيق jpeg أو png والتأكد من أن حجم الملف أقل من 25 ميجابايت.';
 
+  // HOME USER ASK
+  static const String fileType = 'ما نوع هذا الملف؟';
+  static const String rays = 'اشعه';
+  static const String analysis = 'تحاليل';
+
   // ERROR MESSAGES
   static const String networkError = 'خطأ في الاتصال بالشبكة';
   static const String serverError = 'خطأ في الخادم';
   static const String unknownError = 'حدث خطأ غير معروف';
   static const String uploadFailed = 'فشل في رفع الملف';
+
+  // bottom Navigation Bar
+  static const String home = 'الرئيسية';
+  static const String file = 'الملفات';
+  static const String profile = 'الملف الشخصي';
 }
