@@ -176,12 +176,12 @@ class AuthRepository {
     }
   }
 
-  Future<ApiResult<UserModel>> updateProfile(UserModel user) async {
+  Future<bool> updateProfile(UserModel user) async {
     try {
-      final updatedUser = await authService.updateProfile(user.toJson());
-      return ApiResult.success(updatedUser);
+      await authService.updateProfile(user.toJson());
+      return true;
     } catch (e) {
-      return ApiResult.failure(ApiErrorHandler.handle(e));
+      return false;
     }
   }
 }

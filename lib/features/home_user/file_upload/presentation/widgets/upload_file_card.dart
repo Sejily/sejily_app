@@ -6,6 +6,7 @@ import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import '../../data/models/file_upload_service.dart';
 import '../manager/providers/file_upload_provider.dart';
+import 'drive_file_picker_dialog.dart';
 import 'file_preview.dart';
 import 'file_type_dialog.dart';
 
@@ -42,7 +43,6 @@ class UploadFileCard extends ConsumerWidget {
                 ),
                 child: FilePreview(files: selectedFiles),
               ),
-
               const SizedBox(height: 20),
               Row(
                 children: [
@@ -80,7 +80,12 @@ class UploadFileCard extends ConsumerWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => DriveFilePickerDialog(ref: ref),
+                        );
+                      },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
