@@ -11,6 +11,8 @@ import 'package:sejily/features/authentication/data/models/verify_otp_response.d
 import 'package:sejily/features/authentication/data/models/resend_otp_request.dart';
 import 'package:sejily/features/authentication/data/models/login_response.dart';
 
+import '../../features/home_user/profile/data/models/user_model.dart';
+
 part 'auth_service.g.dart';
 
 @RestApi()
@@ -73,6 +75,12 @@ abstract class AuthService {
 
   @POST(ApiEndpoints.resetPassword)
   Future<void> resetPassword(@Body() Map<String, dynamic> body);
+
+  @GET(ApiEndpoints.profile)
+  Future<UserModel> getProfile();
+
+  @PUT(ApiEndpoints.updateProfile)
+  Future<UserModel> updateProfile(@Body() Map<String, dynamic> body);
 }
 
 final authServiceProvider = Provider<AuthService>((ref) {

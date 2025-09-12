@@ -7,6 +7,7 @@ import 'package:sejily/features/authentication/presentation/view/complete_user_d
 import 'package:sejily/features/authentication/presentation/view/data_review_page.dart';
 import 'package:sejily/features/authentication/presentation/view/emergency_contact_page.dart';
 import 'package:sejily/features/authentication/presentation/view/forget_password_view.dart';
+import 'package:sejily/features/home_user/file_upload/presentation/view/home_user_view.dart';
 import 'package:sejily/features/authentication/presentation/view/login_view.dart';
 import 'package:sejily/features/authentication/presentation/view/otp_verification_view.dart';
 import 'package:sejily/features/authentication/presentation/view/register_view.dart';
@@ -18,7 +19,12 @@ import 'package:sejily/features/authentication/presentation/view/upload_personal
 import 'package:sejily/features/authentication/presentation/view/upload_hospital_affiliation_page.dart';
 import 'package:sejily/features/authentication/presentation/view/upload_medical_license_page.dart';
 import 'package:sejily/features/authentication/presentation/view/verification_view.dart';
+import 'package:sejily/features/home_user/profile/presention/view/edit_profile_view.dart';
+import 'package:sejily/features/home_user/profile/presention/view/medical_complete_screen.dart';
+import 'package:sejily/features/home_user/profile/presention/view/profile_view.dart';
 import 'package:sejily/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:sejily/core/widgets/custom_bottom_navbar.dart';
+import '../../features/home_user/profile/data/models/user_model.dart';
 import 'routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -35,17 +41,23 @@ final routerProvider = Provider<GoRouter>((ref) {
         Routes.resetPassword,
         Routes.selectRole,
       ];
+
       final isFirstTime = StorageService.instance.isFirstTime();
       final isLoggedIn = StorageService.instance.isLoggedIn();
-      if (isFirstTime) {
-        return Routes.onboarding;
-      }
-      if (!isLoggedIn && !isFirstTime) {
-        final currentPath = state.matchedLocation;
+      final currentPath = state.matchedLocation;
+
+      if (isFirstTime) return Routes.onboarding;
+
+      if (isLoggedIn) {
+        if (currentPath == '/' || currentPath == Routes.login) {
+          return Routes.home;
+        }
+      } else {
         if (!allowedPathsForNotLoggedIn.contains(currentPath)) {
           return Routes.login;
         }
       }
+
       return null;
     },
     routes: [
@@ -58,14 +70,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const RoleSelectionView(),
       ),
       GoRoute(
-        path: Routes.login,
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
         path: Routes.register,
         builder: (context, state) => const RegisterView(),
       ),
-
       GoRoute(
         path: Routes.verifyOtp,
         builder: (context, state) {
@@ -73,7 +80,6 @@ final routerProvider = Provider<GoRouter>((ref) {
           return OtpPage(email: email);
         },
       ),
-
       GoRoute(
         path: Routes.registerOtpVerification,
         builder: (context, state) {
@@ -85,7 +91,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.forgetPassword,
         builder: (context, state) => const ForgotPasswordPage(),
       ),
-
       GoRoute(
         path: Routes.resetPassword,
         builder: (context, state) {
@@ -95,31 +100,75 @@ final routerProvider = Provider<GoRouter>((ref) {
           return ResetPasswordScreen(email: email, otp: otp);
         },
       ),
-
       GoRoute(
         path: Routes.success,
         builder: (context, state) => const SuccessResetPasswordPage(),
       ),
       GoRoute(
-        path: Routes.home,
+        path: Routes.login,
+        builder: (context, state) => const LoginScreen(),
+      ),
+      ShellRoute(
+        builder: (context, state, child) {
+          final location = state.uri.toString();
+          int currentIndex = 0;
+
+          if (location.startsWith(Routes.home))
+            currentIndex = 0;
+          else if (location.startsWith(Routes.profile))
+            currentIndex = 2;
+
+          return Scaffold(
+            body: child,
+            bottomNavigationBar: CustomBottomNavBar(currentIndex: currentIndex),
+          );
+        },
+        routes: [
+          GoRoute(
+            path: Routes.home,
+            builder: (context, state) => const UploadFilePage(),
+          ),
+          GoRoute(
+            path: Routes.profile,
+            builder: (context, state) => const ProfilePage(),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Routes.completeProfile,
+        builder: (context, state) => const MedicalInfoScreen(),
+      ),
+      GoRoute(
+        path: Routes.editProfile,
+        builder: (context, state) {
+          final user = state.extra as UserModel;
+          return EditProfileScreen(user: user);
+        },
+      ),
+      GoRoute(
+        path: Routes.notifications,
         builder: (context, state) => const Placeholder(),
       ),
-
+      GoRoute(
+        path: Routes.help,
+        builder: (context, state) => const Placeholder(),
+      ),
+      GoRoute(
+        path: Routes.terms,
+        builder: (context, state) => const Placeholder(),
+      ),
       GoRoute(
         path: Routes.completeUserData,
         builder: (context, state) => const CompleteUserDataPage(),
       ),
-
       GoRoute(
         path: Routes.uploadNationalId,
         builder: (context, state) => const UploadNationalIdPage(),
       ),
-
       GoRoute(
         path: Routes.uploadPersonalPhoto,
         builder: (context, state) => const UploadPersonalPhotoPage(),
       ),
-
       GoRoute(
         path: Routes.uploadMedicalLicense,
         builder: (context, state) => const UploadMedicalLicensePage(),

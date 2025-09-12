@@ -63,4 +63,17 @@ class StorageService {
   Future<void> clearAllSecure() async {
     await _secureStorage.deleteAll();
   }
+
+  Future<void> setLoggedIn(bool value) async {
+    await save(AppConstants.isLoggedInKey, value);
+  }
+
+  bool isLoggedIn() {
+    return get<bool>(AppConstants.isLoggedInKey, false) ?? false;
+  }
+
+  Future<void> clearLoginData() async {
+    await remove(AppConstants.isLoggedInKey);
+    await clearAllSecure();
+  }
 }
