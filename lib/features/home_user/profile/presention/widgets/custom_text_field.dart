@@ -4,15 +4,9 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
-  final String hint;
   final TextEditingController? controller;
 
-  const CustomTextField({
-    super.key,
-    required this.label,
-    required this.hint,
-    this.controller,
-  });
+  const CustomTextField({super.key, required this.label, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +21,6 @@ class CustomTextField extends StatelessWidget {
         TextField(
           controller: controller,
           decoration: InputDecoration(
-            hintText: hint,
             hintStyle: AppTextStyles.regular14.copyWith(color: AppColors.gray),
             contentPadding: const EdgeInsets.symmetric(
               vertical: 14,

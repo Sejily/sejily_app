@@ -24,6 +24,7 @@ import 'package:sejily/features/home_user/profile/presention/view/medical_comple
 import 'package:sejily/features/home_user/profile/presention/view/profile_view.dart';
 import 'package:sejily/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:sejily/core/widgets/custom_bottom_navbar.dart';
+import '../../features/home_user/profile/data/models/user_model.dart';
 import 'routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -40,17 +41,23 @@ final routerProvider = Provider<GoRouter>((ref) {
         Routes.resetPassword,
         Routes.selectRole,
       ];
+
       final isFirstTime = StorageService.instance.isFirstTime();
       final isLoggedIn = StorageService.instance.isLoggedIn();
-      if (isFirstTime) {
-        return Routes.onboarding;
-      }
-      if (!isLoggedIn && !isFirstTime) {
-        final currentPath = state.matchedLocation;
+      final currentPath = state.matchedLocation;
+
+      if (isFirstTime) return Routes.onboarding;
+
+      if (isLoggedIn) {
+        if (currentPath == '/' || currentPath == Routes.login) {
+          return Routes.home;
+        }
+      } else {
         if (!allowedPathsForNotLoggedIn.contains(currentPath)) {
           return Routes.login;
         }
       }
+
       return null;
     },
     routes: [
@@ -61,10 +68,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.selectRole,
         builder: (context, state) => const RoleSelectionView(),
-      ),
-      GoRoute(
-        path: Routes.login,
-        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: Routes.register,
@@ -101,17 +104,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.success,
         builder: (context, state) => const SuccessResetPasswordPage(),
       ),
-
+      GoRoute(
+        path: Routes.login,
+        builder: (context, state) => const LoginScreen(),
+      ),
       ShellRoute(
         builder: (context, state, child) {
-          final String location = state.uri.toString();
-
+          final location = state.uri.toString();
           int currentIndex = 0;
-          if (location.startsWith(Routes.home)) {
+
+          if (location.startsWith(Routes.home))
             currentIndex = 0;
-          } else if (location.startsWith(Routes.profile)) {
+          else if (location.startsWith(Routes.profile))
             currentIndex = 2;
-          }
+
           return Scaffold(
             body: child,
             bottomNavigationBar: CustomBottomNavBar(currentIndex: currentIndex),
@@ -134,7 +140,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Routes.editProfile,
-        builder: (context, state) => const EditProfileScreen(),
+        builder: (context, state) {
+          final user = state.extra as UserModel;
+          return EditProfileScreen(user: user);
+        },
       ),
       GoRoute(
         path: Routes.notifications,

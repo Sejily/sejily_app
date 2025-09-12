@@ -1,16 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
-import '../../../../../core/widgets/custom_app_bar.dart';
+import '../manager/providers/edit_profile_provider.dart';
 import '../widgets/custom_text_field.dart';
+import '../../data/models/user_model.dart';
 
-class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
+class EditProfileScreen extends ConsumerStatefulWidget {
+  final UserModel user;
+
+  const EditProfileScreen({super.key, required this.user});
+
+  @override
+  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
+  late TextEditingController nameController;
+  late TextEditingController emailController;
+  late TextEditingController addressController;
+  late TextEditingController cityController;
+  late TextEditingController phoneController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(text: widget.user.name);
+    emailController = TextEditingController(text: widget.user.email);
+    addressController = TextEditingController(
+      text: widget.user.avatarUrl ?? '',
+    );
+    cityController = TextEditingController(text: '');
+    phoneController = TextEditingController(text: '');
+  }
+
+  void _saveProfile() {
+    final updatedUser = UserModel(
+      id: widget.user.id,
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      avatarUrl: addressController.text.trim(),
+    );
+
+    ref.read(editProfileNotifierProvider.notifier).updateProfile(updatedUser);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(editProfileNotifierProvider);
+
+    ref.listen<EditProfileState>(editProfileNotifierProvider, (prev, next) {
+      if (next.result != null) {
+        next.result!.when(
+          onSuccess: (user) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("تم حفظ البيانات بنجاح")),
+            );
+          },
+          onFailure: (error) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(error.errorMessage)));
+          },
+        );
+      }
+    });
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -21,7 +78,6 @@ class EditProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CustomAppBar(),
                 Text(
                   AppStrings.editProfile,
                   style: AppTextStyles.bold20.copyWith(
@@ -29,77 +85,45 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(
-                    "assets/images/selected_person.png",
-                  ),
+                  backgroundImage: widget.user.avatarUrl != null
+                      ? NetworkImage(widget.user.avatarUrl!)
+                      : const AssetImage("assets/images/selected_person.png")
+                            as ImageProvider,
                 ),
                 const SizedBox(height: 30),
-                const CustomTextField(
+                CustomTextField(
                   label: AppStrings.fullNameLabel,
-                  hint: "علي جمال",
+                  controller: nameController,
                 ),
                 const SizedBox(height: 16),
-                const CustomTextField(
+                CustomTextField(
                   label: AppStrings.emailAddress,
-                  hint: "ali.gamal@email.com",
+                  controller: emailController,
                 ),
                 const SizedBox(height: 16),
-                const CustomTextField(
+                CustomTextField(
                   label: AppStrings.address,
-                  hint: "حي الجامعة، المنصورة",
+                  controller: addressController,
                 ),
                 const SizedBox(height: 16),
-                const CustomTextField(label: AppStrings.city, hint: "المنصورة"),
+                CustomTextField(
+                  label: AppStrings.city,
+                  controller: cityController,
+                ),
                 const SizedBox(height: 16),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    AppStrings.phoneNumber,
-                    style: AppTextStyles.medium14.copyWith(
-                      color: AppColors.jetBlack,
-                    ),
-                  ),
+                CustomTextField(
+                  label: AppStrings.phoneNumber,
+                  controller: phoneController,
                 ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.lightGray),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "010695584",
-                            hintStyle: AppTextStyles.regular14.copyWith(
-                              color: AppColors.gray,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(Icons.arrow_drop_down),
-                    ],
-                  ),
-                ),
-
                 const SizedBox(height: 40),
-
                 CustomButton(
-                  onPressed: () {},
+                  onPressed: state.isLoading ? null : _saveProfile,
                   text: AppStrings.save,
-                  backgroundColor: AppColors.darkBlue,
-                  foregroundColor: AppColors.white,
-                  style: AppTextStyles.medium16.copyWith(
-                    color: AppColors.white,
-                  ),
-                  defaultSize: true,
+                  child: state.isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : null,
                 ),
               ],
             ),

@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/routes/routes.dart';
+import '../../../../../core/services/secure_storage_service.dart';
+import '../../data/models/user_model.dart';
+import '../view/edit_profile_view.dart';
 
 class ProfileNavigation {
   static void goToCompleteProfile(BuildContext context) {
     context.push(Routes.completeProfile);
   }
 
-  static void goToEditProfile(BuildContext context) {
-    context.push(Routes.editProfile);
+  static void goToEditProfile(BuildContext context, {required UserModel user}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => EditProfileScreen(user: user)),
+    );
   }
 
   static void goToEmergency(BuildContext context) {
@@ -27,7 +33,8 @@ class ProfileNavigation {
     context.push(Routes.terms);
   }
 
-  static void logout(BuildContext context) {
-    context.push(Routes.login);
+  static void logout(BuildContext context) async {
+    await StorageService.instance.clearLoginData();
+    GoRouter.of(context).go(Routes.login);
   }
 }

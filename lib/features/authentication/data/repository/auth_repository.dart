@@ -13,6 +13,9 @@ import 'package:sejily/features/authentication/data/models/verify_otp_request.da
 import 'package:sejily/features/authentication/data/models/verify_otp_response.dart';
 import 'package:sejily/features/authentication/data/models/login_response.dart';
 
+import '../../../home_user/profile/data/models/user_model.dart';
+import 'auth_repository.dart' as authService;
+
 class AuthRepository {
   final AuthService authService;
 
@@ -161,6 +164,24 @@ class AuthRepository {
       return ApiSuccess(null);
     } catch (e) {
       return ApiFailure(ApiErrorHandler.handle(e));
+    }
+  }
+
+  Future<ApiResult<UserModel>> getProfile() async {
+    try {
+      final response = await authService.getProfile();
+      return ApiResult.success(response);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handle(e));
+    }
+  }
+
+  Future<ApiResult<UserModel>> updateProfile(UserModel user) async {
+    try {
+      final updatedUser = await authService.updateProfile(user.toJson());
+      return ApiResult.success(updatedUser);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handle(e));
     }
   }
 }

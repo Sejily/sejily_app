@@ -5,7 +5,6 @@ import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/features/authentication/presentation/widgets/authentication_button.dart';
-
 import '../../../../core/routes/routes.dart';
 
 class SocialLoginSection extends StatelessWidget {
@@ -33,7 +32,9 @@ class SocialLoginSection extends StatelessWidget {
           children: [
             Expanded(
               child: AuthenticationButton(
-                onTap: () => context.go(Routes.home),
+                onTap: () {
+                  //TODO: Handle iCloud login
+                },
                 label: AppStrings.google,
                 icon: Image.asset(Assets.google),
               ),
