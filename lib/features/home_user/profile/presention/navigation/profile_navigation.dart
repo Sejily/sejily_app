@@ -13,7 +13,7 @@ class ProfileNavigation {
   static void goToEditProfile(BuildContext context, {required UserModel user}) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => EditProfileScreen(user: user)),
+      MaterialPageRoute(builder: (_) => EditProfileScreen()),
     );
   }
 

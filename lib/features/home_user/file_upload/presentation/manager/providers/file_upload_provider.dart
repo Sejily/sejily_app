@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:sejily/core/newtorking/api_error_model.dart';
+import '../../../../../../core/newtorking/api_error_model.dart';
 
 final fileUploadProvider =
     StateNotifierProvider<FileUploadNotifier, List<PlatformFile>>((ref) {

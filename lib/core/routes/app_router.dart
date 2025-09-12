@@ -139,11 +139,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const MedicalInfoScreen(),
       ),
       GoRoute(
-        path: Routes.editProfile,
-        builder: (context, state) {
-          final user = state.extra as UserModel;
-          return EditProfileScreen(user: user);
-        },
+        path: '/edit-profile',
+        builder: (context, state) => const EditProfileScreen(),
       ),
       GoRoute(
         path: Routes.notifications,
