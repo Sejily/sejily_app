@@ -21,6 +21,7 @@ part 'ai_api_service.g.dart';
 abstract class AiApiService {
   factory AiApiService(Dio dio) = _AiApiService;
 
+  //* AI
   @POST(ApiEndpoints.aiUpload)
   @MultiPart()
   Future<AIUploadResponse> uploadFile(@Part() File file);
@@ -41,6 +42,7 @@ abstract class AiApiService {
   @GET(ApiEndpoints.aiInsights)
   Future<void> getInsights({@Query('limit') required int limit});
 
+  //* Document
   @GET(ApiEndpoints.documents)
   Future<DocumentsResponse> getAllDocuments();
 
