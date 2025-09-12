@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:sejily/core/constants/api_endpoints.dart';
+import 'package:sejily/core/newtorking/dio_factory.dart';
 import 'package:sejily/features/ai/data/models/ai_fhir_search_response.dart';
 import 'package:sejily/features/ai/data/models/ai_search_request.dart';
 import 'package:sejily/features/ai/data/models/ai_search_response.dart';
@@ -16,6 +18,11 @@ import 'package:sejily/features/ai/data/models/documents_stats_response.dart';
 import 'package:sejily/features/ai/data/models/processing_status_response.dart';
 
 part 'ai_api_service.g.dart';
+
+final aiApiServiceProvider = Provider<AiApiService>((ref) {
+  final networkProvider = ref.watch(dioProvider);
+  return AiApiService(networkProvider);
+});
 
 @RestApi()
 abstract class AiApiService {
