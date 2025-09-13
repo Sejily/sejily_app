@@ -117,8 +117,9 @@ class AppStrings {
   static const String welcome = 'اهلا';
   static const String uploadFile = 'تحميل الملف';
   static const String browse = 'تصفح';
-  static const String warning =
-      'تنبيه\nبرجاء ادخال معلوماتك الطبية بالترتيب حسب التاريخ وفي حالة ادخال صور برجاء التقاط صور واضحة.';
+  static const String warning = 'تنبيه';
+  static const String warningDescription =
+      'برجاء إدخال معلوماتك الطبية بالترتيب الزمني\n. في حالة إدخال صور، برجاء التقاط صور واضحة\n. برجاء رفع التحاليل معًا، والأشعة معًا بشكل منفصل لسهولة المراجعة.';
   static const String uploadfileDescription =
       'التنسيق: doc , docx , pdf & الحد الأقصى لحجم الملف: 25 ميجا بايت';
 

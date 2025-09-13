@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/services/secure_storage_service.dart';
+import 'package:sejily/features/ai/presentation/pages/user_documents_view.dart';
 import 'package:sejily/features/authentication/presentation/view/complete_user_data_page.dart';
 import 'package:sejily/features/authentication/presentation/view/data_review_page.dart';
 import 'package:sejily/features/authentication/presentation/view/emergency_contact_page.dart';
@@ -24,7 +25,6 @@ import 'package:sejily/features/home_user/profile/presention/view/medical_comple
 import 'package:sejily/features/home_user/profile/presention/view/profile_view.dart';
 import 'package:sejily/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:sejily/core/widgets/custom_bottom_navbar.dart';
-import '../../features/home_user/profile/data/models/user_model.dart';
 import 'routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -113,10 +113,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           final location = state.uri.toString();
           int currentIndex = 0;
 
-          if (location.startsWith(Routes.home))
+          if (location.startsWith(Routes.home)) {
             currentIndex = 0;
-          else if (location.startsWith(Routes.profile))
+          } else if (location.startsWith(Routes.documentations)) {
+            currentIndex = 1;
+          } else if (location.startsWith(Routes.profile)) {
             currentIndex = 2;
+          }
 
           return Scaffold(
             body: child,
@@ -127,6 +130,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: Routes.home,
             builder: (context, state) => const UploadFilePage(),
+          ),
+          GoRoute(
+            path: Routes.documentations,
+            builder: (context, state) => const UserDocumentsView(),
           ),
           GoRoute(
             path: Routes.profile,

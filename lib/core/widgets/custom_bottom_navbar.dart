@@ -33,7 +33,7 @@ class CustomBottomNavBar extends StatelessWidget {
             index: 1,
             icon: Icons.folder_outlined,
             label: AppStrings.file,
-            route: Routes.home,
+            route: Routes.documentations,
           ),
           _buildNavItem(
             context: context,

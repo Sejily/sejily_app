@@ -27,12 +27,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       "subtitle": AppStrings.onboardingSubtitle1,
     },
     {
-      "image": Assets.onboard1,
+      "image": Assets.onboard2,
       "title": AppStrings.onBoardingTitle2,
       "subtitle": AppStrings.onBoardingSubtitle2,
     },
     {
-      "image": Assets.onboard1,
+      "image": Assets.onboard3,
       "title": AppStrings.onBoardingTitle3,
       "subtitle": AppStrings.onBoardingSubtitle3,
     },

@@ -1,27 +1,14 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'document.dart';
+import 'document_response.dart';
 
 part 'documents_response.g.dart';
 
 @JsonSerializable()
 class DocumentsResponse {
-  final List<Document> documents;
-  final int total;
-  final int page;
-  final int limit;
-  final int totalPages;
-  final bool hasNext;
-  final bool hasPrev;
+  final int? total;
+  final List<DocumentResponse>? documents;
 
-  DocumentsResponse({
-    required this.documents,
-    required this.total,
-    required this.page,
-    required this.limit,
-    required this.totalPages,
-    required this.hasNext,
-    required this.hasPrev,
-  });
+  DocumentsResponse({this.total, this.documents});
 
   factory DocumentsResponse.fromJson(Map<String, dynamic> json) =>
       _$DocumentsResponseFromJson(json);

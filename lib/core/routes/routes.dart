@@ -25,4 +25,6 @@ class Routes {
   static const String notifications = "/notifications";
   static const String help = "/help";
   static const String terms = "/terms";
+  static const String documentations = "/documentations";
+  static const String document = "/document";
 }
