@@ -75,14 +75,14 @@ class AppStrings {
 
   // BLOOD TYPE OPTIONS
   static const List<String> bloodTypes = [
-    '+A',
-    '-A',
-    '+B',
-    '-B',
-    '+O',
-    '-O',
-    '+AB',
-    '-AB',
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'O+',
+    'O-',
+    'AB+',
+    'AB-',
   ];
 
   // Personal Information Fields

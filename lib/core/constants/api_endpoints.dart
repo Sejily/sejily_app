@@ -11,8 +11,11 @@ class ApiEndpoints {
   static const String completePatientRegistration =
       "/auth/completeRegisterPatient";
   static const String refreshToken = "/auth/refresh";
-  static const String profile = "/auth/profile";
-  static const String updateProfile = "/users/profile/patient";
+  static const String baseUrl = "https://sejily-server.vercel.app";
+
+  // profile
+  static const String patientProfile = "/users/profile/patient";
+  static const String authProfile = "/auth/profile";
 
   //* AI
   static const String aiUpload = '/ai/ai/file/upload';

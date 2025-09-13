@@ -13,8 +13,8 @@ import 'package:sejily/features/authentication/data/models/verify_otp_request.da
 import 'package:sejily/features/authentication/data/models/verify_otp_response.dart';
 import 'package:sejily/features/authentication/data/models/login_response.dart';
 
+import '../../../home_user/profile/data/models/update_profile_response.dart';
 import '../../../home_user/profile/data/models/user_model.dart';
-import 'auth_repository.dart' as authService;
 
 class AuthRepository {
   final AuthService authService;
@@ -132,6 +132,7 @@ class AuthRepository {
           refreshToken: response.refreshToken,
           accessToken: response.accessToken,
         );
+
         return ApiSuccess(response);
       } else {
         return ApiFailure(const ApiErrorModel(message: "فشل تسجيل الدخول"));
@@ -169,19 +170,27 @@ class AuthRepository {
 
   Future<ApiResult<UserModel>> getProfile() async {
     try {
-      final response = await authService.getProfile();
+      final response = await authService.getPatientProfile();
       return ApiResult.success(response);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handle(e));
     }
   }
 
-  Future<bool> updateProfile(UserModel user) async {
+  Future<ApiResult<UpdateProfileResponse>> updateProfile(UserModel user) async {
     try {
-      await authService.updateProfile(user.toJson());
-      return true;
-    } catch (e) {
-      return false;
+      final response = await authService.updatePatientProfile(user.toJson());
+
+      print(" UpdateProfile Response: ${response.toJson()}");
+
+      if (response.success) {
+        return ApiSuccess(response);
+      } else {
+        return ApiFailure(ApiErrorModel(message: response.message));
+      }
+    } catch (e, st) {
+      print(" UpdateProfile Error: $e");
+      return ApiFailure(ApiErrorHandler.handle(e));
     }
   }
 }

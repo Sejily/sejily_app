@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/routes/app_router.dart';
 import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/services/token_service.dart';
@@ -27,7 +28,7 @@ final class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final accessToken = await _tokenService.getAccessToken();
+    final accessToken = await storage.getAccessToken();
     if (accessToken != null) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
@@ -37,36 +38,37 @@ final class AuthInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    List<String> routes = [
+    List<String> authRoutes = [
       Routes.login,
       Routes.register,
       Routes.forgetPassword,
       Routes.resetPassword,
     ];
 
-    if (!routes.contains(err.requestOptions.path) &&
+    if (!authRoutes.contains(err.requestOptions.path) &&
         (err.response?.statusCode == 401 || err.response?.statusCode == 403)) {
-      final token = await _tokenService.getRefreshToken();
+      final refreshToken = await _tokenService.getRefreshToken();
 
       try {
-        final result = await _tokenService.refreshToken(token);
+        final result = await _tokenService.refreshToken(refreshToken);
 
-        final accesToken = result.accessToken;
-        final refreshToken = result.refreshToken;
+        final accessToken = result.accessToken;
+        final newRefreshToken = result.refreshToken;
 
-        // save new access token and refresh token to secure storage
-        await _tokenService.saveToken(accesToken, refreshToken);
+        await _tokenService.saveToken(accessToken, newRefreshToken);
 
         final options = err.requestOptions;
-        options.headers['Authorization'] = 'Bearer $accesToken';
-        return handler.resolve(await _dio.fetch(options));
+        options.headers['Authorization'] = 'Bearer $accessToken';
+
+        final response = await _dio.fetch(options);
+        return handler.resolve(response);
       } on DioException catch (_) {
         await _tokenService.clearToken();
         router.go(Routes.login);
         return handler.next(err);
-      } finally {
-        handler.next(err);
       }
     }
+
+    return handler.next(err);
   }
 }
