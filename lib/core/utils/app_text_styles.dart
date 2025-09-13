@@ -41,6 +41,11 @@ class AppTextStyles {
     fontWeight: AppFontWeights.semiBold,
   );
 
+  static final TextStyle semiBold20 = TextStyle(
+    fontSize: 20,
+    fontWeight: AppFontWeights.semiBold,
+  );
+
   //* Bold
   static final TextStyle bold20 = TextStyle(
     fontSize: 20,

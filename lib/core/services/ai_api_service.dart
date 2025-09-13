@@ -39,7 +39,9 @@ abstract class AiApiService {
   });
 
   @POST(ApiEndpoints.aiFhirSearch)
-  Future<AIFhirSearchResponse> fhirSearchFile({@Body() required String fileId});
+  Future<AIFhirSearchResponse> fhirSearchFile({
+    @Body() required Map<String, dynamic> body,
+  });
 
   @GET(
     '${ApiEndpoints.aiDocumentHead}{documentId}${ApiEndpoints.aiDocumentTail}',

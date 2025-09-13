@@ -98,11 +98,13 @@ class _AiApiService implements AiApiService {
   }
 
   @override
-  Future<AIFhirSearchResponse> fhirSearchFile({required String fileId}) async {
+  Future<AIFhirSearchResponse> fhirSearchFile(
+      {required Map<String, dynamic> body}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = fileId;
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _options = _setStreamType<AIFhirSearchResponse>(Options(
       method: 'POST',
       headers: _headers,

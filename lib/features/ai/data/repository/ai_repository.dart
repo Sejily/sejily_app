@@ -47,7 +47,9 @@ class AiRepository {
 
   Future<ApiResult<AIFhirSearchResponse>> fhirSearchFile(String fileId) async {
     try {
-      final result = await _api.fhirSearchFile(fileId: fileId);
+      // Send fileId in the correct JSON format expected by the API
+      final body = {'file_id': fileId};
+      final result = await _api.fhirSearchFile(body: body);
       return ApiResult.success(result);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handle(e));
