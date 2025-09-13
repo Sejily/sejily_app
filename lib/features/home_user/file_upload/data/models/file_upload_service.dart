@@ -16,13 +16,8 @@ class FileUploadService {
     );
 
     if (result != null && result.files.isNotEmpty) {
-      final error = await ref
-          .read(fileUploadProvider.notifier)
-          .addFiles(result.files);
-      if (error != null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(error as String)));
+      for (final file in result.files) {
+        await ref.read(fileUploadProvider.notifier).addFile(file, ref);
       }
     }
     return null;
