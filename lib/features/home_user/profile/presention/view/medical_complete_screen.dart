@@ -14,7 +14,7 @@ class MedicalInfoScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bloodType = ref.watch(medicalInfoProvider).bloodType;
+    final medicalInfo = ref.watch(medicalInfoProvider);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -35,13 +35,40 @@ class MedicalInfoScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 20),
 
-                const MedicalTextField(label: AppStrings.medicalState),
+                MedicalTextField(
+                  label: AppStrings.medicalState,
+                  initialValue: medicalInfo.medicalState,
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setMedicalState(val);
+                  },
+                ),
                 const SizedBox(height: 16),
-                const MedicalTextField(label: AppStrings.sensitive),
+
+                MedicalTextField(
+                  label: AppStrings.sensitive,
+                  initialValue: medicalInfo.sensitive,
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setSensitive(val);
+                  },
+                ),
                 const SizedBox(height: 16),
-                const MedicalTextField(label: AppStrings.height),
+
+                MedicalTextField(
+                  label: AppStrings.height,
+                  initialValue: medicalInfo.height,
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setHeight(val);
+                  },
+                ),
                 const SizedBox(height: 16),
-                const MedicalTextField(label: AppStrings.weight),
+
+                MedicalTextField(
+                  label: AppStrings.weight,
+                  initialValue: medicalInfo.weight,
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setWeight(val);
+                  },
+                ),
                 const SizedBox(height: 24),
 
                 Text(
@@ -51,16 +78,26 @@ class MedicalInfoScreen extends ConsumerWidget {
                 const SizedBox(height: 12),
 
                 BloodTypeSelector(
-                  selected: bloodType,
+                  selected: medicalInfo.bloodType,
                   onChanged: (val) {
                     ref.read(medicalInfoProvider.notifier).setBloodType(val);
                   },
                 ),
 
                 const SizedBox(height: 40),
+
                 CustomButton(
                   text: AppStrings.finish,
-                  onPressed: () {},
+                  onPressed: () {
+                    final data = ref.read(medicalInfoProvider);
+                    debugPrint("Medical State: ${data.medicalState}");
+                    debugPrint("Sensitive: ${data.sensitive}");
+                    debugPrint("Height: ${data.height}");
+                    debugPrint("Weight: ${data.weight}");
+                    debugPrint("Blood Type: ${data.bloodType}");
+
+                    Navigator.pop(context, data);
+                  },
                   backgroundColor: AppColors.darkBlue,
                   foregroundColor: AppColors.white,
                   defaultSize: false,

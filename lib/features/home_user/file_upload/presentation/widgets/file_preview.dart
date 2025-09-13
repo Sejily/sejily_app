@@ -29,6 +29,7 @@ class FilePreview extends ConsumerWidget {
         ],
       );
     }
+
     return Column(
       children: files.map((file) {
         return ListTile(

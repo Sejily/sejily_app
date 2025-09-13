@@ -33,6 +33,10 @@ dependencies:
   path_provider: ^2.1.4
   flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.4.6
+  google_sign_in: ^6.2.1
+  googleapis: ^14.0.0
+  googleapis_auth: ^2.0.0
+  http: ^1.2.2
 
 
 dev_dependencies:
