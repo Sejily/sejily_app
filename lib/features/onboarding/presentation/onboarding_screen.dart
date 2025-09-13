@@ -50,6 +50,19 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     }
   }
 
+  void _skipLogic(String route) {
+    if (_currentPage < onboardingData.length - 1) {
+      _pageController.animateToPage(
+        onboardingData.length - 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      storage.setIsFirstTime(false);
+      context.go(route);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,7 +162,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
                   const SizedBox(height: 12),
                   TextButton(
-                    onPressed: () => _nextPage(Routes.login),
+                    onPressed: () => _skipLogic(Routes.login),
                     child: Text(
                       _currentPage == onboardingData.length - 1
                           ? AppStrings.login
