@@ -5,13 +5,13 @@ import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import '../manager/providers/edit_profile_provider.dart';
+import '../manager/providers/user_provider.dart';
+import '../manager/providers/medical_info_provider.dart';
 import '../widgets/custom_text_field.dart';
 import '../../data/models/user_model.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
-  final UserModel user;
-
-  const EditProfileScreen({super.key, required this.user});
+  const EditProfileScreen({super.key});
 
   @override
   ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -24,24 +24,32 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late TextEditingController cityController;
   late TextEditingController phoneController;
 
-  @override
-  void initState() {
-    super.initState();
-    nameController = TextEditingController(text: widget.user.name);
-    emailController = TextEditingController(text: widget.user.email);
-    addressController = TextEditingController(
-      text: widget.user.avatarUrl ?? '',
-    );
-    cityController = TextEditingController(text: '');
-    phoneController = TextEditingController(text: '');
+  UserModel? user;
+  bool controllersInitialized = false;
+
+  void _initializeControllers(UserModel user) {
+    nameController = TextEditingController(text: user.name);
+    emailController = TextEditingController(text: user.email);
+    addressController = TextEditingController(text: user.address ?? '');
+    cityController = TextEditingController(text: user.city ?? '');
+    phoneController = TextEditingController(text: user.phone ?? '');
   }
 
   void _saveProfile() {
-    final updatedUser = UserModel(
-      id: widget.user.id,
+    if (user == null) return;
+
+    final updatedUser = user!.copyWith(
       name: nameController.text.trim(),
       email: emailController.text.trim(),
-      avatarUrl: addressController.text.trim(),
+      address: addressController.text.trim().isEmpty
+          ? null
+          : addressController.text.trim(),
+      city: cityController.text.trim().isEmpty
+          ? null
+          : cityController.text.trim(),
+      phone: phoneController.text.trim().isEmpty
+          ? null
+          : phoneController.text.trim(),
     );
 
     ref.read(editProfileNotifierProvider.notifier).updateProfile(updatedUser);
@@ -52,84 +60,126 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final state = ref.watch(editProfileNotifierProvider);
 
     ref.listen<EditProfileState>(editProfileNotifierProvider, (prev, next) {
-      if (next.result != null) {
-        next.result!.when(
-          onSuccess: (user) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("تم حفظ البيانات بنجاح")),
-            );
-          },
-          onFailure: (error) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(error.errorMessage)));
-          },
-        );
+      if (next.success != null) {
+        if (next.success!) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("تم حفظ البيانات بنجاح")),
+          );
+        } else {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text("حدث خطأ أثناء الحفظ")));
+        }
       }
     });
+
+    final userProfile = ref.watch(userProfileProvider);
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: AppColors.white,
         body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  AppStrings.editProfile,
-                  style: AppTextStyles.bold20.copyWith(
-                    color: AppColors.jetBlack,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: widget.user.avatarUrl != null
-                      ? NetworkImage(widget.user.avatarUrl!)
-                      : const AssetImage("assets/images/selected_person.png")
-                            as ImageProvider,
-                ),
-                const SizedBox(height: 30),
-                CustomTextField(
-                  label: AppStrings.fullNameLabel,
-                  controller: nameController,
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: AppStrings.emailAddress,
-                  controller: emailController,
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: AppStrings.address,
-                  controller: addressController,
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: AppStrings.city,
-                  controller: cityController,
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: AppStrings.phoneNumber,
-                  controller: phoneController,
-                ),
-                const SizedBox(height: 40),
-                CustomButton(
-                  onPressed: state.isLoading ? null : _saveProfile,
-                  text: AppStrings.save,
-                  child: state.isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : null,
-                ),
-              ],
-            ),
+          child: userProfile.when(
+            data: (apiResult) {
+              return apiResult.when(
+                onSuccess: (u) {
+                  if (!controllersInitialized) {
+                    user = u;
+                    _initializeControllers(u);
+                    controllersInitialized = true;
+
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (u.bloodType != null) {
+                        ref
+                            .read(medicalInfoProvider.notifier)
+                            .setBloodType(u.bloodType!);
+                      }
+                    });
+                  }
+
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppStrings.editProfile,
+                          style: AppTextStyles.bold20.copyWith(
+                            color: AppColors.jetBlack,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage:
+                              u.avatarUrl != null && u.avatarUrl!.isNotEmpty
+                              ? NetworkImage(u.avatarUrl!)
+                              : const AssetImage(
+                                      "assets/images/selected_person.png",
+                                    )
+                                    as ImageProvider,
+                        ),
+                        const SizedBox(height: 30),
+                        CustomTextField(
+                          label: AppStrings.fullNameLabel,
+                          controller: nameController,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextField(
+                          label: AppStrings.emailAddress,
+                          controller: emailController,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextField(
+                          label: AppStrings.address,
+                          controller: addressController,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextField(
+                          label: AppStrings.city,
+                          controller: cityController,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextField(
+                          label: AppStrings.phoneNumber,
+                          controller: phoneController,
+                        ),
+                        const SizedBox(height: 40),
+                        CustomButton(
+                          onPressed: state.isLoading ? null : _saveProfile,
+                          text: AppStrings.save,
+                          child: state.isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : null,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                onFailure: (e) {
+                  return Center(child: Text(e.errorMessage));
+                },
+              );
+            },
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (err, st) =>
+                const Center(child: Text("حدث خطأ، حاول مرة أخرى")),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    addressController.dispose();
+    cityController.dispose();
+    phoneController.dispose();
+    super.dispose();
   }
 }
