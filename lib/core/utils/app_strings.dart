@@ -127,7 +127,8 @@ class AppStrings {
   static const String addEmergencyContact = 'اضف جهة طوارئ';
   static const String addEmergencyContactDescription =
       'اضف جهة طوارئ .. و ابقي آمنا.';
-
+  static const String warningemergency =
+      'تنبيه \n في حال طلب الاطباء الوصول لمعلوماتك الطبيه من جهه الطوارئ سيكون للتطبيق امكانيه الوصول لموقعك الجغرافي';
   static const String emergencyContactName = 'اسم جهة الطوارئ';
   static const String emergencyContactPhone = 'رقم هاتف جهة الطوارئ';
   static const String relationshipToEmergencyContact = 'صلة القرابة';

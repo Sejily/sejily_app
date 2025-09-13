@@ -15,7 +15,6 @@ class FilePreview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final fileUploadState = ref.watch(fileUploadProvider);
 
-    // Listen for errors and show snackbar
     ref.listen(fileUploadProvider, (previous, next) {
       if (next.errorMessage != null &&
           next.errorMessage != previous?.errorMessage) {
@@ -34,7 +33,6 @@ class FilePreview extends ConsumerWidget {
       }
     });
 
-    // Show loading state when uploading
     if (fileUploadState.isUploading) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -53,15 +51,17 @@ class FilePreview extends ConsumerWidget {
     if (fileUploadState.files.isEmpty) {
       return Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(Assets.clipboard, height: 50),
+          const SizedBox(height: 12),
           Column(
             children: [
               Text(
                 AppStrings.dragDropOrTapToUpload,
                 style: AppTextStyles.medium16,
               ),
+              const SizedBox(height: 4),
               Text(
                 AppStrings.uploadfileDescription,
                 textAlign: TextAlign.center,
@@ -73,83 +73,92 @@ class FilePreview extends ConsumerWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
+    return SizedBox(
+      height: 200,
       child: ListView.builder(
         itemCount: fileUploadState.files.length,
         itemBuilder: (context, index) {
           final uploadedFile = fileUploadState.files[index];
           final file = uploadedFile.platformFile;
-          return GestureDetector(
-            onTap: () async =>
-                await OpenFile.open(uploadedFile.platformFile.path!),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: GestureDetector(
+              onTap: () async =>
+                  await OpenFile.open(uploadedFile.platformFile.path!),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.lightGray.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(width: 8),
                     Icon(
                       Icons.insert_drive_file,
                       size: 30,
                       color: AppColors.gray,
                     ),
                     const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            file.name,
+                            style: AppTextStyles.medium16.copyWith(
+                              color: AppColors.jetBlack,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            "${(file.size / 1024).toStringAsFixed(2)} KB",
+                            style: AppTextStyles.regular12.copyWith(
+                              color: AppColors.gray,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          file.name,
-                          style: AppTextStyles.medium16.copyWith(
-                            color: AppColors.jetBlack,
+                        TextButton(
+                          onPressed: () =>
+                              _showFhirDialog(context, ref, uploadedFile),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            backgroundColor: AppColors.darkBlue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              side: BorderSide(color: AppColors.darkBlue),
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          child: Text(
+                            'تحليل الملف الطبي',
+                            style: AppTextStyles.regular12.copyWith(
+                              color: AppColors.white,
+                            ),
+                          ),
                         ),
-                        Text(
-                          "${(file.size / 1024).toStringAsFixed(2)} KB",
-                          style: AppTextStyles.regular12.copyWith(
-                            color: AppColors.gray,
-                          ),
+                        IconButton(
+                          icon: const Icon(Icons.close, color: Colors.red),
+                          onPressed: () => ref
+                              .read(fileUploadProvider.notifier)
+                              .removeFile(file),
                         ),
                       ],
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextButton(
-                      onPressed: () =>
-                          _showFhirDialog(context, ref, uploadedFile),
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        backgroundColor: AppColors.darkBlue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          side: BorderSide(color: AppColors.darkBlue),
-                        ),
-                      ),
-                      child: Text(
-                        'تحليل الملف الطبي',
-                        style: AppTextStyles.regular12.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.red),
-                      onPressed: () => ref
-                          .read(fileUploadProvider.notifier)
-                          .removeFile(file),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           );
         },

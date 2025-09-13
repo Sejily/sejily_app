@@ -40,7 +40,7 @@ class EmergencyPage extends ConsumerWidget {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          AppStrings.warning,
+                          AppStrings.warningemergency,
                           style: AppTextStyles.regular14.copyWith(
                             color: AppColors.lightRed,
                           ),

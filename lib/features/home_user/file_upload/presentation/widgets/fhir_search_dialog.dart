@@ -76,7 +76,6 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
     return Column(
       children: [
         Align(
-          alignment: AlignmentGeometry.topLeft,
           child: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(Icons.close),

@@ -16,26 +16,32 @@ class UploadFileCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.all(16),
-      height: MediaQuery.sizeOf(context).height * 0.3,
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.lightGray),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             AppStrings.uploadFile,
             style: AppTextStyles.bold20.copyWith(color: AppColors.jetBlack),
           ),
           const SizedBox(height: 16),
+
           SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.15,
+            height: MediaQuery.sizeOf(context).height * 0.2,
             width: double.infinity,
-            child: DottedBorder(
-              strokeWidth: 1.5,
-              borderType: BorderType.RRect,
-              child: Center(child: const FilePreview()),
+            child: SingleChildScrollView(
+              child: DottedBorder(
+                strokeWidth: 1.5,
+                borderType: BorderType.RRect,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FilePreview(),
+                ),
+              ),
             ),
           ),
 
