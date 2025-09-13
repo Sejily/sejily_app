@@ -77,7 +77,7 @@ To clone and run the Flutter app locally:
 ```bash
 # Clone the repository
 git clone https://github.com/ieee-victoris-4-0/sejily_app.git
-cd Wavlo
+cd sejily_app
 
 # Get Flutter packages
 flutter pub get

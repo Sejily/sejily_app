@@ -38,7 +38,7 @@ class UserModel {
       email: json['email'] ?? '',
       avatarUrl: json['profilePictureUrl'],
       address: json['address'],
-      city: json['city'] ?? '',
+      city: json['city'],
       phone: json['phoneNumber'],
       bloodType: json['bloodType'],
       height: (json['height'] != null)
@@ -58,20 +58,26 @@ class UserModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'fullName': name,
-    'email': email,
-    'phoneNumber': phone ?? '',
-    'address': address ?? '',
-    'city': city ?? '',
-    'bloodType': bloodType ?? '',
-    'height': height ?? 0,
-    'weight': weight ?? 0,
-    'medicalConditions': medicalConditions ?? [],
-    'allergies': allergies ?? [],
-    'privacyLevel': privacyLevel ?? 'STANDARD',
-    'dataRetentionPreference': dataRetentionPreference ?? 'STANDARD',
-  };
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{
+      'fullName': name,
+      'phoneNumber': phone,
+      'address': address,
+      'bloodType': bloodType,
+      'height': height,
+      'weight': weight,
+      'medicalConditions': medicalConditions,
+      'allergies': allergies,
+      'privacyLevel': privacyLevel ?? 'STANDARD',
+      'dataRetentionPreference': dataRetentionPreference ?? 'STANDARD',
+    };
+
+    if (city != null && city!.isNotEmpty) {
+      data['city'] = city;
+    }
+
+    return data;
+  }
 
   UserModel copyWith({
     String? id,

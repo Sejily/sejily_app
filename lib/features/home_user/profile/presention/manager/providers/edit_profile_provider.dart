@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sejily/features/home_user/profile/presention/manager/providers/user_provider.dart';
 import '../../../../../authentication/data/repository/auth_repository.dart';
 import '../../../data/models/user_model.dart';
 import '../providers/medical_info_provider.dart';
@@ -6,13 +7,19 @@ import '../providers/medical_info_provider.dart';
 class EditProfileState {
   final bool isLoading;
   final bool? success;
+  final String? errorMessage;
 
-  EditProfileState({this.isLoading = false, this.success});
+  EditProfileState({this.isLoading = false, this.success, this.errorMessage});
 
-  EditProfileState copyWith({bool? isLoading, bool? success}) {
+  EditProfileState copyWith({
+    bool? isLoading,
+    bool? success,
+    String? errorMessage,
+  }) {
     return EditProfileState(
       isLoading: isLoading ?? this.isLoading,
       success: success,
+      errorMessage: errorMessage,
     );
   }
 }
@@ -24,11 +31,13 @@ class EditProfileNotifier extends StateNotifier<EditProfileState> {
   EditProfileNotifier(this.repo, this.ref) : super(EditProfileState());
 
   Future<void> updateProfile(UserModel user) async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true, success: null, errorMessage: null);
+
     try {
       final medInfo = ref.read(medicalInfoProvider);
+
       final updatedUser = user.copyWith(
-        bloodType: medInfo.bloodType ?? user.bloodType,
+        bloodType: medInfo.bloodType,
         height: medInfo.height != null
             ? double.tryParse(medInfo.height!)
             : user.height,
@@ -41,12 +50,33 @@ class EditProfileNotifier extends StateNotifier<EditProfileState> {
         allergies: medInfo.sensitive != null
             ? [medInfo.sensitive!]
             : user.allergies,
+        city: user.city,
       );
 
-      final success = await repo.updateProfile(updatedUser);
-      state = state.copyWith(isLoading: false, success: success);
-    } catch (_) {
-      state = state.copyWith(isLoading: false, success: false);
+      final result = await repo.updateProfile(updatedUser);
+
+      result.when(
+        onSuccess: (resp) {
+          print(" Update Success: ${resp.message}");
+          ref.invalidate(userProfileProvider);
+
+          state = state.copyWith(isLoading: false, success: true);
+        },
+        onFailure: (error) {
+          print(" Update Failed: ${error.message}");
+          state = state.copyWith(
+            isLoading: false,
+            success: false,
+            errorMessage: error.message,
+          );
+        },
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        success: false,
+        errorMessage: e.toString(),
+      );
     }
   }
 }

@@ -6,6 +6,8 @@ import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../manager/providers/medical_info_provider.dart';
+import '../manager/providers/user_provider.dart';
+import '../manager/providers/edit_profile_provider.dart';
 import '../widgets/blood_type_selector.dart';
 import '../widgets/medical_complete_field.dart';
 
@@ -15,6 +17,22 @@ class MedicalInfoScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final medicalInfo = ref.watch(medicalInfoProvider);
+    final editState = ref.watch(editProfileNotifierProvider);
+
+    ref.listen<EditProfileState>(editProfileNotifierProvider, (prev, next) {
+      if (next.success != null) {
+        if (next.success!) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text("تم الحفظ بنجاح ")));
+          Navigator.pop(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(next.errorMessage ?? "فشل الحفظ")),
+          );
+        }
+      }
+    });
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -87,17 +105,48 @@ class MedicalInfoScreen extends ConsumerWidget {
                 const SizedBox(height: 40),
 
                 CustomButton(
-                  text: AppStrings.finish,
-                  onPressed: () {
-                    final data = ref.read(medicalInfoProvider);
-                    debugPrint("Medical State: ${data.medicalState}");
-                    debugPrint("Sensitive: ${data.sensitive}");
-                    debugPrint("Height: ${data.height}");
-                    debugPrint("Weight: ${data.weight}");
-                    debugPrint("Blood Type: ${data.bloodType}");
+                  text: editState.isLoading
+                      ? "جاري الحفظ..."
+                      : AppStrings.finish,
+                  onPressed: editState.isLoading
+                      ? null
+                      : () {
+                          final userProfile = ref
+                              .read(userProfileProvider)
+                              .value;
 
-                    Navigator.pop(context, data);
-                  },
+                          if (userProfile != null) {
+                            userProfile.when(
+                              onSuccess: (user) {
+                                final updatedUser = user.copyWith(
+                                  bloodType: medicalInfo.bloodType,
+                                  height: medicalInfo.height != null
+                                      ? double.tryParse(medicalInfo.height!)
+                                      : user.height,
+                                  weight: medicalInfo.weight != null
+                                      ? double.tryParse(medicalInfo.weight!)
+                                      : user.weight,
+                                  medicalConditions:
+                                      medicalInfo.medicalState != null
+                                      ? [medicalInfo.medicalState!]
+                                      : user.medicalConditions,
+                                  allergies: medicalInfo.sensitive != null
+                                      ? [medicalInfo.sensitive!]
+                                      : user.allergies,
+                                );
+
+                                ref
+                                    .read(editProfileNotifierProvider.notifier)
+                                    .updateProfile(updatedUser);
+                              },
+                              onFailure: (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(e.errorMessage)),
+                                );
+                              },
+                            );
+                          }
+                        },
                   backgroundColor: AppColors.darkBlue,
                   foregroundColor: AppColors.white,
                   defaultSize: false,

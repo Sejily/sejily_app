@@ -35,40 +35,21 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     phoneController = TextEditingController(text: user.phone ?? '');
   }
 
-  void _saveProfile() {
-    if (user == null) return;
-
-    final updatedUser = user!.copyWith(
-      name: nameController.text.trim(),
-      email: emailController.text.trim(),
-      address: addressController.text.trim().isEmpty
-          ? null
-          : addressController.text.trim(),
-      city: cityController.text.trim().isEmpty
-          ? null
-          : cityController.text.trim(),
-      phone: phoneController.text.trim().isEmpty
-          ? null
-          : phoneController.text.trim(),
-    );
-
-    ref.read(editProfileNotifierProvider.notifier).updateProfile(updatedUser);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(editProfileNotifierProvider);
+    final editState = ref.watch(editProfileNotifierProvider);
 
     ref.listen<EditProfileState>(editProfileNotifierProvider, (prev, next) {
       if (next.success != null) {
         if (next.success!) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("تم حفظ البيانات بنجاح")),
+            SnackBar(content: Text(next.errorMessage ?? "تم الحفظ بنجاح")),
           );
+          Navigator.pop(context);
         } else {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text("حدث خطأ أثناء الحفظ")));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(next.errorMessage ?? "فشل الحفظ")),
+          );
         }
       }
     });
@@ -147,9 +128,28 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         ),
                         const SizedBox(height: 40),
                         CustomButton(
-                          onPressed: state.isLoading ? null : _saveProfile,
+                          onPressed: editState.isLoading
+                              ? null
+                              : () {
+                                  if (user != null) {
+                                    final updatedUser = user!.copyWith(
+                                      name: nameController.text.trim(),
+                                      email: emailController.text.trim(),
+                                      address: addressController.text.trim(),
+                                      city: cityController.text.trim(),
+                                      phone: phoneController.text.trim(),
+                                    );
+
+                                    ref
+                                        .read(
+                                          editProfileNotifierProvider.notifier,
+                                        )
+                                        .updateProfile(updatedUser);
+                                  }
+                                },
+
                           text: AppStrings.save,
-                          child: state.isLoading
+                          child: editState.isLoading
                               ? const CircularProgressIndicator(
                                   color: Colors.white,
                                 )

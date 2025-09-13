@@ -24,64 +24,87 @@ class ProfilePage extends ConsumerWidget {
             data: (result) {
               return result.when(
                 onSuccess: (user) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      CircleAvatar(
-                        radius: 45,
-                        backgroundImage: user.avatarUrl != null
-                            ? NetworkImage(user.avatarUrl!)
-                            : const AssetImage(
-                                    "assets/images/selected_person.png",
-                                  )
-                                  as ImageProvider,
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        user.name,
-                        style: AppTextStyles.bold20.copyWith(
-                          color: AppColors.jetBlack,
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        CircleAvatar(
+                          radius: 45,
+                          backgroundImage:
+                              user.avatarUrl != null &&
+                                  user.avatarUrl!.isNotEmpty
+                              ? NetworkImage(user.avatarUrl!)
+                              : const AssetImage(
+                                      "assets/images/selected_person.png",
+                                    )
+                                    as ImageProvider,
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        user.email,
-                        style: AppTextStyles.regular14.copyWith(
-                          color: AppColors.gray,
+
+                        const SizedBox(height: 12),
+                        Text(
+                          user.name,
+                          style: AppTextStyles.bold20.copyWith(
+                            color: AppColors.jetBlack,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFF8E1),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.amber),
+
+                        const SizedBox(height: 4),
+
+                        Text(
+                          user.email,
+                          style: AppTextStyles.regular14.copyWith(
+                            color: AppColors.gray,
+                          ),
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Icon(
-                              Icons.info_outline,
-                              color: Colors.orange,
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                AppStrings.helpUsProvidePersonal,
-                                style: AppTextStyles.regular14.copyWith(
-                                  color: Colors.brown,
+
+                        const SizedBox(height: 12),
+
+                        if (user.phone != null && user.phone!.isNotEmpty)
+                          Text(" ${user.phone}"),
+                        if (user.city != null && user.city!.isNotEmpty)
+                          Text(" ${user.city}"),
+                        if (user.address != null && user.address!.isNotEmpty)
+                          Text(" ${user.address}"),
+                        if (user.bloodType != null &&
+                            user.bloodType!.isNotEmpty)
+                          Text(" فصيلة الدم: ${user.bloodType}"),
+                        if (user.height != null) Text(" الطول: ${user.height}"),
+                        if (user.weight != null) Text(" الوزن: ${user.weight}"),
+
+                        const SizedBox(height: 20),
+
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFF8E1),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.amber),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.info_outline,
+                                color: Colors.orange,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  AppStrings.helpUsProvidePersonal,
+                                  style: AppTextStyles.regular14.copyWith(
+                                    color: Colors.brown,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Expanded(
-                        child: ListView(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+
+                        const SizedBox(height: 20),
+                        ListView(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             ProfileMenuItem(
                               icon: Icons.person_outline,
@@ -144,8 +167,8 @@ class ProfilePage extends ConsumerWidget {
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
                 onFailure: (error) {

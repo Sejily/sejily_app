@@ -7,7 +7,6 @@ class MedicalInfoState {
   final String? height;
   final String? weight;
   final String? bloodType;
-
   MedicalInfoState({
     this.medicalState,
     this.sensitive,
@@ -15,7 +14,6 @@ class MedicalInfoState {
     this.weight,
     this.bloodType,
   });
-
   MedicalInfoState copyWith({
     String? medicalState,
     String? sensitive,
@@ -37,16 +35,13 @@ class MedicalInfoNotifier extends StateNotifier<MedicalInfoState> {
   MedicalInfoNotifier() : super(MedicalInfoState()) {
     _loadFromStorage();
   }
-
   final _storage = StorageService.instance;
-
   void _loadFromStorage() {
     final medicalState = _storage.get<String>('medicalState');
     final sensitive = _storage.get<String>('sensitive');
     final height = _storage.get<String>('height');
     final weight = _storage.get<String>('weight');
     final bloodType = _storage.get<String>('bloodType');
-
     state = state.copyWith(
       medicalState: medicalState,
       sensitive: sensitive,

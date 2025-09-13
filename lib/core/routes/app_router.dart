@@ -7,6 +7,7 @@ import 'package:sejily/features/authentication/presentation/view/complete_user_d
 import 'package:sejily/features/authentication/presentation/view/data_review_page.dart';
 import 'package:sejily/features/authentication/presentation/view/emergency_contact_page.dart';
 import 'package:sejily/features/authentication/presentation/view/forget_password_view.dart';
+import 'package:sejily/features/home_user/emergency/pressntation/view/emergency_contact_view.dart';
 import 'package:sejily/features/home_user/file_upload/presentation/view/home_user_view.dart';
 import 'package:sejily/features/authentication/presentation/view/login_view.dart';
 import 'package:sejily/features/authentication/presentation/view/otp_verification_view.dart';
@@ -177,6 +178,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.emergencyContact,
         builder: (context, state) => const EmergencyContactPage(),
+      ),
+      GoRoute(
+        path: Routes.emergency,
+        builder: (context, state) => const EmergencyPage(),
       ),
       GoRoute(
         path: Routes.dataReview,
