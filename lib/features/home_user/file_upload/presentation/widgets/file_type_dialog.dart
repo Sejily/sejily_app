@@ -11,7 +11,7 @@ class FileTypeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
         padding: const EdgeInsets.all(24),
@@ -25,52 +25,46 @@ class FileTypeDialog extends StatelessWidget {
             const SizedBox(height: 20),
             Row(
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      onPick(AppStrings.rays);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.darkBlue,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      AppStrings.rays,
-                      style: AppTextStyles.medium16.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                _DialogueOption(
+                  onPick: (type) => onPick(AppStrings.rays),
+                  tite: AppStrings.rays,
                 ),
                 const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      onPick(AppStrings.analysis);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.darkBlue,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      AppStrings.analysis,
-                      style: AppTextStyles.medium16.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                _DialogueOption(
+                  onPick: (type) => onPick(AppStrings.analysis),
+                  tite: AppStrings.analysis,
                 ),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DialogueOption extends StatelessWidget {
+  const _DialogueOption({required this.tite, required this.onPick});
+
+  final String tite;
+  final Function(String type) onPick;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pop(context);
+          onPick(tite);
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.darkBlue,
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+        child: Text(
+          tite,
+          style: AppTextStyles.medium16.copyWith(color: AppColors.white),
         ),
       ),
     );
