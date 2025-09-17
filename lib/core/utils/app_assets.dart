@@ -19,4 +19,7 @@ class Assets {
   static const String clipboard = 'assets/images/clipboard.png';
   static const String drive = 'assets/images/drive.png';
   static const String logo = 'assets/images/logo.png';
+  static const String homeIcon = 'assets/images/home_page.png';
+  static const String profileIcon = 'assets/images/profile.png';
+  static const String celebrationIcon = 'assets/images/celebration.png';
 }

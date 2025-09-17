@@ -101,7 +101,7 @@ class _UploadPersonalPhotoPageState
                   Text(
                     AppStrings.helpUsProvidePersonalizedExperience,
                     style: AppTextStyles.regular14.copyWith(
-                      color: AppColors.gray,
+                      color: AppColors.grayShade500,
                     ),
                   ),
 
@@ -119,7 +119,7 @@ class _UploadPersonalPhotoPageState
                               Text(
                                 AppStrings.uploadPersonalPictureDescription,
                                 style: AppTextStyles.regular14.copyWith(
-                                  color: AppColors.gray,
+                                  color: AppColors.grayShade500,
                                 ),
                               ),
                               const SizedBox(height: 16),

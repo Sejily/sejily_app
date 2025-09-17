@@ -28,7 +28,9 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           onChanged: onChanged,
           decoration: InputDecoration(
-            hintStyle: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+            hintStyle: AppTextStyles.regular14.copyWith(
+              color: AppColors.grayShade500,
+            ),
             contentPadding: const EdgeInsets.symmetric(
               vertical: 14,
               horizontal: 12,

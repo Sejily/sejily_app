@@ -20,7 +20,7 @@ class StepProgressBar extends ConsumerWidget {
           curve: Curves.easeInOut,
           child: LinearProgressIndicator(
             value: progress,
-            backgroundColor: AppColors.gray.withValues(alpha: 0.3),
+            backgroundColor: AppColors.grayShade500.withValues(alpha: 0.3),
             color: AppColors.lightGreen,
             minHeight: 6,
           ),

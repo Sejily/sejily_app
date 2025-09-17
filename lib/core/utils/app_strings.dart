@@ -28,6 +28,7 @@ class AppStrings {
   static const String saveContactInfo = 'حفظ بيانات الاتصال';
   static const String loading = 'تحميل...';
   static const String checking = 'جاري التحقق...';
+  static const String changing = 'جاري تغيير كلمة المرور...';
 
   // USER ROLE SELECTION
   static const String selectYourRole = 'حدد دورك';
@@ -41,7 +42,7 @@ class AppStrings {
   static const String login = 'تسجيل الدخول';
   static const String welcomeBack = 'أهلا بعودتك!';
   static const String enterNextData =
-      '!ادخل البيانات التالية لتتمكن من الوصول إلي حسابك';
+      'ادخل البيانات التالية لتتمكن من الوصول إالي حسابك!';
   static const String email = 'البريد الإلكتروني';
   static const String password = 'كلمة المرور';
   static const String forgetPassword = 'نسيت كلمة المرور؟';
@@ -167,9 +168,9 @@ class AppStrings {
   static const String emailAddress = 'البريد الإلكتروني';
   static const String passwordLabel = 'كلمة المرور';
   static const String createNewAccount = 'تسجيل مستخدم جديد';
-  static const String agreeToUsageAndPrivacyPolicies =
-      'بالضغط على تسجيل مستخدم جديد، فأنت توافق على سياسة الاستخدام والخصوصية';
-
+  static const String agreeToUsageAndPrivacyPolicies1 = 'بالضغط على ';
+  static const String agreeToUsageAndPrivacyPolicies2 = '، فأنت توافق على ';
+  static const String usageAndPrivacyPolicies = ' سياسة الاستخدام والخصوصية';
   static const String haveAccountAlready = 'لديك حساب بالفعل؟';
   static const String loginNow = 'سجل دخول الان';
   static const String orLoginWith = 'أو تسجيل الدخول باستخدام';
@@ -292,6 +293,124 @@ class AppStrings {
       'لا يوجد اتصال بالإنترنت. يرجى التحقق من الاتصال والمحاولة مرة أخرى';
   static const String unexpectedError =
       'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى';
+
+  // AUTHENTICATION SUCCESS/ERROR MESSAGES
+  static const String loginSuccessful = 'تم تسجيل الدخول بنجاح';
+  static const String loginError = 'حدث خطأ في تسجيل الدخول، حاول مرة أخرى';
+  static const String savedSuccessfully = 'تم الحفظ بنجاح';
+  static const String saveFailed = 'فشل الحفظ';
+  static const String saveError = 'حدث خطأ، حاول مرة أخرى';
+  static const String savingInProgress = 'جاري الحفظ...';
+  static const String verificationSuccessful = 'تم التحقق من الرمز بنجاح';
+  static const String verificationCodeIncorrect =
+      'رمز التحقق غير صحيح، حاول مرة أخرى';
+  static const String verificationCodeResent =
+      'تم إعادة إرسال رمز التحقق بنجاح';
+  static const String resendCodeFailed =
+      'فشل في إعادة إرسال الرمز. يرجى المحاولة مرة أخرى.';
+  static const String sending = 'جاري الإرسال...';
+  static const String passwordChangeSuccessful = 'تم تغيير كلمة المرور بنجاح';
+  static const String passwordChangeError =
+      'حدث خطأ في تغيير كلمة المرور، حاول مرة أخرى';
+  static const String verificationCodeSentSuccessfully =
+      'تم إرسال رمز التحقق بنجاح';
+  static const String forgotPasswordError = 'حدث خطأ غير متوقع، حاول مرة أخرى';
+  static const String loginFailed = 'فشل تسجيل الدخول';
+
+  // PROFILE RELATED STRINGS
+  static const String bloodTypeLabel = ' فصيلة الدم: ';
+  static const String heightLabel = ' الطول: ';
+  static const String weightLabel = ' الوزن: ';
+
+  // FILE UPLOAD ERROR MESSAGES
+  static const String fileSizeError = 'الملفات يجب ألا تتعدى 25 ميجا';
+  static const String filePathError = 'مسار الملف غير صحيح';
+  static const String uploadFailedUnexpectedResponse =
+      'فشل في رفع الملف: استجابة غير متوقعة';
+  static const String uploadFailedNoResponse =
+      'فشل في رفع الملف: لا توجد استجابة';
+  static const String uploadFailedGeneral = 'فشل في رفع الملف: ';
+  static const String uploadingFile = 'جاري رفع: ';
+
+  // MEDICAL DOCUMENT ANALYSIS
+  static const String dataLoadError = 'خطأ في تحميل البيانات: ';
+  static const String analyzeMedicalDocument = 'تحليل المستند الطبي';
+  static const String analyzingMedicalDocument = 'جاري تحليل المستند الطبي...';
+  static const String analysisError = 'حدث خطأ أثناء تحليل المستند';
+  static const String pleaseRetry = 'يرجى المحاولة مرة أخرى';
+  static const String retryLabel = 'إعادة المحاولة';
+  static const String noMedicalDataToShow = 'لا توجد بيانات طبية للعرض';
+  static const String noExtractableInfo =
+      'المستند لا يحتوي على معلومات طبية قابلة للاستخراج';
+  static const String patientInfo = 'معلومات المريض';
+  static const String unspecifiedPatient = 'مريض غير محدد';
+  static const String genderLabel = 'الجنس: ';
+  static const String prescribedMedications = 'الأدوية المصروفة';
+  static const String unspecifiedMedication = 'دواء غير محدد';
+  static const String unspecifiedDosage = 'الجرعة غير محددة';
+  static const String unspecified = 'غير محدد';
+
+  // GOOGLE DRIVE FILE PICKER
+  static const String googleDriveLoginFailed =
+      'فشل تسجيل الدخول في Google Drive';
+  static const String selectFilesFromGoogleDrive = 'اختر ملفات من Google Drive';
+  static const String noFilesToShow = 'لا توجد ملفات للعرض';
+  static const String noName = 'بدون اسم';
+  static const String filesSelected = 'تم اختيار \${count} ملف';
+  static const String addFiles = 'إضافة الملفات';
+  static const String analyzeFile = 'تحليل الملف الطبي';
+
+  // EMERGENCY CONTACTS
+  static const String noEmergencyContacts = 'لا توجد جهات طوارئ';
+  static const String emergencyContactDetails = 'تفاصيل جهة الطوارئ';
+  static const String nameLabel = 'الاسم: ';
+  static const String phoneLabel = 'رقم الهاتف: ';
+  static const String relationLabel = 'صلة القرابة: ';
+  static const String deleteEmergencyContact = 'حذف جهة الطوارئ';
+  static const String errorOccurred = 'حدث خطأ';
+
+  // VALIDATION AND INPUT ERRORS
+  static const String pleaseEnterVerificationCode =
+      'من فضلك أدخل رمز التحقق بالكامل';
+  static const String unexpectedErrorRetry =
+      'حدث خطأ غير متوقع. الرجاء المحاولة مرة أخرى';
+  static const String invalidUserRole =
+      'دور المستخدم غير صالح. يرجى المحاولة مرة أخرى.';
+  static const String registrationError = 'حدث خطأ أثناء التسجيل: ';
+  static const String enterPhoneNumber = 'أدخل رقم هاتفك';
+  static const String imageSelectedSuccessfully = 'تم اختيار الصورة بنجاح';
+  static const String changeImage = 'تغيير الصورة';
+  static const String maleGender = 'ذكر';
+  static const String femaleGender = 'أنثى';
+  static const String pleaseUploadPersonalPhoto = 'يرجى تحميل الصورة الشخصية';
+  static const String pleaseUploadNationalId = 'يرجى تحميل صورة الهوية';
+  static const String passwordsDoNotMatchError = 'كلمتا المرور غير متطابقتين';
+  static const String pleaseEnterEmail = 'من فضلك أدخل البريد الإلكتروني';
+  static const String pleaseEnterEmailAndPassword =
+      'من فضلك أدخل البريد وكلمة المرور';
+
+  // DOCUMENT VIEW STRINGS
+  static const String documentDetails = 'تفاصيل المستند';
+  static const String unspecifiedDocument = 'مستند غير محدد';
+  static const String fileTypeLabel = 'نوع الملف';
+  static const String uploadDate = 'تاريخ الرفع';
+  static const String processingDate = 'تاريخ المعالجة';
+  static const String extractedMedicalData = 'البيانات الطبية المستخرجة';
+  static const String extractionAccuracy = 'دقة الاستخراج: ';
+  static const String patientId = 'معرف المريض';
+  static const String status = 'الحالة';
+  static const String active = 'نشط';
+  static const String inactive = 'غير نشط';
+  static const String name = 'الاسم';
+  static const String reportType = 'نوع التقرير';
+  static const String reportStatus = 'حالة التقرير';
+  static const String summary = 'الخلاصة';
+  static const String reportDate = 'تاريخ التقرير';
+  static const String purpose = 'الغرض';
+  static const String identifier = 'المعرف';
+  static const String resourceType = 'نوع المورد';
+  static const String additionalInfo = 'معلومات إضافية';
+  static const String documentId = 'معرف المستند';
 
   // HTTP STATUS ERROR MESSAGES
   static const String badRequestError = 'يرجى التحقق من البيانات المدخلة';

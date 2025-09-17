@@ -111,15 +111,15 @@ class _UploadHospitalAffiliationPageState
                     Text(
                       AppStrings.addProfessionalInfoDescription,
                       style: AppTextStyles.regular14.copyWith(
-                        color: AppColors.gray,
+                        color: AppColors.grayShade500,
                       ),
                     ),
                     _buildFormFields(),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 40),
                       child: CustomButton(
-                        onPressed: _onNext,
                         text: AppStrings.next,
+                        onPressed: _onNext,
                       ),
                     ),
                   ],

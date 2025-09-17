@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -24,10 +25,13 @@ class DataReviewPage extends StatelessWidget {
               const SizedBox(height: 40),
 
               CustomButton(
-                onPressed: () {
-                  context.go(Routes.home);
-                },
                 text: AppStrings.browseMainPage,
+                onPressed: () async {
+                  await storage.setLoggedIn(true);
+                  if (context.mounted) {
+                    context.go(Routes.home);
+                  }
+                },
               ),
 
               const SizedBox(height: 16),
@@ -39,8 +43,7 @@ class DataReviewPage extends StatelessWidget {
                 child: Text(
                   AppStrings.browseUsageAndPrivacyPolicies,
                   style: AppTextStyles.medium14.copyWith(
-                    color: AppColors.darkBlue,
-                    decoration: TextDecoration.underline,
+                    color: AppColors.black,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -68,7 +71,9 @@ class DataReviewPage extends StatelessWidget {
         ),
         Text(
           AppStrings.reviewDataDescription,
-          style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+          style: AppTextStyles.regular14.copyWith(
+            color: AppColors.grayShade500,
+          ),
           textAlign: TextAlign.center,
         ),
       ],

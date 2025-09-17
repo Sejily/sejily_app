@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
+import 'package:sejily/core/utils/app_colors.dart';
 import '../../data/models/google_drive_service.dart';
 
 class DriveFilePickerDialog extends StatefulWidget {
@@ -27,9 +28,11 @@ class _DriveFilePickerDialogState extends State<DriveFilePickerDialog> {
     final success = await _service.signIn();
     if (!success) {
       setState(() => _loading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('فشل تسجيل الدخول في Google Drive')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('فشل تسجيل الدخول في Google Drive')),
+        );
+      }
       return;
     }
 
@@ -43,7 +46,7 @@ class _DriveFilePickerDialogState extends State<DriveFilePickerDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
         constraints: const BoxConstraints(maxHeight: 500),

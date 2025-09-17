@@ -58,7 +58,7 @@ class _RegisterButtonState extends ConsumerState<RegisterButton> {
             ),
           );
     } catch (e) {
-      _showSnackBar('حدث خطأ أثناء التسجيل: ${e.toString()}', Colors.red);
+      _showSnackBar('حدث خطأ أثناء التسجيل: ${e.toString()}', AppColors.red);
     }
   }
 
@@ -72,30 +72,32 @@ class _RegisterButtonState extends ConsumerState<RegisterButton> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref
+        .watch(registerNotifierProvider)
+        .whenOrNull(loading: () => true);
     // Listen to auth state changes for navigation and error handling
     ref.listen(registerNotifierProvider, (previous, next) {
       next.maybeWhen(
         success: () {
           context.push(
-            Routes.registerOtpVerification,
-            extra: widget._emailController.text.trim(),
+            Routes.otpVerification,
+            extra: {
+              'email': widget._emailController.text.trim(),
+              'route': Routes.completeUserData,
+            },
           );
         },
         failure: (error) {
-          _showSnackBar(error.errorMessage, Colors.red);
+          _showSnackBar(error.errorMessage, AppColors.red);
         },
         orElse: () {},
       );
     });
 
     return CustomButton(
+      text: AppStrings.createNewAccount,
+      isLoading: isLoading,
       onPressed: _onRegisterPressed,
-      child: ref
-          .watch(registerNotifierProvider)
-          .maybeWhen(
-            loading: () => const CircularProgressIndicator(),
-            orElse: () => Text(AppStrings.createNewAccount),
-          ),
     );
   }
 }

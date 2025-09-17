@@ -15,11 +15,13 @@ class CustomAppBar extends StatelessWidget {
         onTap: () => context.pop(),
         child: Row(
           children: [
-            Icon(Icons.arrow_back_ios, color: AppColors.gray, size: 12),
+            Icon(Icons.arrow_back_ios, color: AppColors.grayShade500, size: 12),
             const SizedBox(width: 12),
             Text(
               AppStrings.back,
-              style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+              style: AppTextStyles.regular14.copyWith(
+                color: AppColors.grayShade500,
+              ),
             ),
           ],
         ),

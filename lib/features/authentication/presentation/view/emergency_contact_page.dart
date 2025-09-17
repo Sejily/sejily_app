@@ -75,7 +75,7 @@ class _EmergencyContactPageState extends ConsumerState<EmergencyContactPage> {
                   Text(
                     AppStrings.addEmergencyContactDescription,
                     style: AppTextStyles.regular14.copyWith(
-                      color: AppColors.gray,
+                      color: AppColors.grayShade500,
                     ),
                   ),
 

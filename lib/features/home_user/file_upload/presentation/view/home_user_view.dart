@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/features/home_user/file_upload/presentation/widgets/user_app_bar.dart';
@@ -34,12 +35,12 @@ class UploadFilePage extends ConsumerWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: const Color(0xFFFFF8E1),
-        border: const Border(right: BorderSide(color: Colors.orange)),
+        border: Border(right: BorderSide(color: AppColors.orange)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info, color: Colors.orange),
+          Icon(Icons.info, color: AppColors.orange),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -47,11 +48,15 @@ class UploadFilePage extends ConsumerWidget {
               children: [
                 Text(
                   AppStrings.warning,
-                  style: AppTextStyles.semiBold18.copyWith(color: Colors.brown),
+                  style: AppTextStyles.semiBold18.copyWith(
+                    color: AppColors.brown,
+                  ),
                 ),
                 Text(
                   AppStrings.warningDescription,
-                  style: AppTextStyles.regular14.copyWith(color: Colors.brown),
+                  style: AppTextStyles.regular14.copyWith(
+                    color: AppColors.brown,
+                  ),
                 ),
               ],
             ),

@@ -133,15 +133,16 @@ class _CompleteUserDataPageState extends ConsumerState<CompleteUserDataPage> {
                   Text(
                     AppStrings.helpUsProvidePersonalizedExperience,
                     style: AppTextStyles.regular14.copyWith(
-                      color: AppColors.gray,
+                      color: AppColors.grayShade500,
                     ),
                   ),
 
                   _buildFormFields(),
 
                   CustomButton(
-                    onPressed: _isLoading ? null : _handleNext,
-                    text: _isLoading ? AppStrings.loading : AppStrings.next,
+                    isLoading: _isLoading,
+                    onPressed: _handleNext,
+                    text: AppStrings.next,
                   ),
 
                   const SizedBox(height: 40),

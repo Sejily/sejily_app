@@ -6,7 +6,6 @@ class Routes {
   static const String login = '/login';
   static const String register = '/register';
   static const String forgetPassword = '/forgetPassword';
-  static const String verifyOtp = '/verifyOtp';
   static const String resetPassword = '/resetPassword';
   static const String success = '/success';
   static const String home = '/home';
@@ -18,10 +17,10 @@ class Routes {
   static const String uploadHospitalAffiliation = '/uploadHospitalAffiliation';
   static const String emergencyContact = '/emergencyContact';
   static const String dataReview = '/dataReview';
-  static const String registerOtpVerification = '/registerOtpVerification';
-  static const String editProfile = "/editProfile";
+  static const String otpVerification = '/otpVerification';
   static const String completeProfile = "/copmleteProfile";
-  static const String emergency = "/emergency";
+  static const String editProfile = '/edit-profile';
+  static const String userProfileEmergencyContacts = "/emergency";
   static const String notifications = "/notifications";
   static const String help = "/help";
   static const String terms = "/terms";

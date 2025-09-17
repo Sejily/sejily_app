@@ -35,7 +35,7 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('خطأ في تحميل البيانات: $error'),
-              backgroundColor: Colors.red.shade400,
+              backgroundColor: AppColors.redShade400,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -83,7 +83,7 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
         ),
         CircleAvatar(
           radius: 50,
-          backgroundColor: AppColors.gray.withValues(alpha: 0.1),
+          backgroundColor: AppColors.grayShade500.withValues(alpha: 0.1),
           child: Image.asset(Assets.logo, height: 80),
         ),
         const SizedBox(height: 10),
@@ -92,7 +92,7 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.black87,
+            color: AppColors.black87,
           ),
         ),
       ],
@@ -105,13 +105,16 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(
-            color: Colors.blue.shade400,
+            color: AppColors.mediumBlue,
             strokeWidth: 3,
           ),
           const SizedBox(height: 16),
           Text(
             'جاري تحليل المستند الطبي...',
-            style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+            style: TextStyle(
+              fontSize: 16,
+              color: AppColors.grayShade600,
+            ),
           ),
         ],
       ),
@@ -126,7 +129,7 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
           Icon(
             Icons.error_outline_rounded,
             size: 64,
-            color: Colors.grey.shade400,
+            color: AppColors.grayShade400,
           ),
           const SizedBox(height: 16),
           Text(
@@ -134,13 +137,16 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
-              color: Colors.grey.shade700,
+              color: AppColors.grayShade700,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'يرجى المحاولة مرة أخرى',
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.grayShade500,
+            ),
           ),
           const SizedBox(height: 24),
           ElevatedButton.icon(
@@ -152,8 +158,8 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
             icon: const Icon(Icons.refresh_rounded, size: 20),
             label: const Text('إعادة المحاولة'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue.shade50,
-              foregroundColor: Colors.blue.shade700,
+              backgroundColor: AppColors.lightBlue,
+              foregroundColor: AppColors.darkBlueShade,
               elevation: 0,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
@@ -199,7 +205,7 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
           Icon(
             Icons.description_outlined,
             size: 64,
-            color: Colors.grey.shade300,
+            color: AppColors.grayShade300,
           ),
           const SizedBox(height: 16),
           Text(
@@ -207,13 +213,16 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
-              color: Colors.grey.shade600,
+              color: AppColors.grayShade600,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'المستند لا يحتوي على معلومات طبية قابلة للاستخراج',
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.grayShade500,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -260,9 +269,9 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.blue.shade50,
+        color: AppColors.lightBlue,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blue.shade200),
+        border: Border.all(color: AppColors.blueShade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,7 +284,10 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
             const SizedBox(height: 6),
             Text(
               'الجنس: $patientGender',
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColors.grayShade700,
+              ),
             ),
           ],
         ],
@@ -344,9 +356,9 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.blue.shade50,
+        color: AppColors.lightBlue,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blue.shade200),
+        border: Border.all(color: AppColors.blueShade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,7 +370,10 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
           const SizedBox(height: 6),
           Text(
             dosage,
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.grayShade700,
+            ),
           ),
           if (timing != null) ...[
             const SizedBox(height: 4),
@@ -366,7 +381,7 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
               timing,
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey.shade600,
+                color: AppColors.grayShade600,
                 fontStyle: FontStyle.italic,
               ),
             ),

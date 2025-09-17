@@ -14,7 +14,6 @@ class GoogleDriveService {
       _currentUser = await _googleSignIn.signIn();
       return _currentUser != null;
     } catch (e) {
-      print('Google Sign-In error: $e');
       return false;
     }
   }

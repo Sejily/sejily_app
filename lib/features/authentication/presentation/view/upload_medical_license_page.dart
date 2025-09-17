@@ -81,7 +81,7 @@ class _UploadMedicalLicensePageState
                 Text(
                   AppStrings.addProfessionalInfoDescription,
                   style: AppTextStyles.regular14.copyWith(
-                    color: AppColors.gray,
+                    color: AppColors.grayShade500,
                   ),
                 ),
 

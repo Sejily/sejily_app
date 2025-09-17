@@ -98,7 +98,7 @@ class ImageUploadSection extends StatelessWidget {
         isNationalIdPic ?? false
             ? AppStrings.imageUploadNationalId
             : AppStrings.imageUploadCriteria,
-        style: AppTextStyles.regular12.copyWith(color: AppColors.gray),
+        style: AppTextStyles.regular12.copyWith(color: AppColors.grayShade500),
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: 16),

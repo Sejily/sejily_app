@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
@@ -14,46 +15,51 @@ class SuccessResetPasswordPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.celebration, size: 80, color: Color(0xFF1E3A8A)),
+              Image.asset(Assets.celebrationIcon, height: 80),
               const SizedBox(height: 20),
 
               Text(
                 AppStrings.congratulations,
                 style: AppTextStyles.bold24.copyWith(
-                  color: const Color(0xFF1E3A8A),
+                  color: AppColors.blackBlue,
                 ),
               ),
               const SizedBox(height: 12),
 
               Text(
                 AppStrings.passwordResetSuccessDescription,
-                style: AppTextStyles.regular14.copyWith(color: Colors.black54),
+                style: AppTextStyles.regular14.copyWith(
+                  color: AppColors.black54,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
 
               CustomButton(
+                text: AppStrings.loginNow,
                 onPressed: () {
                   ref.read(progressProvider.notifier).reset();
                   context.go(Routes.login);
                 },
-                text: AppStrings.loginNow,
               ),
               const SizedBox(height: 20),
 
-              Text(
-                AppStrings.browseUsageAndPrivacyPolicies,
-                style: AppTextStyles.regular14.copyWith(
-                  fontSize: 13,
-                  color: Colors.black87,
-                  decoration: TextDecoration.underline,
+              TextButton(
+                onPressed: () {
+                  //TODO: Add privacy policies later
+                },
+                child: Text(
+                  AppStrings.browseUsageAndPrivacyPolicies,
+                  style: AppTextStyles.medium14.copyWith(
+                    color: AppColors.black,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],

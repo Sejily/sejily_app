@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sejily/core/routes/routes.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -11,9 +12,13 @@ import 'package:sejily/features/authentication/presentation/widgets/resend_otp_b
 import 'package:sejily/features/authentication/presentation/widgets/verification_button.dart';
 
 class OtpVerificationView extends ConsumerStatefulWidget {
-  const OtpVerificationView({super.key, required this.email});
+  const OtpVerificationView({
+    super.key,
+    required this.email,
+    required this.route,
+  });
   final String email;
-
+  final String route;
   @override
   ConsumerState<OtpVerificationView> createState() =>
       _OtpVerificationViewState();
@@ -42,7 +47,7 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('تم إعادة إرسال رمز التحقق بنجاح'),
-        backgroundColor: Colors.green,
+        backgroundColor: AppColors.lightGreen,
       ),
     );
   }
@@ -52,6 +57,11 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
       SnackBar(content: Text(error), backgroundColor: AppColors.lightRed),
     );
   }
+
+  Map<String, dynamic>? _buildRouteData() =>
+      widget.route == Routes.resetPassword
+      ? {'email': widget.email, 'otp': _pinController.text.trim()}
+      : null;
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +84,12 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
               _buildResendSection(),
 
               VerificationButton(
+                route: widget.route,
                 email: widget.email,
                 otp: _pinController.text.trim(),
                 isComplete: isComplete,
                 onError: _onError,
+                routeData: _buildRouteData(),
               ),
             ],
           ),
@@ -108,7 +120,9 @@ class _OtpVerificationViewState extends ConsumerState<OtpVerificationView> {
         const SizedBox(height: 4),
         Text(
           AppStrings.verificationCodeSent,
-          style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+          style: AppTextStyles.regular14.copyWith(
+            color: AppColors.grayShade500,
+          ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),

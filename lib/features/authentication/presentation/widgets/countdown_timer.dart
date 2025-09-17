@@ -60,7 +60,7 @@ class CountdownTimerState extends State<CountdownTimer> {
     return Text(
       '${_timeLeft ~/ 60}:${(_timeLeft % 60).toString().padLeft(2, '0')}',
       style: AppTextStyles.medium18.copyWith(
-        color: isActive ? AppColors.darkBlue : AppColors.gray,
+        color: isActive ? AppColors.darkBlue : AppColors.grayShade500,
       ),
     );
   }

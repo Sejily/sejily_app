@@ -60,7 +60,9 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
               ),
               Text(
                 _getCurrentDate(),
-                style: AppTextStyles.regular12.copyWith(color: AppColors.gray),
+                style: AppTextStyles.regular12.copyWith(
+                  color: AppColors.grayShade500,
+                ),
               ),
             ],
           ),
@@ -81,12 +83,14 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
         ),
         child: Row(
           children: [
-            Icon(Icons.search, color: AppColors.gray, size: 20),
+            Icon(Icons.search, color: AppColors.grayShade500, size: 20),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 'بحث',
-                style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+                style: AppTextStyles.regular14.copyWith(
+                  color: AppColors.grayShade500,
+                ),
               ),
             ),
           ],
@@ -153,7 +157,9 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
             children: [
               Text(
                 _formatDate(document.uploadedAt),
-                style: AppTextStyles.regular12.copyWith(color: AppColors.gray),
+                style: AppTextStyles.regular12.copyWith(
+                  color: AppColors.grayShade500,
+                ),
               ),
               Expanded(
                 child: Row(
@@ -171,7 +177,7 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
                             color: AppColors.black,
                             fontFamily: 'IBM_Plex_Sans_Arabic',
                             decoration: TextDecoration.none,
-                            decorationColor: Colors.transparent,
+                            decorationColor: AppColors.transparent,
                           ),
                           maxLines: 2,
                         ),
@@ -218,7 +224,7 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.error_outline, size: 48, color: AppColors.gray),
+          Icon(Icons.error_outline, size: 48, color: AppColors.grayShade500),
           const SizedBox(height: 16),
           Text(
             'حدث خطأ أثناء تحميل المستندات',
@@ -227,7 +233,9 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
           const SizedBox(height: 8),
           Text(
             error,
-            style: AppTextStyles.regular12.copyWith(color: AppColors.gray),
+            style: AppTextStyles.regular12.copyWith(
+              color: AppColors.grayShade500,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
@@ -251,7 +259,11 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.folder_open_outlined, size: 64, color: AppColors.gray),
+          Icon(
+            Icons.folder_open_outlined,
+            size: 64,
+            color: AppColors.grayShade500,
+          ),
           const SizedBox(height: 16),
           Text(
             'لا توجد مستندات',
@@ -260,7 +272,9 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
           const SizedBox(height: 8),
           Text(
             'لم يتم العثور على أي مستندات طبية',
-            style: AppTextStyles.regular12.copyWith(color: AppColors.gray),
+            style: AppTextStyles.regular12.copyWith(
+              color: AppColors.grayShade500,
+            ),
           ),
         ],
       ),
@@ -398,7 +412,7 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
         _buildInfoChip(
           Icons.storage,
           _formatFileSize(document.fileSize!),
-          AppColors.skyBlue.withOpacity(0.1),
+          AppColors.skyBlue.withValues(alpha: 0.1),
           AppColors.darkBlue,
         ),
       );
@@ -409,7 +423,7 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
         _buildInfoChip(
           Icons.psychology,
           '${(document.ocrConfidence! * 100).toInt()}% دقة',
-          _getConfidenceColor(document.ocrConfidence!).withOpacity(0.1),
+          _getConfidenceColor(document.ocrConfidence!).withValues(alpha: 0.1),
           _getConfidenceColor(document.ocrConfidence!),
         ),
       );
@@ -420,7 +434,7 @@ class _UserDocumentsViewState extends ConsumerState<UserDocumentsView> {
         _buildInfoChip(
           Icons.category,
           _translateExtractionType(document.aiExtractedData!.extractionType!),
-          AppColors.lightGreen.withOpacity(0.1),
+          AppColors.lightGreen.withValues(alpha: 0.1),
           AppColors.lightGreen,
         ),
       );

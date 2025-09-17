@@ -55,7 +55,7 @@ class _RegisterViewState extends State<RegisterView> {
                   Text(
                     AppStrings.enterDataToCreateAccount,
                     style: AppTextStyles.regular14.copyWith(
-                      color: AppColors.gray,
+                      color: AppColors.grayShade500,
                     ),
                   ),
 
@@ -67,19 +67,7 @@ class _RegisterViewState extends State<RegisterView> {
                     passwordController: _passwordController,
                     nameController: _nameController,
                   ),
-                  //* Terms and Conditions
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Center(
-                      child: Text(
-                        AppStrings.agreeToUsageAndPrivacyPolicies,
-                        style: AppTextStyles.regular12.copyWith(
-                          color: AppColors.gray,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
+                  _termsAndConditions(),
                   //* Already have account
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,6 +90,42 @@ class _RegisterViewState extends State<RegisterView> {
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _termsAndConditions() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Center(
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: AppStrings.agreeToUsageAndPrivacyPolicies1,
+                style: AppTextStyles.medium18.copyWith(color: AppColors.black),
+              ),
+              TextSpan(
+                text: AppStrings.createNewAccount,
+                style: AppTextStyles.medium18.copyWith(
+                  decoration: TextDecoration.underline,
+                  color: AppColors.black,
+                ),
+              ),
+              TextSpan(
+                text: AppStrings.agreeToUsageAndPrivacyPolicies2,
+                style: AppTextStyles.medium18.copyWith(color: AppColors.black),
+              ),
+              TextSpan(
+                text: AppStrings.usageAndPrivacyPolicies,
+                style: AppTextStyles.medium18.copyWith(
+                  decoration: TextDecoration.underline,
+                  color: AppColors.black,
+                ),
+              ),
+            ],
           ),
         ),
       ),

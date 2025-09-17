@@ -71,7 +71,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                 hintText: 'أدخل رقم هاتفك',
                 hintStyle: AppTextStyles.regular16.copyWith(
-                  color: AppColors.gray,
+                  color: AppColors.grayShade500,
                 ),
               ),
               validator: AppValidators.phoneNumberValidator,

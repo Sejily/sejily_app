@@ -18,7 +18,7 @@ class ProfileNavigation {
   }
 
   static void goToEmergency(BuildContext context) {
-    context.push(Routes.emergency);
+    context.push(Routes.userProfileEmergencyContacts);
   }
 
   static void goToNotifications(BuildContext context) {

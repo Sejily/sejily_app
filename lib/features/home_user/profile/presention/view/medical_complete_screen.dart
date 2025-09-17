@@ -22,140 +22,129 @@ class MedicalInfoScreen extends ConsumerWidget {
     ref.listen<EditProfileState>(editProfileNotifierProvider, (prev, next) {
       if (next.success != null) {
         if (next.success!) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text("تم الحفظ بنجاح ")));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text(AppStrings.savedSuccessfully)),
+          );
           Navigator.pop(context);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(next.errorMessage ?? "فشل الحفظ")),
+            SnackBar(content: Text(next.errorMessage ?? AppStrings.saveFailed)),
           );
         }
       }
     });
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: AppColors.white,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CustomAppBar(),
-                const SizedBox(height: 20),
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const CustomAppBar(),
+              const SizedBox(height: 20),
 
-                Text(
-                  AppStrings.helpUsProvidePersonal,
-                  style: AppTextStyles.regular14.copyWith(color: Colors.grey),
+              Text(
+                AppStrings.helpUsProvidePersonal,
+                style: AppTextStyles.regular14.copyWith(
+                  color: AppColors.grayShade500,
                 ),
-                const SizedBox(height: 20),
+              ),
+              const SizedBox(height: 20),
 
-                MedicalTextField(
-                  label: AppStrings.medicalState,
-                  initialValue: medicalInfo.medicalState,
-                  onChanged: (val) {
-                    ref.read(medicalInfoProvider.notifier).setMedicalState(val);
-                  },
-                ),
-                const SizedBox(height: 16),
+              MedicalTextField(
+                label: AppStrings.medicalState,
+                initialValue: medicalInfo.medicalState,
+                onChanged: (val) {
+                  ref.read(medicalInfoProvider.notifier).setMedicalState(val);
+                },
+              ),
+              const SizedBox(height: 16),
 
-                MedicalTextField(
-                  label: AppStrings.sensitive,
-                  initialValue: medicalInfo.sensitive,
-                  onChanged: (val) {
-                    ref.read(medicalInfoProvider.notifier).setSensitive(val);
-                  },
-                ),
-                const SizedBox(height: 16),
+              MedicalTextField(
+                label: AppStrings.sensitive,
+                initialValue: medicalInfo.sensitive,
+                onChanged: (val) {
+                  ref.read(medicalInfoProvider.notifier).setSensitive(val);
+                },
+              ),
+              const SizedBox(height: 16),
 
-                MedicalTextField(
-                  label: AppStrings.height,
-                  initialValue: medicalInfo.height,
-                  onChanged: (val) {
-                    ref.read(medicalInfoProvider.notifier).setHeight(val);
-                  },
-                ),
-                const SizedBox(height: 16),
+              MedicalTextField(
+                label: AppStrings.height,
+                initialValue: medicalInfo.height,
+                onChanged: (val) {
+                  ref.read(medicalInfoProvider.notifier).setHeight(val);
+                },
+              ),
+              const SizedBox(height: 16),
 
-                MedicalTextField(
-                  label: AppStrings.weight,
-                  initialValue: medicalInfo.weight,
-                  onChanged: (val) {
-                    ref.read(medicalInfoProvider.notifier).setWeight(val);
-                  },
-                ),
-                const SizedBox(height: 24),
+              MedicalTextField(
+                label: AppStrings.weight,
+                initialValue: medicalInfo.weight,
+                onChanged: (val) {
+                  ref.read(medicalInfoProvider.notifier).setWeight(val);
+                },
+              ),
+              const SizedBox(height: 24),
 
-                Text(
-                  "${AppStrings.bloodType} *",
-                  style: AppTextStyles.medium16.copyWith(color: Colors.black),
-                ),
-                const SizedBox(height: 12),
+              Text(
+                "${AppStrings.bloodType} *",
+                style: AppTextStyles.medium16.copyWith(color: AppColors.black),
+              ),
+              const SizedBox(height: 12),
 
-                BloodTypeSelector(
-                  selected: medicalInfo.bloodType,
-                  onChanged: (val) {
-                    ref.read(medicalInfoProvider.notifier).setBloodType(val);
-                  },
-                ),
+              BloodTypeSelector(
+                selected: medicalInfo.bloodType,
+                onChanged: (val) {
+                  ref.read(medicalInfoProvider.notifier).setBloodType(val);
+                },
+              ),
 
-                const SizedBox(height: 40),
+              const SizedBox(height: 40),
 
-                CustomButton(
-                  text: editState.isLoading
-                      ? "جاري الحفظ..."
-                      : AppStrings.finish,
-                  onPressed: editState.isLoading
-                      ? null
-                      : () {
-                          final userProfile = ref
-                              .read(userProfileProvider)
-                              .value;
+              CustomButton(
+                isLoading: editState.isLoading,
+                text: AppStrings.finish,
+                loadingText: AppStrings.savingInProgress,
+                onPressed: () {
+                  final userProfile = ref.read(userProfileProvider).value;
 
-                          if (userProfile != null) {
-                            userProfile.when(
-                              onSuccess: (user) {
-                                final updatedUser = user.copyWith(
-                                  bloodType: medicalInfo.bloodType,
-                                  height: medicalInfo.height != null
-                                      ? double.tryParse(medicalInfo.height!)
-                                      : user.height,
-                                  weight: medicalInfo.weight != null
-                                      ? double.tryParse(medicalInfo.weight!)
-                                      : user.weight,
-                                  medicalConditions:
-                                      medicalInfo.medicalState != null
-                                      ? [medicalInfo.medicalState!]
-                                      : user.medicalConditions,
-                                  allergies: medicalInfo.sensitive != null
-                                      ? [medicalInfo.sensitive!]
-                                      : user.allergies,
-                                );
+                  if (userProfile != null) {
+                    userProfile.when(
+                      onSuccess: (user) {
+                        final updatedUser = user.copyWith(
+                          bloodType: medicalInfo.bloodType,
+                          height: medicalInfo.height != null
+                              ? double.tryParse(medicalInfo.height!)
+                              : user.height,
+                          weight: medicalInfo.weight != null
+                              ? double.tryParse(medicalInfo.weight!)
+                              : user.weight,
+                          medicalConditions: medicalInfo.medicalState != null
+                              ? [medicalInfo.medicalState!]
+                              : user.medicalConditions,
+                          allergies: medicalInfo.sensitive != null
+                              ? [medicalInfo.sensitive!]
+                              : user.allergies,
+                        );
 
-                                ref
-                                    .read(editProfileNotifierProvider.notifier)
-                                    .updateProfile(updatedUser);
-                              },
-                              onFailure: (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(e.errorMessage)),
-                                );
-                              },
-                            );
-                          }
-                        },
-                  backgroundColor: AppColors.darkBlue,
-                  foregroundColor: AppColors.white,
-                  defaultSize: false,
-                  style: AppTextStyles.medium16.copyWith(
-                    color: AppColors.white,
-                  ),
-                ),
-              ],
-            ),
+                        ref
+                            .read(editProfileNotifierProvider.notifier)
+                            .updateProfile(updatedUser);
+                      },
+                      onFailure: (e) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text(e.errorMessage)));
+                      },
+                    );
+                  }
+                },
+                defaultSize: false,
+                style: AppTextStyles.medium16.copyWith(color: AppColors.white),
+              ),
+            ],
           ),
         ),
       ),

@@ -55,7 +55,7 @@ class DocumentView extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.05),
+            color: AppColors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -69,7 +69,7 @@ class DocumentView extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.darkBlue.withOpacity(0.1),
+                  color: AppColors.darkBlue.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -93,7 +93,7 @@ class DocumentView extends StatelessWidget {
                     Text(
                       _formatFileSize(document.fileSize),
                       style: AppTextStyles.regular12.copyWith(
-                        color: AppColors.gray,
+                        color: AppColors.grayShade500,
                       ),
                     ),
                   ],
@@ -126,7 +126,7 @@ class DocumentView extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.05),
+            color: AppColors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -171,10 +171,10 @@ class DocumentView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: _getConfidenceColor(confidence).withOpacity(0.1),
+        color: _getConfidenceColor(confidence).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: _getConfidenceColor(confidence).withOpacity(0.3),
+          color: _getConfidenceColor(confidence).withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -388,7 +388,7 @@ class DocumentView extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.05),
+            color: AppColors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -452,7 +452,9 @@ class DocumentView extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'دقة OCR: ${(document.ocrConfidence! * 100).toInt()}%',
-            style: AppTextStyles.regular12.copyWith(color: AppColors.gray),
+            style: AppTextStyles.regular12.copyWith(
+              color: AppColors.grayShade500,
+            ),
           ),
         ],
       ],
@@ -469,7 +471,9 @@ class DocumentView extends StatelessWidget {
       child: Center(
         child: Text(
           'لا توجد بيانات طبية مستخرجة',
-          style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+          style: AppTextStyles.regular14.copyWith(
+            color: AppColors.grayShade500,
+          ),
         ),
       ),
     );
@@ -483,7 +487,9 @@ class DocumentView extends StatelessWidget {
           width: 100,
           child: Text(
             '$label:',
-            style: AppTextStyles.medium14.copyWith(color: AppColors.gray),
+            style: AppTextStyles.medium14.copyWith(
+              color: AppColors.grayShade500,
+            ),
           ),
         ),
         Expanded(
@@ -506,7 +512,9 @@ class DocumentView extends StatelessWidget {
             width: 80,
             child: Text(
               '$label:',
-              style: AppTextStyles.medium14.copyWith(color: AppColors.gray),
+              style: AppTextStyles.medium14.copyWith(
+                color: AppColors.grayShade500,
+              ),
             ),
           ),
           Expanded(
@@ -556,8 +564,8 @@ class DocumentView extends StatelessWidget {
 
   Color _getConfidenceColor(double confidence) {
     if (confidence >= 0.8) return Colors.green;
-    if (confidence >= 0.6) return Colors.orange;
-    return Colors.red;
+    if (confidence >= 0.6) return AppColors.orange;
+    return AppColors.red;
   }
 
   IconData _getConfidenceIcon(double confidence) {
@@ -581,8 +589,9 @@ class DocumentView extends StatelessWidget {
     if (bytes == null) return 'غير محدد';
 
     if (bytes < 1024) return '$bytes بايت';
-    if (bytes < 1024 * 1024)
+    if (bytes < 1024 * 1024) {
       return '${(bytes / 1024).toStringAsFixed(1)} كيلو بايت';
+    }
     return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} ميجا بايت';
   }
 

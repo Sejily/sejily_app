@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/features/authentication/presentation/widgets/authentication_button.dart';
-import '../../../../core/routes/routes.dart';
 
 class SocialLoginSection extends StatelessWidget {
   const SocialLoginSection({super.key});
@@ -21,7 +19,9 @@ class SocialLoginSection extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 AppStrings.orLoginWith,
-                style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+                style: AppTextStyles.regular14.copyWith(
+                  color: AppColors.grayShade500,
+                ),
               ),
             ),
             Expanded(child: Divider(color: AppColors.lightGray, thickness: 1)),

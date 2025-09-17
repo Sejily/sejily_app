@@ -67,7 +67,7 @@ class CustomBottomNavBar extends StatelessWidget {
         curve: Curves.easeInOut,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.darkBlue : Colors.transparent,
+          color: isSelected ? AppColors.darkBlue : AppColors.transparent,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Row(

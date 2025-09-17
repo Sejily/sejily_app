@@ -36,7 +36,9 @@ class GenderRadioButtons extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? AppColors.darkBlue : Colors.grey,
+                color: isSelected
+                    ? AppColors.darkBlue
+                    : AppColors.grayShade500,
                 width: 2,
               ),
             ),

@@ -57,13 +57,11 @@ class EditProfileNotifier extends StateNotifier<EditProfileState> {
 
       result.when(
         onSuccess: (resp) {
-          print(" Update Success: ${resp.message}");
           ref.invalidate(userProfileProvider);
 
           state = state.copyWith(isLoading: false, success: true);
         },
         onFailure: (error) {
-          print(" Update Failed: ${error.message}");
           state = state.copyWith(
             isLoading: false,
             success: false,

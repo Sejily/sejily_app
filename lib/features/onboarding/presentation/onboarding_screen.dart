@@ -38,19 +38,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     },
   ];
 
-  void _nextPage(String route) {
+  void _nextPage(String route) async {
     if (_currentPage < onboardingData.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
-      storage.setIsFirstTime(false);
-      context.go(route);
+      await storage.setIsFirstTime(false);
+      if (mounted) {
+        context.go(route);
+      }
     }
   }
 
-  void _skipLogic(String route) {
+  void _skipLogic(String route) async {
     if (_currentPage < onboardingData.length - 1) {
       _pageController.animateToPage(
         onboardingData.length - 1,
@@ -58,8 +60,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-      storage.setIsFirstTime(false);
-      context.go(route);
+      await storage.setIsFirstTime(false);
+      if (mounted) {
+        context.go(route);
+      }
     }
   }
 
@@ -108,7 +112,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ),
                 boxShadow: const [
                   BoxShadow(
-                    color: Colors.black12,
+                    color: AppColors.black12,
                     blurRadius: 6,
                     spreadRadius: 2,
                     offset: Offset(0, -2),
@@ -130,7 +134,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     onboardingData[_currentPage]["subtitle"]!,
                     textAlign: TextAlign.center,
                     style: AppTextStyles.regular16.copyWith(
-                      color: AppColors.gray,
+                      color: AppColors.grayShade500,
                     ),
                   ),
                   const SizedBox(height: 30),

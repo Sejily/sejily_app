@@ -97,7 +97,6 @@ class RawResponse {
 
       return null;
     } catch (e) {
-      print('❌ Error parsing FHIR data: $e');
       return null;
     }
   }
@@ -129,36 +128,31 @@ class RawResponse {
 
     List<Map<String, dynamic>> resources = [];
 
-    try {
-      // Handle Bundle structure
-      if (parsedData['entry'] is List) {
-        for (var entry in parsedData['entry'] as List) {
-          if (entry is Map<String, dynamic> &&
-              entry['resource'] is Map<String, dynamic>) {
-            final resource = entry['resource'] as Map<String, dynamic>;
-            if (resource['resourceType'] == resourceType) {
-              resources.add(resource);
-            }
+    // Handle Bundle structure
+    if (parsedData['entry'] is List) {
+      for (var entry in parsedData['entry'] as List) {
+        if (entry is Map<String, dynamic> &&
+            entry['resource'] is Map<String, dynamic>) {
+          final resource = entry['resource'] as Map<String, dynamic>;
+          if (resource['resourceType'] == resourceType) {
+            resources.add(resource);
           }
         }
       }
-      // Handle direct array of resources
-      else if (parsedData['entries'] is List) {
-        for (var item in parsedData['entries'] as List) {
-          if (item is Map<String, dynamic> &&
-              item['resourceType'] == resourceType) {
-            resources.add(item);
-          }
-        }
-      }
-      // Handle single resource
-      else if (parsedData['resourceType'] == resourceType) {
-        resources.add(parsedData);
-      }
-    } catch (e) {
-      print('❌ Error extracting resources of type $resourceType: $e');
     }
-
+    // Handle direct array of resources
+    else if (parsedData['entries'] is List) {
+      for (var item in parsedData['entries'] as List) {
+        if (item is Map<String, dynamic> &&
+            item['resourceType'] == resourceType) {
+          resources.add(item);
+        }
+      }
+    }
+    // Handle single resource
+    else if (parsedData['resourceType'] == resourceType) {
+      resources.add(parsedData);
+    }
     return resources;
   }
 }

@@ -9,7 +9,6 @@ extension StorageExtension on StorageService {
   }) async {
     await saveSecure(AppConstants.accessTokenKey, accessToken);
     await saveSecure(AppConstants.refreshTokenKey, refreshToken);
-    await save(AppConstants.isLoggedInKey, true);
   }
 
   Future<String?> getAccessToken() async {

@@ -34,7 +34,7 @@ class LogoutDialog extends ConsumerWidget {
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.red),
+                        side: BorderSide(color: AppColors.red),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -48,7 +48,7 @@ class LogoutDialog extends ConsumerWidget {
                       child: Text(
                         AppStrings.logout,
                         style: AppTextStyles.medium16.copyWith(
-                          color: Colors.red,
+                          color: AppColors.red,
                         ),
                       ),
                     ),

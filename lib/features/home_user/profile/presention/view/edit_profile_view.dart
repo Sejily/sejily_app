@@ -43,12 +43,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       if (next.success != null) {
         if (next.success!) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(next.errorMessage ?? "تم الحفظ بنجاح")),
+            SnackBar(
+              content: Text(next.errorMessage ?? AppStrings.savedSuccessfully),
+            ),
           );
           Navigator.pop(context);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(next.errorMessage ?? "فشل الحفظ")),
+            SnackBar(content: Text(next.errorMessage ?? AppStrings.saveFailed)),
           );
         }
       }
@@ -128,32 +130,24 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         ),
                         const SizedBox(height: 40),
                         CustomButton(
-                          onPressed: editState.isLoading
-                              ? null
-                              : () {
-                                  if (user != null) {
-                                    final updatedUser = user!.copyWith(
-                                      name: nameController.text.trim(),
-                                      email: emailController.text.trim(),
-                                      address: addressController.text.trim(),
-                                      city: cityController.text.trim(),
-                                      phone: phoneController.text.trim(),
-                                    );
-
-                                    ref
-                                        .read(
-                                          editProfileNotifierProvider.notifier,
-                                        )
-                                        .updateProfile(updatedUser);
-                                  }
-                                },
-
+                          isLoading: editState.isLoading,
                           text: AppStrings.save,
-                          child: editState.isLoading
-                              ? const CircularProgressIndicator(
-                                  color: Colors.white,
-                                )
-                              : null,
+                          loadingText: AppStrings.savingInProgress,
+                          onPressed: () {
+                            if (user != null) {
+                              final updatedUser = user!.copyWith(
+                                name: nameController.text.trim(),
+                                email: emailController.text.trim(),
+                                address: addressController.text.trim(),
+                                city: cityController.text.trim(),
+                                phone: phoneController.text.trim(),
+                              );
+
+                              ref
+                                  .read(editProfileNotifierProvider.notifier)
+                                  .updateProfile(updatedUser);
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -165,8 +159,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               );
             },
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, st) =>
-                const Center(child: Text("حدث خطأ، حاول مرة أخرى")),
+            error: (err, st) => const Center(child: Text(AppStrings.saveError)),
           ),
         ),
       ),

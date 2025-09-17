@@ -25,7 +25,7 @@ class SejilyApp extends ConsumerWidget {
       routerConfig: router,
       theme: ThemeData(
         fontFamily: 'IBM_Plex_Sans_Arabic',
-        scaffoldBackgroundColor: AppColors.white,
+        scaffoldBackgroundColor: AppColors.whiteGray,
       ),
 
       //* Handling the localization and RTL support

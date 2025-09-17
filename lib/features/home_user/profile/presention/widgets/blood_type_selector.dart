@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 
@@ -26,7 +27,7 @@ class BloodTypeSelector extends StatelessWidget {
               Radio<String>(
                 value: type,
                 groupValue: selected,
-                activeColor: Colors.blue,
+                activeColor: AppColors.mediumBlue,
                 onChanged: onChanged,
               ),
               Text(type, style: AppTextStyles.regular14),

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
+import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/routes/routes.dart';
 import '../manager/providers/forgot_password_notifier.dart';
-import '../manager/providers/progress_provider.dart';
 
 class ForgotPasswordPage extends ConsumerStatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -40,19 +41,19 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
               const SnackBar(content: Text("تم إرسال رمز التحقق بنجاح")),
             );
 
-            ref
-                .read(progressProvider.notifier)
-                .updateProgressForRoute(Routes.verifyOtp);
-
-            context.push(Routes.verifyOtp, extra: _emailController.text.trim());
+            context.push(
+              Routes.otpVerification,
+              extra: {
+                'email': _emailController.text.trim(),
+                'route': Routes.resetPassword,
+              },
+            );
           },
           onFailure: (error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(
-                  error.message ?? 'حدث خطأ غير متوقع، حاول مرة أخرى',
-                ),
-                backgroundColor: Colors.red,
+                content: Text(error.message ?? AppStrings.unexpectedError),
+                backgroundColor: AppColors.red,
               ),
             );
           },
@@ -61,7 +62,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
     });
 
     return Scaffold(
-      backgroundColor: AppColors.white,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
@@ -71,58 +72,21 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.lock_outline,
-                      size: 60,
-                      color: Color(0xFF2C3E50),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      AppStrings.passwordResetTitle,
-                      style: AppTextStyles.bold24.copyWith(
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      AppStrings.passwordResetDescription,
-                      style: AppTextStyles.regular14.copyWith(
-                        color: Colors.grey,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    _buildHeader(),
                     const SizedBox(height: 30),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: RichText(
-                        text: TextSpan(
-                          text: AppStrings.email,
-                          style: AppTextStyles.regular14.copyWith(
-                            color: Colors.black87,
-                          ),
-                          children: const [
-                            TextSpan(
-                              text: " *",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ],
-                        ),
+                    BuildFieldWithLabel(
+                      label: AppStrings.email,
+                      required: true,
+                      child: CustomTextField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
                       ),
                     ),
-                    const SizedBox(height: 8),
-
-                    CustomTextField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(height: 20),
-
+                    const SizedBox(height: 60),
                     CustomButton(
-                      onPressed: state.isLoading ? null : _sendOtp,
+                      isLoading: state.isLoading,
                       text: AppStrings.sendVerificationCode,
-                      child: state.isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : null,
+                      onPressed: _sendOtp,
                     ),
                   ],
                 ),
@@ -153,6 +117,34 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Column _buildHeader() {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            color: AppColors.lightGray.withValues(alpha: 0.1),
+          ),
+          padding: const EdgeInsets.all(15),
+          child: Image.asset(Assets.validationCode, height: 30, width: 30),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          AppStrings.passwordResetTitle,
+          style: AppTextStyles.bold24.copyWith(color: AppColors.black87),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          AppStrings.passwordResetDescription,
+          style: AppTextStyles.regular14.copyWith(
+            color: AppColors.grayShade500,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

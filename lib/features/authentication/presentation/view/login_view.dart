@@ -5,9 +5,11 @@ import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
+import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_text_field.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import 'package:sejily/core/routes/routes.dart';
+import 'package:sejily/features/authentication/presentation/widgets/authentication_button.dart';
 import 'package:sejily/features/authentication/presentation/widgets/social_login_section.dart';
 import '../manager/providers/login_provider.dart';
 import '../manager/providers/progress_provider.dart';
@@ -36,22 +38,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ref.listen<LoginState>(loginNotifierProvider, (prev, next) {
       if (next.result != null) {
         next.result!.when(
-          onSuccess: (data) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("تم تسجيل الدخول بنجاح")),
-            );
+          onSuccess: (data) async {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(AppStrings.loginSuccessful)));
 
             ref.read(progressProvider.notifier).reset();
-            storage.setLoggedIn(true);
-            context.go(Routes.home);
+            await storage.setLoggedIn(true);
+            if (context.mounted) {
+              context.go(Routes.home);
+            }
           },
           onFailure: (error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(
-                  error.message ?? 'حدث خطأ في تسجيل الدخول، حاول مرة أخرى',
-                ),
-                backgroundColor: Colors.red,
+                content: Text(error.message ?? AppStrings.loginError),
+                backgroundColor: AppColors.red,
               ),
             );
           },
@@ -67,79 +69,94 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
-              Text(AppStrings.welcomeBack, style: AppTextStyles.bold24),
-              const SizedBox(height: 8),
-              Text(
-                AppStrings.enterNextData,
-                style: AppTextStyles.regular16.copyWith(color: AppColors.gray),
-              ),
-              const SizedBox(height: 40),
-              Text(
-                AppStrings.email,
-                style: AppTextStyles.semiBold18.copyWith(
-                  color: AppColors.jetBlack,
-                ),
-              ),
-              const SizedBox(height: 8),
-              CustomTextField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 24),
-              Text(
-                AppStrings.password,
-                style: AppTextStyles.semiBold18.copyWith(
-                  color: AppColors.jetBlack,
-                ),
-              ),
-              const SizedBox(height: 8),
-              CustomTextField(
-                controller: _passwordController,
-                isObscured: true,
-              ),
-              const SizedBox(height: 30),
+              _title(),
+              _loginTextFields(),
               CustomButton(
-                onPressed: loginState.isLoading ? null : _login,
+                isLoading: loginState.isLoading,
                 text: AppStrings.login,
-                child: loginState.isLoading
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : null,
+                onPressed: _login,
               ),
               const SizedBox(height: 10),
-              TextButton(
-                onPressed: () => context.go(Routes.forgetPassword),
-                child: Text(
-                  AppStrings.forgetPassword,
-                  style: AppTextStyles.regular14.copyWith(
-                    color: AppColors.blackBlue,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    AppStrings.dontHaveAccount,
-                    style: AppTextStyles.regular14,
-                  ),
-                  OutlinedButton(
-                    onPressed: () => context.go(Routes.selectRole),
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: const Size(205, 45),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(AppStrings.registerNow),
-                  ),
-                ],
-              ),
+              _forgetPassOrDontHaveAnAccountSection(context),
               const SizedBox(height: 40),
               const SocialLoginSection(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _forgetPassOrDontHaveAnAccountSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: GestureDetector(
+            onTap: () => context.go(Routes.forgetPassword),
+            child: Text(
+              AppStrings.forgetPassword,
+              style: AppTextStyles.medium14.copyWith(
+                color: AppColors.blackBlue,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(AppStrings.dontHaveAccount, style: AppTextStyles.medium14),
+            AuthenticationButton(
+              onTap: () => context.go(Routes.selectRole),
+              label: AppStrings.registerNow,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Column _title() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(AppStrings.welcomeBack, style: AppTextStyles.bold24),
+        const SizedBox(height: 8),
+        Text(
+          AppStrings.enterNextData,
+          style: AppTextStyles.regular16.copyWith(
+            color: AppColors.grayShade500,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Padding _loginTextFields() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40),
+      child: Column(
+        children: [
+          BuildFieldWithLabel(
+            required: true,
+            label: AppStrings.email,
+            child: CustomTextField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+            ),
+          ),
+          const SizedBox(height: 12),
+          BuildFieldWithLabel(
+            required: true,
+            label: AppStrings.password,
+            child: CustomTextField(
+              controller: _passwordController,
+              isObscured: true,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -39,7 +39,9 @@ class _RoleSelectionViewState extends ConsumerState<RoleSelectionView> {
               const SizedBox(height: 8),
               Text(
                 AppStrings.chooseYourRoleTo,
-                style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+                style: AppTextStyles.regular14.copyWith(
+                  color: AppColors.grayShade500,
+                ),
               ),
               const SizedBox(height: 20),
               Expanded(
@@ -83,10 +85,10 @@ class _RoleSelectionViewState extends ConsumerState<RoleSelectionView> {
                     ),
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
                     CustomButton(
+                      text: AppStrings.next,
                       onPressed: selectedRole != null
                           ? _saveRoleAndNavigate
                           : null,
-                      text: AppStrings.next,
                     ),
                   ],
                 ),

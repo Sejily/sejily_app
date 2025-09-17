@@ -21,10 +21,10 @@ class FilePreview extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(next.errorMessage!),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.red,
             action: SnackBarAction(
               label: 'حسناً',
-              textColor: Colors.white,
+              textColor: AppColors.white,
               onPressed: () =>
                   ref.read(fileUploadProvider.notifier).clearError(),
             ),
@@ -41,7 +41,9 @@ class FilePreview extends ConsumerWidget {
           const SizedBox(height: 12),
           Text(
             'جاري رفع: ${fileUploadState.currentUploadingFile}',
-            style: AppTextStyles.medium14.copyWith(color: AppColors.gray),
+            style: AppTextStyles.medium14.copyWith(
+              color: AppColors.grayShade500,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -65,7 +67,9 @@ class FilePreview extends ConsumerWidget {
               Text(
                 AppStrings.uploadfileDescription,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.regular12.copyWith(color: AppColors.gray),
+                style: AppTextStyles.regular12.copyWith(
+                  color: AppColors.grayShade500,
+                ),
               ),
             ],
           ),
@@ -89,7 +93,7 @@ class FilePreview extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.lightGray.withOpacity(0.2),
+                  color: AppColors.lightGray.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -98,7 +102,7 @@ class FilePreview extends ConsumerWidget {
                     Icon(
                       Icons.insert_drive_file,
                       size: 30,
-                      color: AppColors.gray,
+                      color: AppColors.grayShade500,
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -117,7 +121,7 @@ class FilePreview extends ConsumerWidget {
                           Text(
                             "${(file.size / 1024).toStringAsFixed(2)} KB",
                             style: AppTextStyles.regular12.copyWith(
-                              color: AppColors.gray,
+                              color: AppColors.grayShade500,
                             ),
                           ),
                         ],
@@ -149,7 +153,7 @@ class FilePreview extends ConsumerWidget {
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.close, color: Colors.red),
+                          icon: const Icon(Icons.close, color: AppColors.red),
                           onPressed: () => ref
                               .read(fileUploadProvider.notifier)
                               .removeFile(file),

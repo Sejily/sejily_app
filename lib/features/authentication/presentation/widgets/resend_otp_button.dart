@@ -37,7 +37,7 @@ class ResendOtpButton extends ConsumerWidget {
             style: AppTextStyles.medium14.copyWith(
               color: canResend && !isLoading
                   ? AppColors.darkBlue
-                  : AppColors.gray,
+                  : AppColors.grayShade500,
               decoration: canResend && !isLoading
                   ? TextDecoration.underline
                   : null,

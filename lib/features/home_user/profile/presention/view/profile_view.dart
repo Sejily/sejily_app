@@ -54,7 +54,7 @@ class ProfilePage extends ConsumerWidget {
                         Text(
                           user.email,
                           style: AppTextStyles.regular14.copyWith(
-                            color: AppColors.gray,
+                            color: AppColors.grayShade500,
                           ),
                         ),
 
@@ -68,9 +68,11 @@ class ProfilePage extends ConsumerWidget {
                           Text(" ${user.address}"),
                         if (user.bloodType != null &&
                             user.bloodType!.isNotEmpty)
-                          Text(" فصيلة الدم: ${user.bloodType}"),
-                        if (user.height != null) Text(" الطول: ${user.height}"),
-                        if (user.weight != null) Text(" الوزن: ${user.weight}"),
+                          Text("${AppStrings.bloodTypeLabel}${user.bloodType}"),
+                        if (user.height != null)
+                          Text("${AppStrings.heightLabel}${user.height}"),
+                        if (user.weight != null)
+                          Text("${AppStrings.weightLabel}${user.weight}"),
 
                         const SizedBox(height: 20),
 
@@ -79,21 +81,21 @@ class ProfilePage extends ConsumerWidget {
                           decoration: BoxDecoration(
                             color: const Color(0xFFFFF8E1),
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.amber),
+                            border: Border.all(color: AppColors.amber),
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Icon(
                                 Icons.info_outline,
-                                color: Colors.orange,
+                                color: AppColors.orange,
                               ),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   AppStrings.helpUsProvidePersonal,
                                   style: AppTextStyles.regular14.copyWith(
-                                    color: Colors.brown,
+                                    color: AppColors.brown,
                                   ),
                                 ),
                               ),
@@ -150,12 +152,12 @@ class ProfilePage extends ConsumerWidget {
                               contentPadding: EdgeInsets.zero,
                               leading: const Icon(
                                 Icons.logout,
-                                color: Colors.red,
+                                color: AppColors.red,
                               ),
                               title: Text(
                                 AppStrings.logout,
                                 style: AppTextStyles.medium16.copyWith(
-                                  color: Colors.red,
+                                  color: AppColors.red,
                                 ),
                               ),
                               onTap: () {
@@ -176,7 +178,7 @@ class ProfilePage extends ConsumerWidget {
                     child: Text(
                       error.message ?? AppStrings.unexpectedError,
                       style: AppTextStyles.regular16.copyWith(
-                        color: Colors.red,
+                        color: AppColors.red,
                       ),
                     ),
                   );

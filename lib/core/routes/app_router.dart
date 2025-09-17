@@ -20,7 +20,6 @@ import 'package:sejily/features/authentication/presentation/view/upload_national
 import 'package:sejily/features/authentication/presentation/view/upload_personal_photo_page.dart';
 import 'package:sejily/features/authentication/presentation/view/upload_hospital_affiliation_page.dart';
 import 'package:sejily/features/authentication/presentation/view/upload_medical_license_page.dart';
-import 'package:sejily/features/authentication/presentation/view/verification_view.dart';
 import 'package:sejily/features/home_user/profile/presention/view/edit_profile_view.dart';
 import 'package:sejily/features/home_user/profile/presention/view/medical_complete_screen.dart';
 import 'package:sejily/features/home_user/profile/presention/view/profile_view.dart';
@@ -31,32 +30,18 @@ import 'routes.dart';
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     redirect: (context, state) {
-      List<String> allowedPathsForNotLoggedIn = [
-        Routes.login,
-        Routes.register,
-        Routes.completeUserData,
-        Routes.dataReview,
-        Routes.emergencyContact,
-        Routes.forgetPassword,
-        Routes.registerOtpVerification,
-        Routes.resetPassword,
-        Routes.selectRole,
-      ];
-
       final isFirstTime = StorageService.instance.isFirstTime();
       final isLoggedIn = StorageService.instance.isLoggedIn();
       final currentPath = state.matchedLocation;
 
-      if (isFirstTime) return Routes.onboarding;
+      if (state.matchedLocation == '/' || state.matchedLocation.isEmpty) {
+        if (isFirstTime) return Routes.onboarding;
+        if (isLoggedIn) return Routes.home;
+        return Routes.login;
+      }
 
-      if (isLoggedIn) {
-        if (currentPath == '/' || currentPath == Routes.login) {
-          return Routes.home;
-        }
-      } else {
-        if (!allowedPathsForNotLoggedIn.contains(currentPath)) {
-          return Routes.login;
-        }
+      if (!isLoggedIn && _isProtectedRoute(currentPath)) {
+        return Routes.login;
       }
 
       return null;
@@ -74,18 +59,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.register,
         builder: (context, state) => const RegisterView(),
       ),
+
       GoRoute(
-        path: Routes.verifyOtp,
+        path: Routes.otpVerification,
         builder: (context, state) {
-          final email = state.extra as String;
-          return OtpPage(email: email);
-        },
-      ),
-      GoRoute(
-        path: Routes.registerOtpVerification,
-        builder: (context, state) {
-          final email = state.extra as String;
-          return OtpVerificationView(email: email);
+          final args = state.extra as Map<String, dynamic>?;
+          final email = args?['email'] ?? '';
+          final nextRoute = args?['route'] ?? '';
+          return OtpVerificationView(email: email, route: nextRoute);
         },
       ),
       GoRoute(
@@ -187,8 +168,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const EmergencyContactPage(),
       ),
       GoRoute(
-        path: Routes.emergency,
-        builder: (context, state) => const EmergencyPage(),
+        path: Routes.userProfileEmergencyContacts,
+        builder: (context, state) => const UserProfileEmergencyPage(),
       ),
       GoRoute(
         path: Routes.dataReview,
@@ -197,3 +178,19 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+bool _isProtectedRoute(String path) {
+  List<String> protectedRoutes = [
+    Routes.home,
+    Routes.notifications,
+    Routes.documentations,
+    Routes.profile,
+    Routes.completeProfile,
+    Routes.editProfile,
+    Routes.terms,
+    Routes.help,
+    Routes.userProfileEmergencyContacts,
+  ];
+
+  return protectedRoutes.any((route) => path.startsWith(route));
+}

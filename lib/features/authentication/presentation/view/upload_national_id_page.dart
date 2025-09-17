@@ -124,7 +124,9 @@ class _UploadNationalIdPageState extends ConsumerState<UploadNationalIdPage> {
         const SizedBox(height: 8),
         Text(
           AppStrings.helpUsProvidePersonalizedExperience,
-          style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+          style: AppTextStyles.regular14.copyWith(
+            color: AppColors.grayShade500,
+          ),
         ),
       ],
     );

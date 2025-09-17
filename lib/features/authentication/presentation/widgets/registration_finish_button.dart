@@ -88,8 +88,10 @@ class _RegistrationFinishButtonState
       );
     });
     return CustomButton(
-      onPressed: _isLoading ? null : _handleFinish,
-      text: _isLoading ? AppStrings.completingRegistration : AppStrings.finish,
+      isLoading: _isLoading,
+      text: AppStrings.finish,
+      loadingText: AppStrings.completingRegistration,
+      onPressed: _handleFinish,
     );
   }
 }

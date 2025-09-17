@@ -27,7 +27,9 @@ class DatePickerField extends StatelessWidget {
           child: Text(
             controller.text.isEmpty ? '1990-01-01' : controller.text,
             style: controller.text.isEmpty
-                ? AppTextStyles.regular16.copyWith(color: AppColors.gray)
+                ? AppTextStyles.regular16.copyWith(
+                    color: AppColors.grayShade500,
+                  )
                 : AppTextStyles.medium16.copyWith(color: AppColors.jetBlack),
           ),
         ),

@@ -181,15 +181,12 @@ class AuthRepository {
     try {
       final response = await authService.updatePatientProfile(user.toJson());
 
-      print(" UpdateProfile Response: ${response.toJson()}");
-
       if (response.success) {
         return ApiSuccess(response);
       } else {
         return ApiFailure(ApiErrorModel(message: response.message));
       }
-    } catch (e, st) {
-      print(" UpdateProfile Error: $e");
+    } catch (e) {
       return ApiFailure(ApiErrorHandler.handle(e));
     }
   }

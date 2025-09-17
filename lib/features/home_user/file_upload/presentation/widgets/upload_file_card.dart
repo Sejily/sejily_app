@@ -61,22 +61,8 @@ class UploadFileCard extends ConsumerWidget {
                       ),
                     );
                   },
-                  backgroundColor: AppColors.darkBlue,
-                  foregroundColor: AppColors.white,
                   defaultSize: true,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.upload, color: Colors.white),
-                      const SizedBox(width: 8),
-                      Text(
-                        AppStrings.browse,
-                        style: AppTextStyles.regular14.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ],
-                  ),
+                  icon: Icon(Icons.upload, color: AppColors.white),
                 ),
               ),
               const SizedBox(width: 12),

@@ -83,7 +83,9 @@ class NationalityAndNationalIdSection extends StatelessWidget {
       focusedBorder: _buildBorder(AppColors.darkBlue),
       errorBorder: _buildBorder(AppColors.lightRed),
       hintText: '12345678901234',
-      hintStyle: AppTextStyles.regular16.copyWith(color: AppColors.gray),
+      hintStyle: AppTextStyles.regular16.copyWith(
+        color: AppColors.grayShade500,
+      ),
     );
   }
 
