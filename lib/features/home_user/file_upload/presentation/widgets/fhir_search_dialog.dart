@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
-import 'package:sejily/core/helpers/medical_translation_helper.dart';
+import 'package:sejily/core/utils/app_text_styles.dart';
+import 'package:sejily/core/widgets/custom_app_bar.dart';
 import 'package:sejily/features/ai/data/models/ai_fhir_search_response.dart';
 import 'package:sejily/features/ai/presentation/manager/ai_notifier.dart';
+import 'package:sejily/features/home_user/file_upload/presentation/widgets/build_medications_section.dart';
+import 'package:sejily/features/home_user/file_upload/presentation/widgets/build_patient_section.dart';
+import 'package:sejily/features/home_user/file_upload/presentation/widgets/fhir_state_builders.dart';
 
 class FhirSearchDialog extends ConsumerStatefulWidget {
   final String fileId;
@@ -56,13 +60,20 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
           color: AppColors.darkBlue,
           strokeWidth: 2.5,
           borderType: BorderType.RRect,
+          dashPattern: [10, 5],
           child: Column(
             children: [
+              _buildHeader(context),
+              const SizedBox(height: 20),
               Expanded(
                 child: aiState.when(
                   data: (response) => _buildContent(response),
-                  loading: () => _buildLoadingState(),
-                  error: (error, stack) => _buildErrorState(),
+                  loading: () => const BuildLoadingState(),
+                  error: (error, _) => BuildErrorState(
+                    onPressed: () => ref
+                        .read(aiNotifierProvider.notifier)
+                        .fhirSearchFile(widget.fileId),
+                  ),
                 ),
               ),
             ],
@@ -75,103 +86,21 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
   Widget _buildHeader(BuildContext context) {
     return Column(
       children: [
-        Align(
-          child: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.close),
-          ),
-        ),
+        Align(alignment: Alignment.topLeft, child: CustomAppBar()),
         CircleAvatar(
-          radius: 50,
+          radius: 30,
           backgroundColor: AppColors.grayShade500.withValues(alpha: 0.1),
-          child: Image.asset(Assets.logo, height: 80),
+          child: Image.asset(Assets.logo, height: 60),
         ),
         const SizedBox(height: 10),
-        Text(
-          'تحليل المستند الطبي',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: AppColors.black87,
-          ),
-        ),
+        Text('تحليل المستند الطبي', style: AppTextStyles.bold20),
       ],
-    );
-  }
-
-  Widget _buildLoadingState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(
-            color: AppColors.mediumBlue,
-            strokeWidth: 3,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'جاري تحليل المستند الطبي...',
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.grayShade600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildErrorState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error_outline_rounded,
-            size: 64,
-            color: AppColors.grayShade400,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'حدث خطأ أثناء تحليل المستند',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: AppColors.grayShade700,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'يرجى المحاولة مرة أخرى',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.grayShade500,
-            ),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () {
-              ref
-                  .read(aiNotifierProvider.notifier)
-                  .fhirSearchFile(widget.fileId);
-            },
-            icon: const Icon(Icons.refresh_rounded, size: 20),
-            label: const Text('إعادة المحاولة'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.lightBlue,
-              foregroundColor: AppColors.darkBlueShade,
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
   Widget _buildContent(dynamic response) {
     if (response is! AIFhirSearchResponse || response.fhirData?.entry == null) {
-      return _buildEmptyState();
+      return BuildEmptyState();
     }
 
     final entries = response.fhirData!.entry!;
@@ -182,217 +111,17 @@ class _FhirSearchDialogState extends ConsumerState<FhirSearchDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(context),
-          const SizedBox(height: 24),
           if (patient != null) ...[
-            _buildPatientSection(patient),
+            BuildPatientSection(patient: patient),
             const SizedBox(height: 20),
           ],
           if (medications.isNotEmpty) ...[
-            _buildMedicationsSection(medications),
+            BuildMedicationsSection(medications: medications),
           ],
-          if (patient == null && medications.isEmpty) _buildEmptyState(),
+          if (patient == null && medications.isEmpty) BuildEmptyState(),
         ],
       ),
     );
-  }
-
-  Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.description_outlined,
-            size: 64,
-            color: AppColors.grayShade300,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'لا توجد بيانات طبية للعرض',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: AppColors.grayShade600,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'المستند لا يحتوي على معلومات طبية قابلة للاستخراج',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.grayShade500,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPatientSection(FhirResource patient) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.person_outline, color: AppColors.darkBlue, size: 24),
-              const SizedBox(width: 8),
-              Text(
-                'معلومات المريض',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.darkBlue,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          _buildPatientCard(patient),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPatientCard(FhirResource patient) {
-    final patientName = patient.name?.isNotEmpty == true
-        ? _formatName(patient.name!.first)
-        : 'مريض غير محدد';
-
-    final patientGender = patient.gender != null
-        ? MedicalTranslationHelper.translateGender(patient.gender!)
-        : null;
-
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.lightBlue,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.blueShade200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            patientName,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          if (patientGender != null) ...[
-            const SizedBox(height: 6),
-            Text(
-              'الجنس: $patientGender',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.grayShade700,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMedicationsSection(List<FhirResource> medications) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.medication_outlined,
-                color: AppColors.darkBlue,
-                size: 24,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'الأدوية المصروفة',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.darkBlue,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          ...medications.asMap().entries.map((entry) {
-            final index = entry.key;
-            final medication = entry.value;
-            return Padding(
-              padding: EdgeInsets.only(
-                bottom: index < medications.length - 1 ? 12 : 0,
-              ),
-              child: _buildMedicationCard(medication),
-            );
-          }),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMedicationCard(FhirResource medication) {
-    final medicationName =
-        medication.medicationCodeableConcept?.text ?? 'دواء غير محدد';
-
-    final dosage = medication.dosageInstruction?.isNotEmpty == true
-        ? MedicalTranslationHelper.translateDosageText(
-            medication.dosageInstruction!.first.text ?? 'الجرعة غير محددة',
-          )
-        : 'الجرعة غير محددة';
-
-    final timing =
-        medication.dosageInstruction?.isNotEmpty == true &&
-            medication.dosageInstruction!.first.timing != null
-        ? MedicalTranslationHelper.formatTiming(
-            medication.dosageInstruction!.first.timing!,
-          )
-        : null;
-
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.lightBlue,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.blueShade200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            medicationName,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            dosage,
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.grayShade700,
-            ),
-          ),
-          if (timing != null) ...[
-            const SizedBox(height: 4),
-            Text(
-              timing,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.grayShade600,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  String _formatName(FhirName name) {
-    return name.text ?? 'غير محدد';
   }
 
   FhirResource? _extractPatient(List<FhirEntry> entries) {

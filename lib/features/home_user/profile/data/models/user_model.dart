@@ -1,18 +1,24 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user_model.g.dart';
+
+@JsonSerializable()
 class UserModel {
   final String id;
+  @JsonKey(name: 'fullName')
   final String name;
   final String email;
+  @JsonKey(name: 'profilePictureUrl')
   final String? avatarUrl;
   final String? address;
   final String? city;
+  @JsonKey(name: 'phoneNumber')
   final String? phone;
   final String? bloodType;
   final double? height;
   final double? weight;
   final List<String>? medicalConditions;
   final List<String>? allergies;
-  final String? privacyLevel;
-  final String? dataRetentionPreference;
 
   UserModel({
     required this.id,
@@ -27,57 +33,12 @@ class UserModel {
     this.weight,
     this.medicalConditions,
     this.allergies,
-    this.privacyLevel,
-    this.dataRetentionPreference,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'] ?? '',
-      name: json['fullName'] ?? '',
-      email: json['email'] ?? '',
-      avatarUrl: json['profilePictureUrl'],
-      address: json['address'],
-      city: json['city'],
-      phone: json['phoneNumber'],
-      bloodType: json['bloodType'],
-      height: (json['height'] != null)
-          ? double.tryParse(json['height'].toString())
-          : null,
-      weight: (json['weight'] != null)
-          ? double.tryParse(json['weight'].toString())
-          : null,
-      medicalConditions: (json['medicalConditions'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList(),
-      allergies: (json['allergies'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList(),
-      privacyLevel: json['privacyLevel'],
-      dataRetentionPreference: json['dataRetentionPreference'],
-    );
-  }
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{
-      'fullName': name,
-      'phoneNumber': phone,
-      'address': address,
-      'bloodType': bloodType,
-      'height': height,
-      'weight': weight,
-      'medicalConditions': medicalConditions,
-      'allergies': allergies,
-      'privacyLevel': privacyLevel ?? 'STANDARD',
-      'dataRetentionPreference': dataRetentionPreference ?? 'STANDARD',
-    };
-
-    if (city != null && city!.isNotEmpty) {
-      data['city'] = city;
-    }
-
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
   UserModel copyWith({
     String? id,
@@ -108,9 +69,6 @@ class UserModel {
       weight: weight ?? this.weight,
       medicalConditions: medicalConditions ?? this.medicalConditions,
       allergies: allergies ?? this.allergies,
-      privacyLevel: privacyLevel ?? this.privacyLevel,
-      dataRetentionPreference:
-          dataRetentionPreference ?? this.dataRetentionPreference,
     );
   }
 }

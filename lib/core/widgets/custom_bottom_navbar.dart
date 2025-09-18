@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_strings.dart';
@@ -12,33 +14,29 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        border: Border(top: BorderSide(color: AppColors.lightGray)),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavItem(
             context: context,
             index: 0,
-            icon: Icons.home,
+            icon: Assets.homeIcon,
             label: AppStrings.home,
             route: Routes.home,
           ),
           _buildNavItem(
             context: context,
             index: 1,
-            icon: Icons.folder_outlined,
+            icon: Assets.documents,
             label: AppStrings.file,
             route: Routes.documentations,
           ),
           _buildNavItem(
             context: context,
             index: 2,
-            icon: Icons.person_outline,
+            icon: Assets.profileIcon,
             label: AppStrings.profile,
             route: Routes.profile,
           ),
@@ -50,7 +48,7 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget _buildNavItem({
     required BuildContext context,
     required int index,
-    required IconData icon,
+    required String icon,
     required String label,
     required String route,
   }) {
@@ -63,20 +61,26 @@ class CustomBottomNavBar extends StatelessWidget {
         }
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        duration: const Duration(milliseconds: 500),
+        width: 150,
+        curve: Curves.easeIn,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.darkBlue : AppColors.transparent,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(16),
         ),
+
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            SvgPicture.asset(
               icon,
-              color: isSelected ? AppColors.white : AppColors.darkBlue,
+              colorFilter: ColorFilter.mode(
+                isSelected ? AppColors.white : AppColors.darkBlue,
+                BlendMode.srcIn,
+              ),
+              height: 24,
             ),
             if (isSelected) ...[
               const SizedBox(width: 6),

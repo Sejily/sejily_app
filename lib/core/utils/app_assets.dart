@@ -1,8 +1,5 @@
 class Assets {
   Assets._();
-
-  static const String continuePersonalData =
-      'assets/images/continue_personal_data.png';
   static const String selectedMedicalDoctor =
       'assets/images/selected_medical_doctor.png';
   static const String unselectedMedicalDoctor =
@@ -19,7 +16,18 @@ class Assets {
   static const String clipboard = 'assets/images/clipboard.png';
   static const String drive = 'assets/images/drive.png';
   static const String logo = 'assets/images/logo.png';
-  static const String homeIcon = 'assets/images/home_page.png';
-  static const String profileIcon = 'assets/images/profile.png';
+  static const String homeIcon = 'assets/images/home_page.svg';
+  static const String profileIcon = 'assets/images/profile.svg';
   static const String celebrationIcon = 'assets/images/celebration.png';
+  static const String deleteIcon = 'assets/images/delete.svg';
+  static const String notificationIcon = 'assets/images/notification.svg';
+  static const String fileUpload = 'assets/images/upload.svg';
+  static const String documents = 'assets/images/documents.svg';
+  static const String terms = 'assets/images/terms.svg';
+  static const String help = 'assets/images/help.svg';
+  static const String logOut = 'assets/images/logout.svg';
+  static const String editPersonalInfo = 'assets/images/edit_personal_info.svg';
+  static const String completePersonalInfo =
+      'assets/images/complete_personal_info.svg';
+  static const String emergency = 'assets/images/emergency_group.svg';
 }

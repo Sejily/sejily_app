@@ -60,7 +60,7 @@ class AppStrings {
   // PROFILE STRINGS
   static const String completeProfile = 'اكمال بياناتك الشخصية';
   static const String helpUsProvidePersonal =
-      'تنبيه\nبرجاء اكمل بياناتك الشخصية لمتابعة حالتك بكفائة ولضمان افضل تجربة.';
+      'برجاء اكمل بياناتك الشخصية لمتابعة حالتك بكفائة ولضمان افضل تجربة.';
   static const String editProfile = 'تعديل ملفك الشخصي';
   static const String emergency = 'جهات الطؤاري';
   static const String notification = 'الاشعارات';

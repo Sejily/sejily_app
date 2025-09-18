@@ -41,8 +41,8 @@ class AppColors {
   static const Color redShade400 = Color(0xFFEF5350);
 
   //* Other common colors
-  static const Color amber = Color(0xFFFFC107);
   static const Color orange = Color(0xFFFF9800);
+  static const Color lightOrange = Color(0xFFFFF8E1);
   static const Color brown = Color(0xFF795548);
   static const Color transparent = Color(0x00000000);
 }

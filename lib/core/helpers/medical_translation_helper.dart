@@ -41,8 +41,8 @@ class MedicalTranslationHelper {
   }
 
   /// Translate gender from English to Arabic
-  static String translateGender(String gender) {
-    switch (gender.toLowerCase()) {
+  static String? translateGender(String? gender) {
+    switch (gender?.toLowerCase()) {
       case 'male':
         return 'ذكر';
       case 'female':

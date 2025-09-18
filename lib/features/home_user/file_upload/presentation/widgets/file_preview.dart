@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:open_file/open_file.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
@@ -37,14 +38,29 @@ class FilePreview extends ConsumerWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(),
-          const SizedBox(height: 12),
           Text(
-            'جاري رفع: ${fileUploadState.currentUploadingFile}',
+            'جاري رفع الملف',
             style: AppTextStyles.medium14.copyWith(
               color: AppColors.grayShade500,
             ),
-            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 4),
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width * 0.2,
+            child: LinearProgressIndicator(
+              value: fileUploadState.uploadProgress,
+              backgroundColor: AppColors.lightGray.withValues(alpha: 0.3),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.darkBlue),
+              minHeight: 6,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '${(fileUploadState.uploadProgress * 100).toInt()}%',
+            style: AppTextStyles.regular12.copyWith(
+              color: AppColors.darkBlue,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       );
@@ -53,32 +69,25 @@ class FilePreview extends ConsumerWidget {
     if (fileUploadState.files.isEmpty) {
       return Column(
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(Assets.clipboard, height: 50),
           const SizedBox(height: 12),
-          Column(
-            children: [
-              Text(
-                AppStrings.dragDropOrTapToUpload,
-                style: AppTextStyles.medium16,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                AppStrings.uploadfileDescription,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.regular12.copyWith(
-                  color: AppColors.grayShade500,
-                ),
-              ),
-            ],
+          Text(AppStrings.dragDropOrTapToUpload, style: AppTextStyles.medium16),
+          const SizedBox(height: 4),
+          Text(
+            AppStrings.uploadfileDescription,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.regular12.copyWith(
+              color: AppColors.grayShade500,
+            ),
           ),
         ],
       );
     }
 
     return SizedBox(
-      height: 200,
       child: ListView.builder(
         itemCount: fileUploadState.files.length,
         itemBuilder: (context, index) {
@@ -93,7 +102,7 @@ class FilePreview extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.lightGray.withValues(alpha: 0.2),
+                  color: AppColors.skyBlue.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -102,7 +111,7 @@ class FilePreview extends ConsumerWidget {
                     Icon(
                       Icons.insert_drive_file,
                       size: 30,
-                      color: AppColors.grayShade500,
+                      color: AppColors.darkBlue,
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -127,39 +136,7 @@ class FilePreview extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextButton(
-                          onPressed: () =>
-                              _showFhirDialog(context, ref, uploadedFile),
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 6,
-                            ),
-                            backgroundColor: AppColors.darkBlue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              side: BorderSide(color: AppColors.darkBlue),
-                            ),
-                          ),
-                          child: Text(
-                            'تحليل الملف الطبي',
-                            style: AppTextStyles.regular12.copyWith(
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.close, color: AppColors.red),
-                          onPressed: () => ref
-                              .read(fileUploadProvider.notifier)
-                              .removeFile(file),
-                        ),
-                      ],
-                    ),
+                    _buttonSection(context, ref, uploadedFile: uploadedFile),
                   ],
                 ),
               ),
@@ -170,14 +147,47 @@ class FilePreview extends ConsumerWidget {
     );
   }
 
-  void _showFhirDialog(
+  Row _buttonSection(
     BuildContext context,
-    WidgetRef ref,
-    UploadedFile uploadedFile,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) => FhirSearchDialog(fileId: uploadedFile.fileId),
+    WidgetRef ref, {
+    required UploadedFile uploadedFile,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        TextButton(
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => FhirSearchDialog(fileId: uploadedFile.fileId),
+          ),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            backgroundColor: AppColors.darkBlue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(color: AppColors.darkBlue),
+            ),
+          ),
+          child: Text(
+            'تحليل الملف الطبي',
+            style: AppTextStyles.regular12.copyWith(color: AppColors.white),
+          ),
+        ),
+        const SizedBox(width: 8),
+        GestureDetector(
+          onTap: () => ref
+              .read(fileUploadProvider.notifier)
+              .removeFile(uploadedFile.platformFile),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: AppColors.white,
+            ),
+            child: SvgPicture.asset(Assets.deleteIcon, height: 24),
+          ),
+        ),
+      ],
     );
   }
 }

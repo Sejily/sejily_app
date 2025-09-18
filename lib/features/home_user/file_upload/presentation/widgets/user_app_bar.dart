@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/newtorking/api_result.dart';
 import 'package:sejily/core/routes/routes.dart';
@@ -50,7 +51,7 @@ class UserAppBar extends ConsumerWidget {
             style: AppTextStyles.medium16.copyWith(color: AppColors.jetBlack),
           ),
         ),
-        const Icon(Icons.notifications_outlined, size: 26),
+        SvgPicture.asset(Assets.notificationIcon, height: 26),
       ],
     );
   }

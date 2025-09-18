@@ -28,7 +28,7 @@ class _DriveFilePickerDialogState extends State<DriveFilePickerDialog> {
     final success = await _service.signIn();
     if (!success) {
       setState(() => _loading = false);
-      if (context.mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('فشل تسجيل الدخول في Google Drive')),
         );

@@ -19,12 +19,14 @@ class FileUploadState {
   final bool isUploading;
   final String? errorMessage;
   final String? currentUploadingFile;
+  final double uploadProgress;
 
   const FileUploadState({
     this.files = const [],
     this.isUploading = false,
     this.errorMessage,
     this.currentUploadingFile,
+    this.uploadProgress = 0.0,
   });
 
   FileUploadState copyWith({
@@ -32,12 +34,14 @@ class FileUploadState {
     bool? isUploading,
     String? errorMessage,
     String? currentUploadingFile,
+    double? uploadProgress,
   }) {
     return FileUploadState(
       files: files ?? this.files,
       isUploading: isUploading ?? this.isUploading,
       errorMessage: errorMessage,
       currentUploadingFile: currentUploadingFile,
+      uploadProgress: uploadProgress ?? this.uploadProgress,
     );
   }
 }
@@ -70,18 +74,28 @@ class FileUploadNotifier extends StateNotifier<FileUploadState> {
       return;
     }
 
-    // Start uploading
+    // Start uploading with progress simulation
     state = state.copyWith(
       isUploading: true,
       currentUploadingFile: newFile.name,
       errorMessage: null,
+      uploadProgress: 0.0,
     );
 
     try {
       final file = File(newFile.path!);
       final aiNotifier = ref.read(aiNotifierProvider.notifier);
 
+      // Simulate upload progress while the actual upload happens
+      _simulateUploadProgress();
+
       await aiNotifier.uploadFile(file);
+
+      // Complete progress to 100%
+      state = state.copyWith(uploadProgress: 1.0);
+
+      // Small delay to show 100% completion
+      await Future.delayed(const Duration(milliseconds: 300));
 
       // Get the upload response from AI notifier
       final uploadState = ref.read(aiNotifierProvider);
@@ -99,11 +113,13 @@ class FileUploadNotifier extends StateNotifier<FileUploadState> {
             files: [...state.files, uploadedFile],
             isUploading: false,
             currentUploadingFile: null,
+            uploadProgress: 0.0,
           );
         } else {
           state = state.copyWith(
             isUploading: false,
             currentUploadingFile: null,
+            uploadProgress: 0.0,
             errorMessage: "فشل في رفع الملف: استجابة غير متوقعة",
           );
         }
@@ -111,6 +127,7 @@ class FileUploadNotifier extends StateNotifier<FileUploadState> {
         state = state.copyWith(
           isUploading: false,
           currentUploadingFile: null,
+          uploadProgress: 0.0,
           errorMessage: "فشل في رفع الملف: لا توجد استجابة",
         );
       }
@@ -119,8 +136,25 @@ class FileUploadNotifier extends StateNotifier<FileUploadState> {
       state = state.copyWith(
         isUploading: false,
         currentUploadingFile: null,
+        uploadProgress: 0.0,
         errorMessage: "فشل في رفع الملف: ${e.toString()}",
       );
+    }
+  }
+
+  // Simulate upload progress with incremental updates
+  void _simulateUploadProgress() async {
+    const steps = 20; // Number of progress steps
+    const stepDelay = Duration(milliseconds: 100); // Delay between steps
+
+    for (int i = 1; i <= steps; i++) {
+      if (!state.isUploading) break; // Stop if upload is cancelled/completed
+
+      await Future.delayed(stepDelay);
+
+      // Update progress incrementally (0.0 to 0.95, leaving final 5% for actual completion)
+      final progress = (i / steps) * 0.95;
+      state = state.copyWith(uploadProgress: progress);
     }
   }
 

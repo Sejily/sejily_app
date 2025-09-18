@@ -1,10 +1,16 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
-import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_strings.dart';
+import 'package:sejily/core/utils/app_text_styles.dart';
+import 'package:sejily/core/widgets/custom_button.dart';
+import 'package:sejily/features/home_user/file_upload/data/models/file_upload_service.dart';
+import 'package:sejily/features/home_user/file_upload/presentation/widgets/file_preview.dart';
+import 'package:sejily/features/home_user/file_upload/presentation/widgets/file_type_dialog.dart';
 import 'package:sejily/features/home_user/file_upload/presentation/widgets/user_app_bar.dart';
-import '../widgets/upload_file_card.dart';
+import 'package:sejily/features/home_user/profile/presention/widgets/warning_card.dart';
 
 class UploadFilePage extends ConsumerWidget {
   const UploadFilePage({super.key});
@@ -16,50 +22,93 @@ class UploadFilePage extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Column(children: [UserAppBar(), _warningCard()]),
+              UserAppBar(),
+              WarningCard(
+                textColor: AppColors.brown,
+                bgColor: AppColors.lightOrange,
+                borderColor: AppColors.orange,
+                description: AppStrings.warningDescription,
+              ),
 
               const UploadFileCard(),
-              const SizedBox(),
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Container _warningCard() {
+class UploadFileCard extends ConsumerWidget {
+  const UploadFileCard({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF8E1),
-        border: Border(right: BorderSide(color: AppColors.orange)),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.lightGray),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          Icon(Icons.info, color: AppColors.orange),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppStrings.warning,
-                  style: AppTextStyles.semiBold18.copyWith(
-                    color: AppColors.brown,
-                  ),
-                ),
-                Text(
-                  AppStrings.warningDescription,
-                  style: AppTextStyles.regular14.copyWith(
-                    color: AppColors.brown,
-                  ),
-                ),
-              ],
+          Text(
+            AppStrings.uploadFile,
+            style: AppTextStyles.bold20.copyWith(color: AppColors.jetBlack),
+          ),
+          const SizedBox(height: 16),
+
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height * 0.2,
+            width: double.infinity,
+            child: DottedBorder(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              dashPattern: [15, 20],
+              stackFit: StackFit.expand,
+              strokeWidth: 1.5,
+              radius: Radius.circular(16),
+              borderType: BorderType.RRect,
+              child: FilePreview(),
             ),
+          ),
+
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: CustomButton(
+                  text: AppStrings.browse,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => FileTypeDialog(
+                        onPick: (type) {
+                          FileUploadService.pickFiles(context, ref, type);
+                        },
+                      ),
+                    );
+                  },
+                  defaultSize: true,
+                  icon: Icon(Icons.upload, color: AppColors.white),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  icon: Image.asset(Assets.drive, height: 20),
+                  label: Text("Drive", style: AppTextStyles.regular14),
+                ),
+              ),
+            ],
           ),
         ],
       ),
