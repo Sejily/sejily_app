@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sejily/core/enums/user_role.dart';
 import 'package:sejily/core/helpers/storage_extension.dart';
 import 'package:sejily/features/authentication/data/models/tokens_model.dart';
 import 'package:sejily/core/newtorking/api_error_handler.dart';
@@ -132,7 +133,11 @@ class AuthRepository {
           refreshToken: response.refreshToken,
           accessToken: response.accessToken,
         );
-
+        final userRole = UserRole.values.firstWhere(
+          (role) => role.value == response.user.role,
+          orElse: () => UserRole.patient,
+        );
+        await storage.saveUserRole(userRole);
         return ApiSuccess(response);
       } else {
         return ApiFailure(const ApiErrorModel(message: "فشل تسجيل الدخول"));

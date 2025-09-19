@@ -6,14 +6,12 @@ part 'login_response.g.dart';
 class LoginResponse {
   final String accessToken;
   final String refreshToken;
-
-  @JsonKey(name: 'user', includeFromJson: false, includeToJson: false)
-  final Map<String, dynamic>? user;
+  final UserData user;
 
   const LoginResponse({
     required this.accessToken,
     required this.refreshToken,
-    this.user,
+    required this.user,
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
@@ -22,4 +20,28 @@ class LoginResponse {
   Map<String, dynamic> toJson() => _$LoginResponseToJson(this);
 
   bool get isSuccess => accessToken.isNotEmpty && refreshToken.isNotEmpty;
+}
+
+@JsonSerializable()
+class UserData {
+  final String id;
+  final String email;
+  final String fullName;
+  final String role;
+  final String? profilePictureUrl;
+  final String? phoneNumber;
+
+  const UserData({
+    required this.id,
+    required this.email,
+    required this.fullName,
+    required this.role,
+    this.profilePictureUrl,
+    this.phoneNumber,
+  });
+
+  factory UserData.fromJson(Map<String, dynamic> json) =>
+      _$UserDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserDataToJson(this);
 }
