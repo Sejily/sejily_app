@@ -9,12 +9,18 @@ class CustomTextField extends StatefulWidget {
     this.isObscured,
     this.keyboardType,
     this.validator,
+    this.hintText,
+    this.onChanged,
+    this.canChange,
   });
 
   final TextEditingController? controller;
   final bool? isObscured;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+  final String? hintText;
+  final void Function(String)? onChanged;
+  final bool? canChange;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -26,6 +32,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: widget.canChange,
+      onChanged: widget.onChanged,
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUnfocus,
       controller: widget.controller,
@@ -33,9 +41,19 @@ class _CustomTextFieldState extends State<CustomTextField> {
       style: AppTextStyles.regular14,
       obscureText: widget.isObscured == true ? _obscureText : false,
       decoration: InputDecoration(
+        hint: widget.hintText != null
+            ? Text(
+                widget.hintText!,
+                style: AppTextStyles.regular14.copyWith(color: AppColors.gray),
+              )
+            : null,
         isDense: false,
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: AppColors.lightGray),
+        ),
+        disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: AppColors.lightGray),
         ),

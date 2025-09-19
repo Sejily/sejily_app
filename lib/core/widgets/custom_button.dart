@@ -11,8 +11,8 @@ class CustomButton extends StatelessWidget {
     this.loadingText,
     this.style,
     this.defaultSize,
-    this.icon,
     this.isLoading,
+    this.forgroundColor,
   });
 
   final VoidCallback? onPressed;
@@ -20,44 +20,29 @@ class CustomButton extends StatelessWidget {
   final String? loadingText;
   final TextStyle? style;
   final bool? defaultSize;
-  final Widget? icon;
   final bool? isLoading;
+  final Color? forgroundColor;
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = this.isLoading ?? false;
     return ElevatedButton(
-      onPressed: isLoading ?? false ? null : onPressed,
+      onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
         minimumSize: defaultSize ?? false ? null : Size(double.infinity, 0),
         padding: EdgeInsets.symmetric(
           vertical: MediaQuery.sizeOf(context).height * 0.015,
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        foregroundColor: isLoading ?? false
-            ? AppColors.grayShade500
-            : AppColors.white,
-        backgroundColor: isLoading ?? false
-            ? AppColors.gray
-            : AppColors.darkBlue,
+        foregroundColor:
+            forgroundColor ??
+            (isLoading ? AppColors.grayShade500 : AppColors.white),
+        backgroundColor: isLoading ? AppColors.gray : AppColors.darkBlue,
       ),
-      child: icon == null
-          ? Text(
-              isLoading ?? false ? loadingText ?? AppStrings.loading : text,
-              style: style ?? AppTextStyles.semiBold18,
-            )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                icon!,
-                const SizedBox(width: 8),
-                Text(
-                  text,
-                  style: AppTextStyles.regular14.copyWith(
-                    color: AppColors.white,
-                  ),
-                ),
-              ],
-            ),
+      child: Text(
+        isLoading ? loadingText ?? AppStrings.loading : text,
+        style: style ?? AppTextStyles.semiBold18,
+      ),
     );
   }
 }

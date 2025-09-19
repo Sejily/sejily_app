@@ -29,6 +29,7 @@ class AppStrings {
   static const String loading = 'تحميل...';
   static const String checking = 'جاري التحقق...';
   static const String changing = 'جاري تغيير كلمة المرور...';
+  static const String sureToLogout = 'هل متاكد من انك تريد تسجيل الخروج؟';
 
   // USER ROLE SELECTION
   static const String selectYourRole = 'حدد دورك';
@@ -59,6 +60,7 @@ class AppStrings {
 
   // PROFILE STRINGS
   static const String completeProfile = 'اكمال بياناتك الشخصية';
+  static const String complete = 'اكمال';
   static const String helpUsProvidePersonal =
       'برجاء اكمل بياناتك الشخصية لمتابعة حالتك بكفائة ولضمان افضل تجربة.';
   static const String editProfile = 'تعديل ملفك الشخصي';
@@ -129,7 +131,7 @@ class AppStrings {
   static const String addEmergencyContactDescription =
       'اضف جهة طوارئ .. و ابقي آمنا.';
   static const String warningemergency =
-      'تنبيه \n في حال طلب الاطباء الوصول لمعلوماتك الطبيه من جهه الطوارئ سيكون للتطبيق امكانيه الوصول لموقعك الجغرافي';
+      'في حال طلب الاطباء الوصول لمعلوماتك الطبيه من جهه الطوارئ سيكون للتطبيق امكانيه الوصول لموقعك الجغرافي';
   static const String emergencyContactName = 'اسم جهة الطوارئ';
   static const String emergencyContactPhone = 'رقم هاتف جهة الطوارئ';
   static const String relationshipToEmergencyContact = 'صلة القرابة';

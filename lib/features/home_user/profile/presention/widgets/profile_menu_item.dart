@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sejily/core/utils/app_colors.dart';
@@ -27,14 +28,19 @@ class ProfileMenuItem extends StatelessWidget {
           color ?? AppColors.darkBlue,
           BlendMode.srcIn,
         ),
+        height: 24,
       ),
       title: Text(
         title,
-        style: AppTextStyles.medium16.copyWith(
+        style: AppTextStyles.semiBold16.copyWith(
           color: color ?? AppColors.jetBlack,
         ),
       ),
-      trailing: const Icon(Icons.chevron_right, color: AppColors.darkBlue),
+      trailing: const Icon(
+        CupertinoIcons.chevron_left,
+        color: AppColors.darkBlue,
+        size: 18,
+      ),
       onTap: onTap,
     );
   }

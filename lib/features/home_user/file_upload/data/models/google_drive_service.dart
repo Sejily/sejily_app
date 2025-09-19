@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class GoogleDriveService {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [drive.DriveApi.driveReadonlyScope, 'email'],
+    scopes: [drive.DriveApi.driveFileScope, 'email'],
   );
 
   GoogleSignInAccount? _currentUser;

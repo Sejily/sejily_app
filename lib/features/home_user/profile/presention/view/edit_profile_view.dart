@@ -1,13 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sejily/core/helpers/string_extensions.dart';
+import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_strings.dart';
+import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
+import 'package:sejily/core/widgets/custom_text_field.dart';
+import 'package:sejily/features/authentication/presentation/widgets/phone_number_field.dart';
 import '../manager/providers/edit_profile_provider.dart';
 import '../manager/providers/user_provider.dart';
 import '../manager/providers/medical_info_provider.dart';
-import '../widgets/custom_text_field.dart';
 import '../../data/models/user_model.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
@@ -23,6 +29,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late TextEditingController addressController;
   late TextEditingController cityController;
   late TextEditingController phoneController;
+  String _selectedCountryCode = ' +20 ';
 
   UserModel? user;
   bool controllersInitialized = false;
@@ -63,72 +70,34 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         child: userProfile.when(
           data: (apiResult) {
             return apiResult.when(
-              onSuccess: (u) {
+              onSuccess: (userData) {
                 if (!controllersInitialized) {
-                  user = u;
-                  _initializeControllers(u);
+                  user = userData;
+                  _initializeControllers(userData);
                   controllersInitialized = true;
 
                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                    if (u.bloodType != null) {
+                    if (userData.bloodType != null) {
                       ref
                           .read(medicalInfoProvider.notifier)
-                          .setBloodType(u.bloodType!);
+                          .setBloodType(userData.bloodType!);
                     }
                   });
                 }
 
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        AppStrings.editProfile,
-                        style: AppTextStyles.bold20.copyWith(
-                          color: AppColors.jetBlack,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage:
-                            u.avatarUrl != null && u.avatarUrl!.isNotEmpty
-                            ? NetworkImage(u.avatarUrl!)
-                            : const AssetImage(
-                                    "assets/images/selected_person.png",
-                                  )
-                                  as ImageProvider,
-                      ),
+                      SizedBox(height: 20),
+                      _header(userData),
                       const SizedBox(height: 30),
-                      CustomTextField(
-                        label: AppStrings.fullNameLabel,
-                        controller: nameController,
-                      ),
-                      const SizedBox(height: 16),
-                      CustomTextField(
-                        label: AppStrings.emailAddress,
-                        controller: emailController,
-                      ),
-                      const SizedBox(height: 16),
-                      CustomTextField(
-                        label: AppStrings.address,
-                        controller: addressController,
-                      ),
-                      const SizedBox(height: 16),
-                      CustomTextField(
-                        label: AppStrings.city,
-                        controller: cityController,
-                      ),
-                      const SizedBox(height: 16),
-                      CustomTextField(
-                        label: AppStrings.phoneNumber,
-                        controller: phoneController,
-                      ),
+                      _userTextFields(),
                       const SizedBox(height: 40),
                       CustomButton(
                         isLoading: editState.isLoading,
-                        text: AppStrings.save,
+                        text: AppStrings.saveChanges,
                         loadingText: AppStrings.savingInProgress,
                         onPressed: () {
                           if (user != null) {
@@ -137,7 +106,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                               email: emailController.text.trim(),
                               address: addressController.text.trim(),
                               city: cityController.text.trim(),
-                              phone: phoneController.text.trim(),
+                              phone:
+                                  '$_selectedCountryCode${phoneController.text.trim()}',
                             );
 
                             ref
@@ -159,6 +129,90 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           error: (err, st) => const Center(child: Text(AppStrings.saveError)),
         ),
       ),
+    );
+  }
+
+  Column _userTextFields() {
+    return Column(
+      children: [
+        BuildFieldWithLabel(
+          label: AppStrings.fullNameLabel,
+          child: CustomTextField(
+            hintText: nameController.text,
+            controller: nameController,
+          ),
+        ),
+        const SizedBox(height: 16),
+        BuildFieldWithLabel(
+          label: AppStrings.emailAddress,
+          child: CustomTextField(
+            hintText: emailController.text,
+            controller: emailController,
+            canChange: false,
+          ),
+        ),
+        const SizedBox(height: 16),
+        BuildFieldWithLabel(
+          label: AppStrings.address,
+          child: CustomTextField(
+            hintText: addressController.text,
+            controller: addressController,
+          ),
+        ),
+
+        const SizedBox(height: 16),
+        BuildFieldWithLabel(
+          required: true,
+          label: AppStrings.city,
+          child: CustomTextField(
+            hintText: cityController.text,
+            controller: cityController,
+          ),
+        ),
+        const SizedBox(height: 16),
+        BuildFieldWithLabel(
+          required: true,
+          label: AppStrings.phoneNumber,
+          child: PhoneNumberField(
+            initialCountryCode: _selectedCountryCode,
+            onCountryCodeChanged: (countryCode) {
+              setState(() {
+                _selectedCountryCode = countryCode;
+              });
+            },
+            controller: phoneController,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _header(UserModel userData) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Icon(CupertinoIcons.left_chevron),
+              onPressed: () => context.pop(),
+            ),
+            Spacer(),
+            Text(
+              AppStrings.editProfile,
+              style: AppTextStyles.bold24.copyWith(color: AppColors.jetBlack),
+            ),
+            Spacer(),
+          ],
+        ),
+        const SizedBox(height: 20),
+        CircleAvatar(
+          radius: 50,
+          backgroundImage: !userData.avatarUrl.isNullOrEmpty()
+              ? NetworkImage(userData.avatarUrl!)
+              : const AssetImage(Assets.selectedPerson),
+        ),
+      ],
     );
   }
 

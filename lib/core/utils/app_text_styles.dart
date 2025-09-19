@@ -36,6 +36,11 @@ class AppTextStyles {
   );
 
   //* SemiBold
+  static final TextStyle semiBold16 = TextStyle(
+    fontSize: 16,
+    fontWeight: AppFontWeights.semiBold,
+  );
+
   static final TextStyle semiBold18 = TextStyle(
     fontSize: 18,
     fontWeight: AppFontWeights.semiBold,

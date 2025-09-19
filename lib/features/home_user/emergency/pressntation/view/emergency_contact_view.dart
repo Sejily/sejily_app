@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sejily/features/authentication/presentation/view/emergency_contact_page.dart';
+import 'package:sejily/features/home_user/emergency/data/models/emergency_contact_service.dart';
+import 'package:sejily/features/home_user/profile/presention/widgets/warning_card.dart';
 import '../manager/providers/emergency_contacts_provider.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
 import '../../../../../core/widgets/custom_bottom_navbar.dart';
@@ -22,30 +24,13 @@ class UserProfileEmergencyPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFEBEE),
-                  border: Border.all(color: AppColors.lightRed),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(Icons.info, color: AppColors.lightRed),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        AppStrings.warningemergency,
-                        style: AppTextStyles.regular14.copyWith(
-                          color: AppColors.lightRed,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              WarningCard(
+                textColor: AppColors.pink,
+                bgColor: AppColors.whiteRed,
+                borderColor: AppColors.lightRed,
+                description: AppStrings.warningemergency,
               ),
+
               const SizedBox(height: 20),
               CustomButton(
                 text: AppStrings.addEmergencyContact,
@@ -73,68 +58,15 @@ class UserProfileEmergencyPage extends ConsumerWidget {
                         ),
                       );
                     }
-
                     return ListView.builder(
                       itemCount: contacts.length,
                       itemBuilder: (context, index) {
                         final contact = contacts[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 40),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "تفاصيل جهة الطوارئ",
-                                style: AppTextStyles.medium16.copyWith(
-                                  color: AppColors.blackBlue,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "الاسم: ${contact.name}",
-                                style: AppTextStyles.regular14,
-                              ),
-                              Text(
-                                "رقم الهاتف: ${contact.phoneNumber}",
-                                style: AppTextStyles.regular14,
-                              ),
-                              Text(
-                                "صلة القرابة: ${contact.relation}",
-                                style: AppTextStyles.regular14,
-                              ),
-                              const SizedBox(height: 24),
-                              Center(
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      side: BorderSide(
-                                        color: AppColors.lightRed,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 12,
-                                      ),
-                                    ),
-                                    onPressed: () async {
-                                      await ref
-                                          .read(
-                                            emergencyContactsProvider.notifier,
-                                          )
-                                          .deleteContact(contact.id);
-                                    },
-                                    child: Text(
-                                      "حذف جهة الطوارئ",
-                                      style: AppTextStyles.medium14.copyWith(
-                                        color: AppColors.lightRed,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                          child: EmergencyContactDetails(
+                            contact: contact,
+                            ref: ref,
                           ),
                         );
                       },
@@ -151,6 +83,66 @@ class UserProfileEmergencyPage extends ConsumerWidget {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavBar(currentIndex: 2),
+    );
+  }
+}
+
+class EmergencyContactDetails extends StatelessWidget {
+  const EmergencyContactDetails({
+    super.key,
+    required this.contact,
+    required this.ref,
+  });
+
+  final EmergencyContact contact;
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "تفاصيل جهة الطوارئ",
+          style: AppTextStyles.medium16.copyWith(color: AppColors.blackBlue),
+        ),
+        const SizedBox(height: 8),
+        Text("الاسم: ${contact.name}", style: AppTextStyles.regular14),
+        Text(
+          "رقم الهاتف: ${contact.phoneNumber}",
+          style: AppTextStyles.regular14,
+        ),
+        Text(
+          "صلة القرابة: ${contact.relation}",
+          style: AppTextStyles.regular14,
+        ),
+        const SizedBox(height: 24),
+        Center(
+          child: SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: AppColors.lightRed),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              onPressed: () async {
+                await ref
+                    .read(emergencyContactsProvider.notifier)
+                    .deleteContact(contact.id);
+              },
+              child: Text(
+                "حذف جهة الطوارئ",
+                style: AppTextStyles.medium14.copyWith(
+                  color: AppColors.lightRed,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

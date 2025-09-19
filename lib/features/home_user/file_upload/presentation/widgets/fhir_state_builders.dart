@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
-import 'package:sejily/core/widgets/custom_button.dart';
+import 'package:sejily/core/widgets/action_button.dart';
 
 class BuildLoadingState extends StatelessWidget {
   const BuildLoadingState({super.key});
@@ -56,10 +56,11 @@ class BuildErrorState extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          CustomButton(
+          ActionButton(
             text: 'إعادة المحاولة',
             icon: const Icon(Icons.refresh_rounded, size: 20),
             onPressed: onPressed,
+            isOutlined: true,
           ),
         ],
       ),

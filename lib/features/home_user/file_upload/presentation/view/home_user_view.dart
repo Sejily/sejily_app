@@ -1,12 +1,14 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
-import 'package:sejily/core/widgets/custom_button.dart';
+import 'package:sejily/core/widgets/action_button.dart';
 import 'package:sejily/features/home_user/file_upload/data/models/file_upload_service.dart';
+import 'package:sejily/features/home_user/file_upload/presentation/widgets/drive_file_picker_dialog.dart';
 import 'package:sejily/features/home_user/file_upload/presentation/widgets/file_preview.dart';
 import 'package:sejily/features/home_user/file_upload/presentation/widgets/file_type_dialog.dart';
 import 'package:sejily/features/home_user/file_upload/presentation/widgets/user_app_bar.dart';
@@ -78,34 +80,29 @@ class UploadFileCard extends ConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: CustomButton(
+                child: ActionButton(
                   text: AppStrings.browse,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => FileTypeDialog(
-                        onPick: (type) {
-                          FileUploadService.pickFiles(context, ref, type);
-                        },
-                      ),
-                    );
-                  },
-                  defaultSize: true,
-                  icon: Icon(Icons.upload, color: AppColors.white),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => FileTypeDialog(
+                      onPick: (type) =>
+                          FileUploadService.pickFiles(context, ref, type),
+                    ),
+                  ),
+                  icon: SvgPicture.asset(Assets.fileUpload, height: 24),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: () {},
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                child: ActionButton(
+                  text: "Drive",
+                  icon: Image.asset(Assets.drive, height: 24),
+                  isOutlined: true,
+                  textColor: AppColors.black,
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => DriveFilePickerDialog(ref: ref),
                   ),
-                  icon: Image.asset(Assets.drive, height: 20),
-                  label: Text("Drive", style: AppTextStyles.regular14),
                 ),
               ),
             ],

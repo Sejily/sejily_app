@@ -61,6 +61,7 @@ class ProfilePage extends ConsumerWidget {
                                     context,
                                   ),
                             ),
+                            Divider(color: AppColors.grayShade300, height: 8),
                             ProfileMenuItem(
                               icon: Assets.editPersonalInfo,
                               title: AppStrings.editProfile,
@@ -69,28 +70,33 @@ class ProfilePage extends ConsumerWidget {
                                 user: user,
                               ),
                             ),
+                            Divider(color: AppColors.grayShade300, height: 8),
                             ProfileMenuItem(
                               icon: Assets.emergency,
                               title: AppStrings.emergency,
                               onTap: () =>
                                   ProfileNavigation.goToEmergency(context),
                             ),
+                            Divider(color: AppColors.grayShade300, height: 8),
                             ProfileMenuItem(
                               icon: Assets.notificationIcon,
                               title: AppStrings.notification,
                               onTap: () =>
                                   ProfileNavigation.goToNotifications(context),
                             ),
+                            Divider(color: AppColors.grayShade300, height: 8),
                             ProfileMenuItem(
                               icon: Assets.help,
                               title: AppStrings.help,
                               onTap: () => ProfileNavigation.goToHelp(context),
                             ),
+                            Divider(color: AppColors.grayShade300, height: 8),
                             ProfileMenuItem(
                               icon: Assets.terms,
                               title: AppStrings.terms,
                               onTap: () => ProfileNavigation.goToTerms(context),
                             ),
+                            Divider(color: AppColors.grayShade300, height: 8),
                             ProfileMenuItem(
                               icon: Assets.logOut,
                               title: AppStrings.logout,

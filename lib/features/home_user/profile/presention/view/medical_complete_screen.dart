@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sejily/core/utils/app_colors.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_strings.dart';
+import 'package:sejily/core/widgets/build_field_with_label.dart';
 import 'package:sejily/core/widgets/custom_button.dart';
+import 'package:sejily/core/widgets/custom_text_field.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../manager/providers/medical_info_provider.dart';
 import '../manager/providers/user_provider.dart';
 import '../manager/providers/edit_profile_provider.dart';
 import '../widgets/blood_type_selector.dart';
-import '../widgets/medical_complete_field.dart';
 
 class MedicalInfoScreen extends ConsumerWidget {
   const MedicalInfoScreen({super.key});
@@ -42,70 +43,72 @@ class MedicalInfoScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CustomAppBar(),
-              const SizedBox(height: 20),
-
               Text(
                 AppStrings.helpUsProvidePersonal,
                 style: AppTextStyles.regular14.copyWith(
                   color: AppColors.grayShade500,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
 
-              MedicalTextField(
+              BuildFieldWithLabel(
                 label: AppStrings.medicalState,
-                initialValue: medicalInfo.medicalState,
-                onChanged: (val) {
-                  ref.read(medicalInfoProvider.notifier).setMedicalState(val);
-                },
+                child: CustomTextField(
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setMedicalState(val);
+                  },
+                ),
               ),
               const SizedBox(height: 16),
 
-              MedicalTextField(
+              BuildFieldWithLabel(
                 label: AppStrings.sensitive,
-                initialValue: medicalInfo.sensitive,
-                onChanged: (val) {
-                  ref.read(medicalInfoProvider.notifier).setSensitive(val);
-                },
+                child: CustomTextField(
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setSensitive(val);
+                  },
+                ),
               ),
               const SizedBox(height: 16),
 
-              MedicalTextField(
+              BuildFieldWithLabel(
                 label: AppStrings.height,
-                initialValue: medicalInfo.height,
-                onChanged: (val) {
-                  ref.read(medicalInfoProvider.notifier).setHeight(val);
-                },
+                child: CustomTextField(
+                  hintText: medicalInfo.height,
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setHeight(val);
+                  },
+                ),
               ),
               const SizedBox(height: 16),
 
-              MedicalTextField(
+              BuildFieldWithLabel(
                 label: AppStrings.weight,
-                initialValue: medicalInfo.weight,
-                onChanged: (val) {
-                  ref.read(medicalInfoProvider.notifier).setWeight(val);
-                },
+                child: CustomTextField(
+                  hintText: medicalInfo.weight,
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setWeight(val);
+                  },
+                ),
               ),
               const SizedBox(height: 24),
 
-              Text(
-                "${AppStrings.bloodType} *",
-                style: AppTextStyles.medium16.copyWith(color: AppColors.black),
-              ),
-              const SizedBox(height: 12),
-
-              BloodTypeSelector(
-                selected: medicalInfo.bloodType,
-                onChanged: (val) {
-                  ref.read(medicalInfoProvider.notifier).setBloodType(val);
-                },
+              BuildFieldWithLabel(
+                label: AppStrings.bloodType,
+                required: true,
+                child: BloodTypeSelector(
+                  selected: medicalInfo.bloodType,
+                  onChanged: (val) {
+                    ref.read(medicalInfoProvider.notifier).setBloodType(val);
+                  },
+                ),
               ),
 
               const SizedBox(height: 40),
 
               CustomButton(
                 isLoading: editState.isLoading,
-                text: AppStrings.finish,
+                text: AppStrings.complete,
                 loadingText: AppStrings.savingInProgress,
                 onPressed: () {
                   final userProfile = ref.read(userProfileProvider).value;

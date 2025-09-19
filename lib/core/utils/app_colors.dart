@@ -37,6 +37,8 @@ class AppColors {
 
   //* Red shades
   static const Color lightRed = Color(0xfff53d6b);
+  static const Color whiteRed = Color(0xfffef0f4);
+  static const Color pink = Color(0xffd50b3e);
   static const Color red = Color(0xFFF44336);
   static const Color redShade400 = Color(0xFFEF5350);
 
