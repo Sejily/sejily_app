@@ -167,7 +167,8 @@ The AI model in Sejily:
 | 🧩 **Code Generation** | **Freezed**, **json_serializable**, and **build_runner** for immutable models and type-safe serialization |
 | 🎨 **UI Toolkit** | Custom reusable widgets, SVG support, skeleton loaders, and asset-driven UI components |
 
-### Architecture Overview
+---
+## Architecture Overview
 
 Sejily is organized around reusable features and shared core utilities:
 
@@ -236,3 +237,20 @@ This structure keeps the codebase scalable as new healthcare, AI, and profile fe
       │       └── presentation/
       └── 📄 main.dart
 </pre>
+---
+## 🎥 Demo Video
+
+Experience the complete Sejily workflow, from user registration and verification to AI-powered medical document processing and decentralized medical record management.
+
+### 📹 Full Platform Demonstration:
+
+[Watch Sejily Demo](https://drive.google.com/file/d/1vg2NfOEWeSDTyYrqJ2APwtmcIwKl8tko/view?usp=sharing)
+
+
+### Demo Highlights
+- Secure Multi-Role Authentication
+- Patient Registration & Verification
+- Doctor Registration & Credential Verification
+- AI OCR & Medical Record Summarization
+- Decentralized Medical Record Management
+- Doctor & Patient Dashboards
