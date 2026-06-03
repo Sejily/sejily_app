@@ -3,6 +3,8 @@
 Sejily is a mobile-first platform that gives patients **full control over their medical records**.  
 It combines **AI** for structuring messy health documents with **Web3 decentralized storage**, ensuring privacy, ownership, and accessibility across hospitals and borders.
 
+<img width="1280" height="722" alt="image_2026-06-03_07-01-43" src="https://github.com/user-attachments/assets/491813b0-9a3c-47e7-a8b4-d1d0d2468514" />
+
 ---
 
 ## ✨ Features
