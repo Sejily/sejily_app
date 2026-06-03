@@ -1,0 +1,1145 @@
+{
+  "@@locale": "en",
+  "@@context": "Healthcare App Localization",
+
+  "onboardingTitle1": "Your path to smarter and safer healthcare.",
+  "@onboardingTitle1": {
+    "description": "First onboarding screen title"
+  },
+  "onboardingSubtitle1": "Save your medical record, track your health, and share your data with your doctor with complete confidence.",
+  "@onboardingSubtitle1": {
+    "description": "First onboarding screen subtitle"
+  },
+
+  "onBoardingTitle2": "Your medical data in your hands... and encrypted with the strongest technologies!",
+  "@onBoardingTitle2": {
+    "description": "Second onboarding screen title"
+  },
+  "onBoardingSubtitle2": "No need to worry anymore - your privacy is our priority",
+  "@onBoardingSubtitle2": {
+    "description": "Second onboarding screen subtitle"
+  },
+
+  "onBoardingTitle3": "Everything you need for your health in one place... and one click away.",
+  "@onBoardingTitle3": {
+    "description": "Third onboarding screen title"
+  },
+  "onBoardingSubtitle3": "Upload your medical file and let artificial intelligence organize it for you!",
+  "@onBoardingSubtitle3": {
+    "description": "Third onboarding screen subtitle"
+  },
+
+  "next": "Next",
+  "@next": {
+    "description": "Button text for next action"
+  },
+  "skip": "Skip",
+  "@skip": {
+    "description": "Button text for skip action"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Button text for back/return action"
+  },
+  "finish": "Finish",
+  "@finish": {
+    "description": "Button text for finish action"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Button text for save action"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button text for cancel action"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Button text for confirm action"
+  },
+  "verify": "Verify",
+  "@verify": {
+    "description": "Button text for verify action"
+  },
+  "saveContactInfo": "Save Contact Information",
+  "@saveContactInfo": {
+    "description": "Button text for saving contact information"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading state text"
+  },
+  "checking": "Checking...",
+  "@checking": {
+    "description": "Checking/validating state text"
+  },
+  "changing": "Changing password...",
+  "@changing": {
+    "description": "Password change in progress text"
+  },
+  "sureToLogout": "Are you sure you want to logout?",
+  "@sureToLogout": {
+    "description": "Logout confirmation dialog message"
+  },
+
+  "selectYourRole": "Select Your Role",
+  "@selectYourRole": {
+    "description": "Role selection screen title"
+  },
+  "chooseYourRoleTo": "Choose your role to help us provide you with the appropriate experience.",
+  "@chooseYourRoleTo": {
+    "description": "Role selection screen description"
+  },
+  "doctor": "Doctor",
+  "@doctor": {
+    "description": "Doctor role option"
+  },
+  "user": "User",
+  "@user": {
+    "description": "User role option"
+  },
+
+  "newUser": "New User",
+  "@newUser": {
+    "description": "New user button text on onboarding"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button text"
+  },
+  "welcomeBack": "Welcome back!",
+  "@welcomeBack": {
+    "description": "Welcome back message on login screen"
+  },
+  "welcome": "Welcome, {name}!",
+  "@welcome": {
+    "description": "Welcome message with user name",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "enterNextData": "Enter the following data to access your account!",
+  "@enterNextData": {
+    "description": "Login screen instruction text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "forgetPassword": "Forgot password?",
+  "@forgetPassword": {
+    "description": "Forgot password link text"
+  },
+  "dontHaveAccount": "Don't have an account?",
+  "@dontHaveAccount": {
+    "description": "No account prompt on login screen"
+  },
+  "registerNow": "Register Now",
+  "@registerNow": {
+    "description": "Register now link/button text"
+  },
+  "orSignupWith": "Or sign up with",
+  "@orSignupWith": {
+    "description": "Social signup section header"
+  },
+  "google": "Google",
+  "@google": {
+    "description": "Google social login option"
+  },
+  "icloud": "iCloud",
+  "@icloud": {
+    "description": "iCloud social login option"
+  },
+
+  "completePersonalProfile": "Complete Your Personal Profile",
+  "@completePersonalProfile": {
+    "description": "Personal profile completion screen title"
+  },
+  "helpUsProvidePersonalizedExperience": "Help us know you better to provide a personalized experience.",
+  "@helpUsProvidePersonalizedExperience": {
+    "description": "Personal profile completion screen description"
+  },
+
+  "completeProfile": "Complete Your Personal Information",
+  "@completeProfile": {
+    "description": "Complete profile screen title"
+  },
+  "complete": "Complete",
+  "@complete": {
+    "description": "Complete button text"
+  },
+  "helpUsProvidePersonal": "Please complete your personal information to follow up on your condition efficiently and ensure the best experience.",
+  "@helpUsProvidePersonal": {
+    "description": "Medical profile completion instruction text"
+  },
+  "editProfile": "Edit Your Profile",
+  "@editProfile": {
+    "description": "Edit profile menu option"
+  },
+  "emergency": "Emergency Contacts",
+  "@emergency": {
+    "description": "Emergency contacts menu option"
+  },
+  "notification": "Notifications",
+  "@notification": {
+    "description": "Notifications menu option"
+  },
+  "help": "Help & Support",
+  "@help": {
+    "description": "Help and support menu option"
+  },
+  "terms": "Terms & Conditions",
+  "@terms": {
+    "description": "Terms and conditions menu option"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout menu option"
+  },
+  "medicalState": "Medical History",
+  "@medicalState": {
+    "description": "Medical history field label"
+  },
+  "sensitive": "Allergies",
+  "@sensitive": {
+    "description": "Allergies/Sensitivities field label"
+  },
+  "height": "Height",
+  "@height": {
+    "description": "Height field label"
+  },
+  "weight": "Weight",
+  "@weight": {
+    "description": "Weight field label"
+  },
+  "bloodType": "Blood Type",
+  "@bloodType": {
+    "description": "Blood type field label"
+  },
+  "saveChanges": "Save Changes",
+  "@saveChanges": {
+    "description": "Save changes button text"
+  },
+
+  "bloodTypes": "A+, A-, B+, B-, O+, O-, AB+, AB-",
+  "@bloodTypes": {
+    "description": "List of blood type options"
+  },
+
+  "address": "Address",
+  "@address": {
+    "description": "Address field label"
+  },
+  "dateOfBirth": "Date of Birth",
+  "@dateOfBirth": {
+    "description": "Date of birth field label"
+  },
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "Phone number field label"
+  },
+  "gender": "Gender",
+  "@gender": {
+    "description": "Gender field label"
+  },
+  "male": "Male",
+  "@male": {
+    "description": "Male gender option"
+  },
+  "female": "Female",
+  "@female": {
+    "description": "Female gender option"
+  },
+
+  "nationality": "Nationality",
+  "@nationality": {
+    "description": "Nationality field label"
+  },
+  "egyptian": "Egyptian",
+  "@egyptian": {
+    "description": "Egyptian nationality option"
+  },
+  "nationalIdNumber": "National ID Number",
+  "@nationalIdNumber": {
+    "description": "National ID number field label"
+  },
+
+  "profilePictureUpload": "ID Photo",
+  "@profilePictureUpload": {
+    "description": "ID photo upload section title"
+  },
+  "dragDropOrTapToUpload": "Drop file or browse",
+  "@dragDropOrTapToUpload": {
+    "description": "File upload area instruction text"
+  },
+  "imageUploadCriteria": "Format: .jpeg, .png & Maximum file size: 25 MB",
+  "@imageUploadCriteria": {
+    "description": "Image upload requirements text"
+  },
+  "imageUploadNationalId": "Format: .jpeg, .png & Maximum file size: 25 MB. Please upload a clear ID photo",
+  "@imageUploadNationalId": {
+    "description": "National ID upload requirements text"
+  },
+  "browseFiles": "Browse Files",
+  "@browseFiles": {
+    "description": "Browse files button text"
+  },
+
+  "personalPictureUpload": "Upload Personal Photo",
+  "@personalPictureUpload": {
+    "description": "Personal photo upload section title"
+  },
+  "personalPicture": "Personal Photo",
+  "@personalPicture": {
+    "description": "Personal photo field label"
+  },
+  "uploadPersonalPictureDescription": "Please upload the file in jpeg and png format and the maximum file size less than 25 MB.",
+  "@uploadPersonalPictureDescription": {
+    "description": "Personal photo upload instructions"
+  },
+
+  "uploadFile": "Upload File",
+  "@uploadFile": {
+    "description": "Upload file button/section title"
+  },
+  "browse": "Browse",
+  "@browse": {
+    "description": "Browse button text"
+  },
+  "warning": "Warning",
+  "@warning": {
+    "description": "Warning dialog/card title"
+  },
+  "warningDescription": "Please enter your medical information in chronological order.\nIf you upload images, please take clear pictures.\nPlease upload analyses together and X-rays together separately for easy review.",
+  "@warningDescription": {
+    "description": "Medical file upload warning instructions"
+  },
+  "uploadfileDescription": "Format: doc, docx, pdf & Maximum file size: 25 MB",
+  "@uploadfileDescription": {
+    "description": "Document upload requirements text"
+  },
+
+  "addEmergencyContact": "Add Emergency Contact",
+  "@addEmergencyContact": {
+    "description": "Add emergency contact button/screen title"
+  },
+  "addEmergencyContactDescription": "Add an emergency contact and stay safe.",
+  "@addEmergencyContactDescription": {
+    "description": "Emergency contact screen description"
+  },
+  "warningemergency": "If doctors request access to your medical information from the emergency contact, the application will have the ability to access your geographical location",
+  "@warningemergency": {
+    "description": "Emergency contact location permission warning"
+  },
+  "emergencyContactName": "Emergency Contact Name",
+  "@emergencyContactName": {
+    "description": "Emergency contact name field label"
+  },
+  "emergencyContactPhone": "Emergency Contact Phone",
+  "@emergencyContactPhone": {
+    "description": "Emergency contact phone field label"
+  },
+  "relationshipToEmergencyContact": "Relationship",
+  "@relationshipToEmergencyContact": {
+    "description": "Relationship to emergency contact field label"
+  },
+  "relative": "Relative",
+  "@relative": {
+    "description": "Relative relationship option"
+  },
+  "addAnotherContact": "Add Another Contact",
+  "@addAnotherContact": {
+    "description": "Add another emergency contact button text"
+  },
+  "chooseRelationShip": "Choose Relationship",
+  "@chooseRelationShip": {
+    "description": "Relationship dropdown placeholder"
+  },
+  "relationshipOptions": "Father/Mother, Son/Daughter, Husband/Wife, Brother/Sister, Uncle/Aunt, Cousin, Grandfather/Grandmother, Friend/Colleague, Doctor, Hospital, Other",
+  "@relationshipOptions": {
+    "description": "List of relationship options"
+  },
+
+  "dataUnderReview": "Your data is currently under review!",
+  "@dataUnderReview": {
+    "description": "Data review screen title"
+  },
+  "reviewDataDescription": "Our team is reviewing your information to ensure accuracy and security. This may take up to 48 hours. You will receive an email notification when your data has been reviewed.",
+  "@reviewDataDescription": {
+    "description": "Data review screen description"
+  },
+  "browseMainPage": "Browse Main Page",
+  "@browseMainPage": {
+    "description": "Browse main page button text"
+  },
+  "browseUsageAndPrivacyPolicies": "Browse Usage and Privacy Policies",
+  "@browseUsageAndPrivacyPolicies": {
+    "description": "Privacy policies link text"
+  },
+  "verificationCodeTimeout": "00:59",
+  "@verificationCodeTimeout": {
+    "description": "Verification code timeout display"
+  },
+
+  "registerNowFree": "Register Now for Free!",
+  "@registerNowFree": {
+    "description": "Registration screen title"
+  },
+  "enterDataToCreateAccount": "Enter the following information to create a new account. Start now, don't hesitate!",
+  "@enterDataToCreateAccount": {
+    "description": "Registration screen instruction text"
+  },
+
+  "fullNameLabel": "Full Name",
+  "@fullNameLabel": {
+    "description": "Full name field label"
+  },
+  "emailAddress": "Email Address",
+  "@emailAddress": {
+    "description": "Email address field label"
+  },
+  "passwordLabel": "Password",
+  "@passwordLabel": {
+    "description": "Password field label"
+  },
+  "createNewAccount": "Create New Account",
+  "@createNewAccount": {
+    "description": "Create account button text"
+  },
+  "agreeToUsageAndPrivacyPolicies1": "By clicking ",
+  "@agreeToUsageAndPrivacyPolicies1": {
+    "description": "Terms agreement text part 1"
+  },
+  "agreeToUsageAndPrivacyPolicies2": ", you agree to ",
+  "@agreeToUsageAndPrivacyPolicies2": {
+    "description": "Terms agreement text part 2"
+  },
+  "usageAndPrivacyPolicies": "Usage and Privacy Policies",
+  "@usageAndPrivacyPolicies": {
+    "description": "Privacy policies link text"
+  },
+  "haveAccountAlready": "Already have an account?",
+  "@haveAccountAlready": {
+    "description": "Already have account prompt"
+  },
+  "loginNow": "Login Now",
+  "@loginNow": {
+    "description": "Login now link text"
+  },
+  "orLoginWith": "Or login with",
+  "@orLoginWith": {
+    "description": "Social login section header"
+  },
+
+  "enterVerificationCode": "Enter Verification Code",
+  "@enterVerificationCode": {
+    "description": "OTP verification screen title"
+  },
+  "verificationCodeSent": "We have sent a verification code to the following email",
+  "@verificationCodeSent": {
+    "description": "Verification code sent message"
+  },
+  "didntReceiveCode": "Didn't receive a code?",
+  "@didntReceiveCode": {
+    "description": "Didn't receive code prompt"
+  },
+  "requestNewCode": "Request New Code",
+  "@requestNewCode": {
+    "description": "Resend code button text"
+  },
+
+  "passwordResetTitle": "Password Recovery!",
+  "@passwordResetTitle": {
+    "description": "Password reset screen title"
+  },
+  "passwordResetDescription": "Enter your email address to recover your password!",
+  "@passwordResetDescription": {
+    "description": "Password reset screen description"
+  },
+  "sendVerificationCode": "Send Verification Code",
+  "@sendVerificationCode": {
+    "description": "Send verification code button text"
+  },
+  "enterNewPassword": "Enter New Password!",
+  "@enterNewPassword": {
+    "description": "New password screen title"
+  },
+  "enterNewPasswordDescription": "Enter your new password. It must be at least 8 characters!",
+  "@enterNewPasswordDescription": {
+    "description": "New password screen description"
+  },
+  "newPassword": "New Password",
+  "@newPassword": {
+    "description": "New password field label"
+  },
+  "confirmNewPassword": "Confirm New Password",
+  "@confirmNewPassword": {
+    "description": "Confirm password field label"
+  },
+  "changePassword": "Change Password",
+  "@changePassword": {
+    "description": "Change password button text"
+  },
+  "forgotPassword": "Remember Password?",
+  "@forgotPassword": {
+    "description": "Remember password link text"
+  },
+
+  "congratulations": "Congratulations!",
+  "@congratulations": {
+    "description": "Success dialog title"
+  },
+  "passwordResetSuccessDescription": "Your account password has been changed successfully. You can now go back and login again!",
+  "@passwordResetSuccessDescription": {
+    "description": "Password reset success message"
+  },
+  "registrationCompletedSuccessfully": "Registration completed successfully!",
+  "@registrationCompletedSuccessfully": {
+    "description": "Registration success message"
+  },
+  "completingRegistration": "Completing registration...",
+  "@completingRegistration": {
+    "description": "Registration in progress text"
+  },
+  "emergencyContactSaved": "Emergency contact information saved!",
+  "@emergencyContactSaved": {
+    "description": "Emergency contact save success message"
+  },
+  "registrationFailed": "Registration failed",
+  "@registrationFailed": {
+    "description": "Registration failure message"
+  },
+  "generalError": "An error occurred. Please try again.",
+  "@generalError": {
+    "description": "General error message"
+  },
+
+  "fieldRequired": "This field is required",
+  "@fieldRequired": {
+    "description": "Required field validation message"
+  },
+  "invalidEmail": "Email is invalid",
+  "@invalidEmail": {
+    "description": "Invalid email validation message"
+  },
+  "passwordTooShort": "Password is too short",
+  "@passwordTooShort": {
+    "description": "Password too short validation message"
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Passwords mismatch validation message"
+  },
+  "invalidPhoneNumber": "Phone number is invalid",
+  "@invalidPhoneNumber": {
+    "description": "Invalid phone validation message"
+  },
+
+  "enterPassword": "Enter password",
+  "@enterPassword": {
+    "description": "Enter password validation message"
+  },
+  "enterConfirmPassword": "Enter confirm password",
+  "@enterConfirmPassword": {
+    "description": "Enter confirm password validation message"
+  },
+  "enterEmailAddress": "Enter email address",
+  "@enterEmailAddress": {
+    "description": "Enter email validation message"
+  },
+  "enterValidEmail": "Enter a valid email",
+  "@enterValidEmail": {
+    "description": "Enter valid email validation message"
+  },
+  "passwordMissingUppercase": "Password must contain at least one uppercase letter",
+  "@passwordMissingUppercase": {
+    "description": "Password missing uppercase validation message"
+  },
+  "passwordMissingLowercase": "Password must contain at least one lowercase letter",
+  "@passwordMissingLowercase": {
+    "description": "Password missing lowercase validation message"
+  },
+  "passwordMissingSpecialChar": "Password must contain at least one special character",
+  "@passwordMissingSpecialChar": {
+    "description": "Password missing special character validation message"
+  },
+  "enterDigit": "Enter a number",
+  "@enterDigit": {
+    "description": "Enter digit validation message"
+  },
+
+  "specializationOptions": "General Medicine, Pediatrics, Obstetrics and Gynecology, General Surgery, Cardiology, Neurology, Orthopedics, Dermatology, Ophthalmology, Otolaryngology, Psychiatry, Dentistry, Neurosurgery, Cardiac Surgery, Plastic Surgery, Radiology, Anesthesiology, Emergency Medicine, Internal Medicine, Nephrology, Oncology",
+  "@specializationOptions": {
+    "description": "List of medical specialization options"
+  },
+  "completeProfessionalProfile": "Complete Your Professional Profile!",
+  "@completeProfessionalProfile": {
+    "description": "Professional profile completion screen title"
+  },
+  "addProfessionalInfoDescription": "Add your information to build a complete professional profile.",
+  "@addProfessionalInfoDescription": {
+    "description": "Professional profile completion description"
+  },
+  "hospitalName": "Hospital Name",
+  "@hospitalName": {
+    "description": "Hospital name field label"
+  },
+  "city": "City",
+  "@city": {
+    "description": "City field label"
+  },
+  "specialization": "Specialization",
+  "@specialization": {
+    "description": "Specialization field label"
+  },
+  "medicalLicenseNumber": "Medical License Number",
+  "@medicalLicenseNumber": {
+    "description": "Medical license number field label"
+  },
+  "uploadMedicalLicense": "Upload Your Medical License",
+  "@uploadMedicalLicense": {
+    "description": "Upload medical license section title"
+  },
+  "enterMedicalLicenseNumber": "Enter Medical License Number",
+  "@enterMedicalLicenseNumber": {
+    "description": "Medical license number placeholder"
+  },
+  "medicalLicenseDocument": "Medical License Card",
+  "@medicalLicenseDocument": {
+    "description": "Medical license document label"
+  },
+  "medicalLicenseUpload": "Medical License Card",
+  "@medicalLicenseUpload": {
+    "description": "Medical license upload field label"
+  },
+  "medicalLicenseDescription": "Please upload the file in jpeg or png format and make sure the file size is less than 25 MB.",
+  "@medicalLicenseDescription": {
+    "description": "Medical license upload instructions"
+  },
+
+  "fileType": "What type of file is this?",
+  "@fileType": {
+    "description": "File type selection dialog title"
+  },
+  "rays": "X-ray",
+  "@rays": {
+    "description": "X-ray file type option"
+  },
+  "analysis": "Analysis",
+  "@analysis": {
+    "description": "Analysis/lab report file type option"
+  },
+
+  "networkError": "Network connection error",
+  "@networkError": {
+    "description": "Network error message"
+  },
+  "serverError": "Server error",
+  "@serverError": {
+    "description": "Server error message"
+  },
+  "unknownError": "An unknown error occurred",
+  "@unknownError": {
+    "description": "Unknown error message"
+  },
+  "uploadFailed": "File upload failed",
+  "@uploadFailed": {
+    "description": "Upload failure message"
+  },
+
+  "home": "Home",
+  "@home": {
+    "description": "Home tab label"
+  },
+  "file": "Files",
+  "@file": {
+    "description": "Files tab label"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile tab label"
+  },
+
+  "connectionTimeoutError": "Connection timed out. Please try again",
+  "@connectionTimeoutError": {
+    "description": "Connection timeout error message"
+  },
+  "sendTimeoutError": "Send timed out. Please try again",
+  "@sendTimeoutError": {
+    "description": "Send timeout error message"
+  },
+  "receiveTimeoutError": "Receive timed out. Please try again",
+  "@receiveTimeoutError": {
+    "description": "Receive timeout error message"
+  },
+  "badCertificateError": "Invalid security certificate",
+  "@badCertificateError": {
+    "description": "Bad certificate error message"
+  },
+  "cancelledRequestError": "Request was cancelled",
+  "@cancelledRequestError": {
+    "description": "Cancelled request error message"
+  },
+  "connectionErrorMsg": "No internet connection. Please check your connection and try again",
+  "@connectionErrorMsg": {
+    "description": "No internet connection error message"
+  },
+  "unexpectedError": "An unexpected error occurred. Please try again",
+  "@unexpectedError": {
+    "description": "Unexpected error message"
+  },
+
+  "loginSuccessful": "Login successful",
+  "@loginSuccessful": {
+    "description": "Login success message"
+  },
+  "loginError": "An error occurred during login, please try again",
+  "@loginError": {
+    "description": "Login error message"
+  },
+  "savedSuccessfully": "Saved successfully",
+  "@savedSuccessfully": {
+    "description": "Save success message"
+  },
+  "saveFailed": "Save failed",
+  "@saveFailed": {
+    "description": "Save failure message"
+  },
+  "saveError": "An error occurred, please try again",
+  "@saveError": {
+    "description": "Save error message"
+  },
+  "savingInProgress": "Saving...",
+  "@savingInProgress": {
+    "description": "Saving in progress message"
+  },
+  "verificationSuccessful": "Code verified successfully",
+  "@verificationSuccessful": {
+    "description": "Verification success message"
+  },
+  "verificationCodeIncorrect": "Verification code is incorrect, please try again",
+  "@verificationCodeIncorrect": {
+    "description": "Incorrect verification code message"
+  },
+  "verificationCodeResent": "Verification code resent successfully",
+  "@verificationCodeResent": {
+    "description": "Code resent success message"
+  },
+  "resendCodeFailed": "Failed to resend code. Please try again.",
+  "@resendCodeFailed": {
+    "description": "Resend code failure message"
+  },
+  "sending": "Sending...",
+  "@sending": {
+    "description": "Sending in progress message"
+  },
+  "passwordChangeSuccessful": "Password changed successfully",
+  "@passwordChangeSuccessful": {
+    "description": "Password change success message"
+  },
+  "passwordChangeError": "An error occurred while changing password, please try again",
+  "@passwordChangeError": {
+    "description": "Password change error message"
+  },
+  "verificationCodeSentSuccessfully": "Verification code sent successfully",
+  "@verificationCodeSentSuccessfully": {
+    "description": "Verification code sent success message"
+  },
+  "forgotPasswordError": "An unexpected error occurred, please try again",
+  "@forgotPasswordError": {
+    "description": "Forgot password error message"
+  },
+  "loginFailed": "Login failed",
+  "@loginFailed": {
+    "description": "Login failed message"
+  },
+
+  "bloodTypeLabel": "Blood Type: ",
+  "@bloodTypeLabel": {
+    "description": "Blood type label with colon"
+  },
+  "heightLabel": "Height: ",
+  "@heightLabel": {
+    "description": "Height label with colon"
+  },
+  "weightLabel": "Weight: ",
+  "@weightLabel": {
+    "description": "Weight label with colon"
+  },
+
+  "fileSizeError": "Files must not exceed 25 MB",
+  "@fileSizeError": {
+    "description": "File size error message"
+  },
+  "filePathError": "File path is invalid",
+  "@filePathError": {
+    "description": "File path error message"
+  },
+  "uploadFailedUnexpectedResponse": "File upload failed: unexpected response",
+  "@uploadFailedUnexpectedResponse": {
+    "description": "Upload failed unexpected response message"
+  },
+  "uploadFailedNoResponse": "File upload failed: no response",
+  "@uploadFailedNoResponse": {
+    "description": "Upload failed no response message"
+  },
+  "uploadFailedGeneral": "File upload failed: ",
+  "@uploadFailedGeneral": {
+    "description": "Upload failed general message prefix"
+  },
+  "uploadingFile": "Uploading: ",
+  "@uploadingFile": {
+    "description": "Uploading file message prefix"
+  },
+
+  "dataLoadError": "Error loading data: ",
+  "@dataLoadError": {
+    "description": "Data load error message prefix"
+  },
+  "analyzeMedicalDocument": "Analyze Medical Document",
+  "@analyzeMedicalDocument": {
+    "description": "Analyze document button text"
+  },
+  "analyzingMedicalDocument": "Analyzing medical document...",
+  "@analyzingMedicalDocument": {
+    "description": "Analyzing document in progress message"
+  },
+  "analysisError": "An error occurred while analyzing the document",
+  "@analysisError": {
+    "description": "Analysis error message"
+  },
+  "pleaseRetry": "Please try again",
+  "@pleaseRetry": {
+    "description": "Retry instruction text"
+  },
+  "retryLabel": "Retry",
+  "@retryLabel": {
+    "description": "Retry button text"
+  },
+  "noMedicalDataToShow": "No medical data to display",
+  "@noMedicalDataToShow": {
+    "description": "No medical data message"
+  },
+  "noExtractableInfo": "The document does not contain extractable medical information",
+  "@noExtractableInfo": {
+    "description": "No extractable info message"
+  },
+  "patientInfo": "Patient Information",
+  "@patientInfo": {
+    "description": "Patient information section title"
+  },
+  "unspecifiedPatient": "Unspecified patient",
+  "@unspecifiedPatient": {
+    "description": "Unspecified patient placeholder"
+  },
+  "genderLabel": "Gender: ",
+  "@genderLabel": {
+    "description": "Gender label with colon"
+  },
+  "prescribedMedications": "Prescribed Medications",
+  "@prescribedMedications": {
+    "description": "Prescribed medications section title"
+  },
+  "unspecifiedMedication": "Unspecified medication",
+  "@unspecifiedMedication": {
+    "description": "Unspecified medication placeholder"
+  },
+  "unspecifiedDosage": "Unspecified dosage",
+  "@unspecifiedDosage": {
+    "description": "Unspecified dosage placeholder"
+  },
+  "unspecified": "Unspecified",
+  "@unspecified": {
+    "description": "Unspecified general placeholder"
+  },
+
+  "googleDriveLoginFailed": "Failed to login to Google Drive",
+  "@googleDriveLoginFailed": {
+    "description": "Google Drive login failure message"
+  },
+  "selectFilesFromGoogleDrive": "Select Files from Google Drive",
+  "@selectFilesFromGoogleDrive": {
+    "description": "Google Drive file picker title"
+  },
+  "noFilesToShow": "No files to display",
+  "@noFilesToShow": {
+    "description": "No files message"
+  },
+  "noName": "No name",
+  "@noName": {
+    "description": "No name placeholder"
+  },
+  "filesSelected": "Selected {count} file(s)",
+  "@filesSelected": {
+    "description": "Number of files selected",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "addFiles": "Add Files",
+  "@addFiles": {
+    "description": "Add files button text"
+  },
+  "analyzeFile": "Analyze Medical File",
+  "@analyzeFile": {
+    "description": "Analyze file button text"
+  },
+
+  "noEmergencyContacts": "No emergency contacts",
+  "@noEmergencyContacts": {
+    "description": "No emergency contacts message"
+  },
+  "emergencyContactDetails": "Emergency Contact Details",
+  "@emergencyContactDetails": {
+    "description": "Emergency contact details screen title"
+  },
+  "nameLabel": "Name: ",
+  "@nameLabel": {
+    "description": "Name label with colon"
+  },
+  "phoneLabel": "Phone: ",
+  "@phoneLabel": {
+    "description": "Phone label with colon"
+  },
+  "relationLabel": "Relationship: ",
+  "@relationLabel": {
+    "description": "Relationship label with colon"
+  },
+  "deleteEmergencyContact": "Delete Emergency Contact",
+  "@deleteEmergencyContact": {
+    "description": "Delete emergency contact button text"
+  },
+  "errorOccurred": "An error occurred",
+  "@errorOccurred": {
+    "description": "Generic error occurred message"
+  },
+
+  "pleaseEnterVerificationCode": "Please enter the complete verification code",
+  "@pleaseEnterVerificationCode": {
+    "description": "Enter complete verification code message"
+  },
+  "unexpectedErrorRetry": "An unexpected error occurred. Please try again",
+  "@unexpectedErrorRetry": {
+    "description": "Unexpected error retry message"
+  },
+  "invalidUserRole": "Invalid user role. Please try again.",
+  "@invalidUserRole": {
+    "description": "Invalid user role error message"
+  },
+  "registrationError": "An error occurred during registration: ",
+  "@registrationError": {
+    "description": "Registration error message prefix"
+  },
+  "enterPhoneNumber": "Enter your phone number",
+  "@enterPhoneNumber": {
+    "description": "Enter phone number placeholder"
+  },
+  "imageSelectedSuccessfully": "Image selected successfully",
+  "@imageSelectedSuccessfully": {
+    "description": "Image selected success message"
+  },
+  "changeImage": "Change Image",
+  "@changeImage": {
+    "description": "Change image button text"
+  },
+  "maleGender": "Male",
+  "@maleGender": {
+    "description": "Male gender value"
+  },
+  "femaleGender": "Female",
+  "@femaleGender": {
+    "description": "Female gender value"
+  },
+  "pleaseUploadPersonalPhoto": "Please upload a personal photo",
+  "@pleaseUploadPersonalPhoto": {
+    "description": "Upload personal photo validation message"
+  },
+  "pleaseUploadNationalId": "Please upload a national ID photo",
+  "@pleaseUploadNationalId": {
+    "description": "Upload national ID validation message"
+  },
+  "passwordsDoNotMatchError": "Passwords do not match",
+  "@passwordsDoNotMatchError": {
+    "description": "Passwords do not match error message"
+  },
+  "pleaseEnterEmail": "Please enter your email",
+  "@pleaseEnterEmail": {
+    "description": "Please enter email validation message"
+  },
+  "pleaseEnterEmailAndPassword": "Please enter your email and password",
+  "@pleaseEnterEmailAndPassword": {
+    "description": "Please enter email and password validation message"
+  },
+
+  "documentDetails": "Document Details",
+  "@documentDetails": {
+    "description": "Document details screen title"
+  },
+  "unspecifiedDocument": "Unspecified document",
+  "@unspecifiedDocument": {
+    "description": "Unspecified document placeholder"
+  },
+  "fileTypeLabel": "File Type",
+  "@fileTypeLabel": {
+    "description": "File type field label"
+  },
+  "uploadDate": "Upload Date",
+  "@uploadDate": {
+    "description": "Upload date label"
+  },
+  "processingDate": "Processing Date",
+  "@processingDate": {
+    "description": "Processing date label"
+  },
+  "extractedMedicalData": "Extracted Medical Data",
+  "@extractedMedicalData": {
+    "description": "Extracted medical data section title"
+  },
+  "extractionAccuracy": "Extraction Accuracy: ",
+  "@extractionAccuracy": {
+    "description": "Extraction accuracy label"
+  },
+  "patientId": "Patient ID",
+  "@patientId": {
+    "description": "Patient ID label"
+  },
+  "status": "Status",
+  "@status": {
+    "description": "Status label"
+  },
+  "active": "Active",
+  "@active": {
+    "description": "Active status value"
+  },
+  "inactive": "Inactive",
+  "@inactive": {
+    "description": "Inactive status value"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "Name label"
+  },
+  "reportType": "Report Type",
+  "@reportType": {
+    "description": "Report type label"
+  },
+  "reportStatus": "Report Status",
+  "@reportStatus": {
+    "description": "Report status label"
+  },
+  "summary": "Summary",
+  "@summary": {
+    "description": "Summary label"
+  },
+  "reportDate": "Report Date",
+  "@reportDate": {
+    "description": "Report date label"
+  },
+  "purpose": "Purpose",
+  "@purpose": {
+    "description": "Purpose label"
+  },
+  "identifier": "Identifier",
+  "@identifier": {
+    "description": "Identifier label"
+  },
+  "resourceType": "Resource Type",
+  "@resourceType": {
+    "description": "Resource type label"
+  },
+  "additionalInfo": "Additional Information",
+  "@additionalInfo": {
+    "description": "Additional information label"
+  },
+  "documentId": "Document ID",
+  "@documentId": {
+    "description": "Document ID label"
+  },
+
+  "badRequestError": "Please check the entered data",
+  "@badRequestError": {
+    "description": "HTTP 400 error message"
+  },
+  "unauthorizedError": "Unauthorized access. Please login again",
+  "@unauthorizedError": {
+    "description": "HTTP 401 error message"
+  },
+  "forbiddenError": "Access to this resource is forbidden",
+  "@forbiddenError": {
+    "description": "HTTP 403 error message"
+  },
+  "notFoundError": "The requested resource was not found",
+  "@notFoundError": {
+    "description": "HTTP 404 error message"
+  },
+  "conflictError": "Data conflict. Please try again",
+  "@conflictError": {
+    "description": "HTTP 409 error message"
+  },
+  "internalServerError": "Internal server error. Please try again later",
+  "@internalServerError": {
+    "description": "HTTP 500 error message"
+  },
+  "serviceUnavailableError": "Service is currently unavailable. Please try again later",
+  "@serviceUnavailableError": {
+    "description": "HTTP 503 error message"
+  },
+
+  "emailInvalidError": "Email is invalid",
+  "@emailInvalidError": {
+    "description": "Email invalid API error message"
+  },
+  "passwordRequiredError": "Password is required",
+  "@passwordRequiredError": {
+    "description": "Password required API error message"
+  },
+  "phoneInvalidError": "Phone number is invalid",
+  "@phoneInvalidError": {
+    "description": "Phone invalid API error message"
+  },
+  "accountExistsError": "An account with this email already exists",
+  "@accountExistsError": {
+    "description": "Account exists API error message"
+  },
+  "accountNotFoundError": "No account found with this email",
+  "@accountNotFoundError": {
+    "description": "Account not found API error message"
+  },
+  "invalidCredentialsError": "Email or password is invalid",
+  "@invalidCredentialsError": {
+    "description": "Invalid credentials API error message"
+  },
+  "accountNotVerifiedError": "Account is not verified. Please check your email",
+  "@accountNotVerifiedError": {
+    "description": "Account not verified API error message"
+  },
+  "verificationCodeInvalidError": "Verification code is invalid",
+  "@verificationCodeInvalidError": {
+    "description": "Invalid verification code API error message"
+  },
+  "verificationCodeExpiredError": "Verification code has expired",
+  "@verificationCodeExpiredError": {
+    "description": "Expired verification code API error message"
+  },
+  "uploadFailedRetry": "File upload failed. Please try again",
+  "@uploadFailedRetry": {
+    "description": "Upload failed retry API error message"
+  },
+  "fileSizeExceededError": "File size is too large. Maximum 25 MB",
+  "@fileSizeExceededError": {
+    "description": "File size exceeded API error message"
+  },
+  "fileTypeNotSupportedError": "File type is not supported. Please use JPEG or PNG images",
+  "@fileTypeNotSupportedError": {
+    "description": "File type not supported API error message"
+  }
+}

@@ -133,10 +133,7 @@ class AuthRepository {
           refreshToken: response.refreshToken,
           accessToken: response.accessToken,
         );
-        final userRole = UserRole.values.firstWhere(
-          (role) => role.value == response.user.role,
-          orElse: () => UserRole.patient,
-        );
+        final userRole = UserRole.fromValue(response.user.role);
         await storage.saveUserRole(userRole);
         return ApiSuccess(response);
       } else {

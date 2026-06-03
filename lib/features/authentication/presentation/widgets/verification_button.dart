@@ -51,7 +51,7 @@ class VerificationButton extends ConsumerWidget {
     });
 
     return CustomButton(
-      isLoading: isActivated,
+      isLoading: isLoading,
       text: AppStrings.verify,
       loadingText: AppStrings.checking,
       onPressed: () async {

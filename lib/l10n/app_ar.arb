@@ -1,0 +1,1145 @@
+{
+  "@@locale": "ar",
+  "@@context": "تطبيق الرعاية الصحية",
+
+  "onboardingTitle1": "طريقك إلى رعاية صحية أذكى وأكثر أمانًا.",
+  "@onboardingTitle1": {
+    "description": "عنوان شاشة التعريف الأولى"
+  },
+  "onboardingSubtitle1": "إحفظ سجلك الطبي، تتبع صحتك، وشارك بياناتك مع طبيبك بثقة تامة.",
+  "@onboardingSubtitle1": {
+    "description": "وصف شاشة التعريف الأولى"
+  },
+
+  "onBoardingTitle2": "بياناتك الطبية بين يديك... ومشفرة بأقوي التقنيات!",
+  "@onBoardingTitle2": {
+    "description": "عنوان شاشة التعريف الثانية"
+  },
+  "onBoardingSubtitle2": "لا داعي للقلق بعد الآن - خصوصيتك هي أولويتنا",
+  "@onBoardingSubtitle2": {
+    "description": "وصف شاشة التعريف الثانية"
+  },
+
+  "onBoardingTitle3": "كل ما تحتاجه لصحتك في مكان واحد... و بضغطة واحدة.",
+  "@onBoardingTitle3": {
+    "description": "عنوان شاشة التعريف الثالثة"
+  },
+  "onBoardingSubtitle3": "ارفع ملفك الطبي, و دع الذكاء الاصطناعي ينظمه لك!",
+  "@onBoardingSubtitle3": {
+    "description": "وصف شاشة التعريف الثالثة"
+  },
+
+  "next": "التالي",
+  "@next": {
+    "description": "نص زر التالي"
+  },
+  "skip": "تخطي",
+  "@skip": {
+    "description": "نص زر التخطي"
+  },
+  "back": "رجوع",
+  "@back": {
+    "description": "نص زر الرجوع"
+  },
+  "finish": "إنهاء",
+  "@finish": {
+    "description": "نص زر الإنهاء"
+  },
+  "save": "حفظ",
+  "@save": {
+    "description": "نص زر الحفظ"
+  },
+  "cancel": "إلغاء",
+  "@cancel": {
+    "description": "نص زر الإلغاء"
+  },
+  "confirm": "تأكيد",
+  "@confirm": {
+    "description": "نص زر التأكيد"
+  },
+  "verify": "تحقق",
+  "@verify": {
+    "description": "نص زر التحقق"
+  },
+  "saveContactInfo": "حفظ بيانات الاتصال",
+  "@saveContactInfo": {
+    "description": "نص زر حفظ بيانات الاتصال"
+  },
+  "loading": "تحميل...",
+  "@loading": {
+    "description": "نص حالة التحميل"
+  },
+  "checking": "جاري التحقق...",
+  "@checking": {
+    "description": "نص حالة التحقق"
+  },
+  "changing": "جاري تغيير كلمة المرور...",
+  "@changing": {
+    "description": "نص حالة تغيير كلمة المرور"
+  },
+  "sureToLogout": "هل متاكد من انك تريد تسجيل الخروج؟",
+  "@sureToLogout": {
+    "description": "رسالة تأكيد تسجيل الخروج"
+  },
+
+  "selectYourRole": "حدد دورك",
+  "@selectYourRole": {
+    "description": "عنوان شاشة اختيار الدور"
+  },
+  "chooseYourRoleTo": "اختر دورك لنساعدك في الحصول علي التجربة المناسبة لك.",
+  "@chooseYourRoleTo": {
+    "description": "وصف شاشة اختيار الدور"
+  },
+  "doctor": "طبيب",
+  "@doctor": {
+    "description": "خيار دور الطبيب"
+  },
+  "user": "مستخدم",
+  "@user": {
+    "description": "خيار دور المستخدم"
+  },
+
+  "newUser": "مستخدم جديد",
+  "@newUser": {
+    "description": "نص زر مستخدم جديد"
+  },
+  "login": "تسجيل الدخول",
+  "@login": {
+    "description": "نص زر تسجيل الدخول"
+  },
+  "welcomeBack": "أهلا بعودتك!",
+  "@welcomeBack": {
+    "description": "رسالة الترحيب في شاشة تسجيل الدخول"
+  },
+  "welcome": "أهلاً وسهلاً {name}!",
+  "@welcome": {
+    "description": "رسالة الترحيب مع اسم المستخدم",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "enterNextData": "ادخل البيانات التالية لتتمكن من الوصول إلي حسابك!",
+  "@enterNextData": {
+    "description": "نص تعليمات شاشة تسجيل الدخول"
+  },
+  "email": "البريد الإلكتروني",
+  "@email": {
+    "description": "تسمية حقل البريد الإلكتروني"
+  },
+  "password": "كلمة المرور",
+  "@password": {
+    "description": "تسمية حقل كلمة المرور"
+  },
+  "forgetPassword": "نسيت كلمة المرور؟",
+  "@forgetPassword": {
+    "description": "نص رابط نسيت كلمة المرور"
+  },
+  "dontHaveAccount": "ليس لديك حساب؟",
+  "@dontHaveAccount": {
+    "description": "نص عدم وجود حساب"
+  },
+  "registerNow": "سجل الآن",
+  "@registerNow": {
+    "description": "نص رابط/زر التسجيل الآن"
+  },
+  "orSignupWith": "او تسجيل الدخول باستخدام",
+  "@orSignupWith": {
+    "description": "عنوان قسم التسجيل الاجتماعي"
+  },
+  "google": "Google",
+  "@google": {
+    "description": "خيار تسجيل الدخول عبر جوجل"
+  },
+  "icloud": "Icloud",
+  "@icloud": {
+    "description": "خيار تسجيل الدخول عبر iCloud"
+  },
+
+  "completePersonalProfile": "أكمل ملفك الشخصي",
+  "@completePersonalProfile": {
+    "description": "عنوان شاشة إكمال الملف الشخصي"
+  },
+  "helpUsProvidePersonalizedExperience": "ساعدنا في معرفتك بشكل أفضل لتقديم تجربة مخصصة لك.",
+  "@helpUsProvidePersonalizedExperience": {
+    "description": "وصف شاشة إكمال الملف الشخصي"
+  },
+
+  "completeProfile": "اكمال بياناتك الشخصية",
+  "@completeProfile": {
+    "description": "عنوان شاشة إكمال البيانات"
+  },
+  "complete": "اكمال",
+  "@complete": {
+    "description": "نص زر الإكمال"
+  },
+  "helpUsProvidePersonal": "برجاء اكمل بياناتك الشخصية لمتابعة حالتك بكفائة ولضمان افضل تجربة.",
+  "@helpUsProvidePersonal": {
+    "description": "نص تعليمات إكمال الملف الطبي"
+  },
+  "editProfile": "تعديل ملفك الشخصي",
+  "@editProfile": {
+    "description": "خيار قائمة تعديل الملف"
+  },
+  "emergency": "جهات الطؤاري",
+  "@emergency": {
+    "description": "خيار قائمة جهات الطوارئ"
+  },
+  "notification": "الاشعارات",
+  "@notification": {
+    "description": "خيار قائمة الإشعارات"
+  },
+  "help": "المساعده والدعم",
+  "@help": {
+    "description": "خيار قائمة المساعدة والدعم"
+  },
+  "terms": "الشروط والاحكام",
+  "@terms": {
+    "description": "خيار قائمة الشروط والأحكام"
+  },
+  "logout": "تسجيل الخروج",
+  "@logout": {
+    "description": "خيار قائمة تسجيل الخروج"
+  },
+  "medicalState": "الحاله الطبيه",
+  "@medicalState": {
+    "description": "تسمية حقل الحالة الطبية"
+  },
+  "sensitive": "الحساسيه",
+  "@sensitive": {
+    "description": "تسمية حقل الحساسية"
+  },
+  "height": "الطول",
+  "@height": {
+    "description": "تسمية حقل الطول"
+  },
+  "weight": "الوزن",
+  "@weight": {
+    "description": "تسمية حقل الوزن"
+  },
+  "bloodType": "فصيله الدم",
+  "@bloodType": {
+    "description": "تسمية حقل فصيلة الدم"
+  },
+  "saveChanges": "حفظ التغييرات",
+  "@saveChanges": {
+    "description": "نص زر حفظ التغييرات"
+  },
+
+  "bloodTypes": "A+, A-, B+, B-, O+, O-, AB+, AB-",
+  "@bloodTypes": {
+    "description": "قائمة خيارات فصائل الدم"
+  },
+
+  "address": "العنوان",
+  "@address": {
+    "description": "تسمية حقل العنوان"
+  },
+  "dateOfBirth": "تاريخ الميلاد",
+  "@dateOfBirth": {
+    "description": "تسمية حقل تاريخ الميلاد"
+  },
+  "phoneNumber": "رقم الهاتف",
+  "@phoneNumber": {
+    "description": "تسمية حقل رقم الهاتف"
+  },
+  "gender": "الجنس",
+  "@gender": {
+    "description": "تسمية حقل الجنس"
+  },
+  "male": "ذكر",
+  "@male": {
+    "description": "خيار جنس ذكر"
+  },
+  "female": "أنثى",
+  "@female": {
+    "description": "خيار جنس أنثى"
+  },
+
+  "nationality": "الجنسية",
+  "@nationality": {
+    "description": "تسمية حقل الجنسية"
+  },
+  "egyptian": "مصري",
+  "@egyptian": {
+    "description": "خيار الجنسية المصرية"
+  },
+  "nationalIdNumber": "رقم الهوية",
+  "@nationalIdNumber": {
+    "description": "تسمية حقل رقم الهوية"
+  },
+
+  "profilePictureUpload": "صورة الهوية",
+  "@profilePictureUpload": {
+    "description": "عنوان قسم رفع صورة الهوية"
+  },
+  "dragDropOrTapToUpload": "اسقاط ملف أو تصفح",
+  "@dragDropOrTapToUpload": {
+    "description": "نص تعليمات منطقة رفع الملفات"
+  },
+  "imageUploadCriteria": "التنسيق: .jpeg ، .png & الحد الأقصى لحجم الملف: 25 ميجا بايت",
+  "@imageUploadCriteria": {
+    "description": "نص متطلبات رفع الصور"
+  },
+  "imageUploadNationalId": "التنسيق: .jpeg ، .png & الحد الأقصى لحجم الملف: 25 ميجا بايت ويرجى تحميل صورة هوية واضحه",
+  "@imageUploadNationalId": {
+    "description": "نص متطلبات رفع صورة الهوية"
+  },
+  "browseFiles": "تصفح الملفات",
+  "@browseFiles": {
+    "description": "نص زر تصفح الملفات"
+  },
+
+  "personalPictureUpload": "تحميل الصورة الشخصية",
+  "@personalPictureUpload": {
+    "description": "عنوان قسم رفع الصورة الشخصية"
+  },
+  "personalPicture": "الصورة الشخصية",
+  "@personalPicture": {
+    "description": "تسمية حقل الصورة الشخصية"
+  },
+  "uploadPersonalPictureDescription": "يرجى تحميل الملف بتنسيق jpeg و png والحد الأقصى \nللملف أقل من 25 ميجابايت.",
+  "@uploadPersonalPictureDescription": {
+    "description": "تعليمات رفع الصورة الشخصية"
+  },
+
+  "uploadFile": "تحميل الملف",
+  "@uploadFile": {
+    "description": "نص زر/عنوان قسم رفع الملف"
+  },
+  "browse": "تصفح",
+  "@browse": {
+    "description": "نص زر التصفح"
+  },
+  "warning": "تنبيه",
+  "@warning": {
+    "description": "عنوان مربع حوار/بطاقة التنبيه"
+  },
+  "warningDescription": "برجاء إدخال معلوماتك الطبية بالترتيب الزمني\n. في حالة إدخال صور، برجاء التقاط صور واضحة\n. برجاء رفع التحاليل معًا، والأشعة معًا بشكل منفصل لسهولة المراجعة.",
+  "@warningDescription": {
+    "description": "تعليمات تحذير رفع الملفات الطبية"
+  },
+  "uploadfileDescription": "التنسيق: doc , docx , pdf & الحد الأقصى لحجم الملف: 25 ميجا بايت",
+  "@uploadfileDescription": {
+    "description": "نص متطلبات رفع المستندات"
+  },
+
+  "addEmergencyContact": "اضف جهة طوارئ",
+  "@addEmergencyContact": {
+    "description": "نص زر/عنوان شاشة إضافة جهة طوارئ"
+  },
+  "addEmergencyContactDescription": "اضف جهة طوارئ .. و ابقي آمنا.",
+  "@addEmergencyContactDescription": {
+    "description": "وصف شاشة جهة الطوارئ"
+  },
+  "warningemergency": "في حال طلب الاطباء الوصول لمعلوماتك الطبيه من جهه الطوارئ سيكون للتطبيق امكانيه الوصول لموقعك الجغرافي",
+  "@warningemergency": {
+    "description": "تحذير صلاحيات الموقع لجهة الطوارئ"
+  },
+  "emergencyContactName": "اسم جهة الطوارئ",
+  "@emergencyContactName": {
+    "description": "تسمية حقل اسم جهة الطوارئ"
+  },
+  "emergencyContactPhone": "رقم هاتف جهة الطوارئ",
+  "@emergencyContactPhone": {
+    "description": "تسمية حقل هاتف جهة الطوارئ"
+  },
+  "relationshipToEmergencyContact": "صلة القرابة",
+  "@relationshipToEmergencyContact": {
+    "description": "تسمية حقل صلة القرابة بجهة الطوارئ"
+  },
+  "relative": "قريب",
+  "@relative": {
+    "description": "خيار علاقة قريب"
+  },
+  "addAnotherContact": "اضف جهة أخرى",
+  "@addAnotherContact": {
+    "description": "نص زر إضافة جهة طوارئ أخرى"
+  },
+  "chooseRelationShip": "اختر صلة القرابة",
+  "@chooseRelationShip": {
+    "description": "نص placeholder القائمة المنسدلة للعلاقة"
+  },
+  "relationshipOptions": "الأب/الأم، الابن/الابنة، الزوج/الزوجة، الأخ/الأخت، العم/العمة، الخال/الخالة، الجد/الجدة، صديق/زميل، طبيب، مستشفي، أخري",
+  "@relationshipOptions": {
+    "description": "قائمة خيارات العلاقات"
+  },
+
+  "dataUnderReview": "بياناتك قيد المراجعة الآن!",
+  "@dataUnderReview": {
+    "description": "عنوان شاشة مراجعة البيانات"
+  },
+  "reviewDataDescription": "فريقنا بفحص معلوماتك للتأكد من دقة وأمانك. هذا قد\n يستغرق حتي 48 ساعة ستصلك رسالة على البريد في حال مراجعة \nالبيانات.",
+  "@reviewDataDescription": {
+    "description": "وصف شاشة مراجعة البيانات"
+  },
+  "browseMainPage": "تصفح الصفحة الرئيسية",
+  "@browseMainPage": {
+    "description": "نص زر تصفح الصفحة الرئيسية"
+  },
+  "browseUsageAndPrivacyPolicies": "تصفح سياسات الاستخدام والخصوصية",
+  "@browseUsageAndPrivacyPolicies": {
+    "description": "نص رابط سياسات الخصوصية"
+  },
+  "verificationCodeTimeout": "00:59",
+  "@verificationCodeTimeout": {
+    "description": "عرض مؤقت رمز التحقق"
+  },
+
+  "registerNowFree": "سجل الآن مجاناً!",
+  "@registerNowFree": {
+    "description": "عنوان شاشة التسجيل"
+  },
+  "enterDataToCreateAccount": "ادخل البيانات التالية لانشاء حساب جديد. ابدأ الآن لما محالياً!",
+  "@enterDataToCreateAccount": {
+    "description": "نص تعليمات شاشة التسجيل"
+  },
+
+  "fullNameLabel": "الاسم بالكامل",
+  "@fullNameLabel": {
+    "description": "تسمية حقل الاسم الكامل"
+  },
+  "emailAddress": "البريد الإلكتروني",
+  "@emailAddress": {
+    "description": "تسمية حقل عنوان البريد الإلكتروني"
+  },
+  "passwordLabel": "كلمة المرور",
+  "@passwordLabel": {
+    "description": "تسمية حقل كلمة المرور"
+  },
+  "createNewAccount": "تسجيل مستخدم جديد",
+  "@createNewAccount": {
+    "description": "نص زر إنشاء الحساب"
+  },
+  "agreeToUsageAndPrivacyPolicies1": "بالضغط على ",
+  "@agreeToUsageAndPrivacyPolicies1": {
+    "description": "نص الموافقة على الشروط - الجزء 1"
+  },
+  "agreeToUsageAndPrivacyPolicies2": "، فأنت توافق على ",
+  "@agreeToUsageAndPrivacyPolicies2": {
+    "description": "نص الموافقة على الشروط - الجزء 2"
+  },
+  "usageAndPrivacyPolicies": " سياسة الاستخدام والخصوصية",
+  "@usageAndPrivacyPolicies": {
+    "description": "نص رابط سياسات الخصوصية"
+  },
+  "haveAccountAlready": "لديك حساب بالفعل؟",
+  "@haveAccountAlready": {
+    "description": "نص prompt لديك حساب بالفعل"
+  },
+  "loginNow": "سجل دخول الان",
+  "@loginNow": {
+    "description": "نص رابط تسجيل الدخول الآن"
+  },
+  "orLoginWith": "أو تسجيل الدخول باستخدام",
+  "@orLoginWith": {
+    "description": "عنوان قسم تسجيل الدخول الاجتماعي"
+  },
+
+  "enterVerificationCode": "ادخل رمز التحقق",
+  "@enterVerificationCode": {
+    "description": "عنوان شاشة التحقق من OTP"
+  },
+  "verificationCodeSent": "لقد قمنا بإرسال رمز التأكيد للبريد الالكتروني التالي",
+  "@verificationCodeSent": {
+    "description": "رسالة إرسال رمز التحقق"
+  },
+  "didntReceiveCode": "لم تستلم رمزاً؟",
+  "@didntReceiveCode": {
+    "description": "نص prompt لم تستلم الرمز"
+  },
+  "requestNewCode": "اطلب رمز جديد",
+  "@requestNewCode": {
+    "description": "نص زر إعادة إرسال الرمز"
+  },
+
+  "passwordResetTitle": "استعادة كلمة المرور!",
+  "@passwordResetTitle": {
+    "description": "عنوان شاشة إعادة تعيين كلمة المرور"
+  },
+  "passwordResetDescription": "قم بادخال البريد الالكتروني لاستعادة كلمة المرور الخاصة بك!",
+  "@passwordResetDescription": {
+    "description": "وصف شاشة إعادة تعيين كلمة المرور"
+  },
+  "sendVerificationCode": "إرسال رمز التحقق",
+  "@sendVerificationCode": {
+    "description": "نص زر إرسال رمز التحقق"
+  },
+  "enterNewPassword": "ادخل كلمة المرور الجديدة!",
+  "@enterNewPassword": {
+    "description": "عنوان شاشة كلمة المرور الجديدة"
+  },
+  "enterNewPasswordDescription": "قم بادخال كلمة المرور الجديدة يجب أن تكون مكونة من 8 حروف!",
+  "@enterNewPasswordDescription": {
+    "description": "وصف شاشة كلمة المرور الجديدة"
+  },
+  "newPassword": "كلمة المرور الجديدة",
+  "@newPassword": {
+    "description": "تسمية حقل كلمة المرور الجديدة"
+  },
+  "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+  "@confirmNewPassword": {
+    "description": "تسمية حقل تأكيد كلمة المرور"
+  },
+  "changePassword": "تغيير كلمة المرور",
+  "@changePassword": {
+    "description": "نص زر تغيير كلمة المرور"
+  },
+  "forgotPassword": "تذكرت كلمة المرور؟",
+  "@forgotPassword": {
+    "description": "نص رابط تذكر كلمة المرور"
+  },
+
+  "congratulations": "تهانينا!",
+  "@congratulations": {
+    "description": "عنوان مربع حوار النجاح"
+  },
+  "passwordResetSuccessDescription": "لقد تم تغيير كلمة مرور حسابك بنجاح، يمكنك الآن العودة وتسجيل الدخول من جديد!",
+  "@passwordResetSuccessDescription": {
+    "description": "رسالة نجاح إعادة تعيين كلمة المرور"
+  },
+  "registrationCompletedSuccessfully": "تم إتمام التسجيل بنجاح!",
+  "@registrationCompletedSuccessfully": {
+    "description": "رسالة نجاح التسجيل"
+  },
+  "completingRegistration": "جاري إتمام التسجيل...",
+  "@completingRegistration": {
+    "description": "نص التسجيل قيد التنفيذ"
+  },
+  "emergencyContactSaved": "تم حفظ بيانات الاتصال الطارئ!",
+  "@emergencyContactSaved": {
+    "description": "رسالة نجاح حفظ جهة الطوارئ"
+  },
+  "registrationFailed": "فشل في إتمام التسجيل",
+  "@registrationFailed": {
+    "description": "رسالة فشل التسجيل"
+  },
+  "generalError": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+  "@generalError": {
+    "description": "رسالة خطأ عامة"
+  },
+
+  "fieldRequired": "هذا الحقل مطلوب",
+  "@fieldRequired": {
+    "description": "رسالة التحقق من الحقل المطلوب"
+  },
+  "invalidEmail": "البريد الإلكتروني غير صحيح",
+  "@invalidEmail": {
+    "description": "رسالة التحقق من البريد الإلكتروني غير الصحيح"
+  },
+  "passwordTooShort": "كلمة المرور قصيرة جداً",
+  "@passwordTooShort": {
+    "description": "رسالة التحقق من كلمة المرور القصيرة"
+  },
+  "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
+  "@passwordsDoNotMatch": {
+    "description": "رسالة التحقق من عدم تطابق كلمات المرور"
+  },
+  "invalidPhoneNumber": "رقم الهاتف غير صحيح",
+  "@invalidPhoneNumber": {
+    "description": "رسالة التحقق من رقم الهاتف غير الصحيح"
+  },
+
+  "enterPassword": "ادخل كلمة المرور",
+  "@enterPassword": {
+    "description": "رسالة التحقق من إدخال كلمة المرور"
+  },
+  "enterConfirmPassword": "ادخل تأكيد كلمة المرور",
+  "@enterConfirmPassword": {
+    "description": "رسالة التحقق من إدخال تأكيد كلمة المرور"
+  },
+  "enterEmailAddress": "ادخل البريد الإلكتروني",
+  "@enterEmailAddress": {
+    "description": "رسالة التحقق من إدخال البريد الإلكتروني"
+  },
+  "enterValidEmail": "ادخل بريد إلكتروني صحيح",
+  "@enterValidEmail": {
+    "description": "رسالة التحقق من إدخال بريد إلكتروني صحيح"
+  },
+  "passwordMissingUppercase": "كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل",
+  "@passwordMissingUppercase": {
+    "description": "رسالة التحقق من كلمة المرور - حرف كبير مفقود"
+  },
+  "passwordMissingLowercase": "كلمة المرور يجب أن تحتوي على حرف صغير واحد على الأقل",
+  "@passwordMissingLowercase": {
+    "description": "رسالة التحقق من كلمة المرور - حرف صغير مفقود"
+  },
+  "passwordMissingSpecialChar": "كلمة المرور يجب أن تحتوي على رمز خاص واحد على الأقل",
+  "@passwordMissingSpecialChar": {
+    "description": "رسالة التحقق من كلمة المرور - رمز خاص مفقود"
+  },
+  "enterDigit": "ادخل الرقم",
+  "@enterDigit": {
+    "description": "رسالة التحقق من إدخال رقم"
+  },
+
+  "specializationOptions": "الطب العام، طب الأطفال، طب النساء والولادة، جراحة عامة، طب القلب، طب الأعصاب، طب العظام، طب الجلدية، طب العيون، طب الأنف والأذن والحنجرة، طب النفسية، طب الأسنان، جراحة المخ والأعصاب، جراحة القلب، جراحة التجميل، طب الأشعة، طب التخدير، طب الطوارئ، طب الأمراض الباطنة، طب الكلى، طب الأورام",
+  "@specializationOptions": {
+    "description": "قائمة خيارات التخصصات الطبية"
+  },
+  "completeProfessionalProfile": "اكمل بياناتك المهنية!",
+  "@completeProfessionalProfile": {
+    "description": "عنوان شاشة إكمال الملف المهني"
+  },
+  "addProfessionalInfoDescription": "أضف معلوماتك لبناء ملف تعريفي كامل.",
+  "@addProfessionalInfoDescription": {
+    "description": "وصف شاشة إكمال الملف المهني"
+  },
+  "hospitalName": "اسم المستشفى",
+  "@hospitalName": {
+    "description": "تسمية حقل اسم المستشفى"
+  },
+  "city": "المدينة",
+  "@city": {
+    "description": "تسمية حقل المدينة"
+  },
+  "specialization": "التخصص",
+  "@specialization": {
+    "description": "تسمية حقل التخصص"
+  },
+  "medicalLicenseNumber": "رقم الترخيص الطبي",
+  "@medicalLicenseNumber": {
+    "description": "تسمية حقل رقم الترخيص الطبي"
+  },
+  "uploadMedicalLicense": "ارفع ترخيصك الطبي",
+  "@uploadMedicalLicense": {
+    "description": "عنوان قسم رفع الترخيص الطبي"
+  },
+  "enterMedicalLicenseNumber": "ادخل رقم الترخيص الطبي",
+  "@enterMedicalLicenseNumber": {
+    "description": "نص placeholder لرقم الترخيص الطبي"
+  },
+  "medicalLicenseDocument": "بطاقة نقابة الاطباء",
+  "@medicalLicenseDocument": {
+    "description": "تسمية مستند الترخيص الطبي"
+  },
+  "medicalLicenseUpload": "بطاقة نقابة الاطباء",
+  "@medicalLicenseUpload": {
+    "description": "تسمية حقل رفع الترخيص الطبي"
+  },
+  "medicalLicenseDescription": "يرجى تحميل الملف بتنسيق jpeg أو png والتأكد من أن حجم الملف أقل من 25 ميجابايت.",
+  "@medicalLicenseDescription": {
+    "description": "تعليمات رفع الترخيص الطبي"
+  },
+
+  "fileType": "ما نوع هذا الملف؟",
+  "@fileType": {
+    "description": "عنوان مربع حوار اختيار نوع الملف"
+  },
+  "rays": "اشعه",
+  "@rays": {
+    "description": "خيار نوع ملف الأشعة"
+  },
+  "analysis": "تحاليل",
+  "@analysis": {
+    "description": "خيار نوع ملف التحاليل"
+  },
+
+  "networkError": "خطأ في الاتصال بالشبكة",
+  "@networkError": {
+    "description": "رسالة خطأ الشبكة"
+  },
+  "serverError": "خطأ في الخادم",
+  "@serverError": {
+    "description": "رسالة خطأ الخادم"
+  },
+  "unknownError": "حدث خطأ غير معروف",
+  "@unknownError": {
+    "description": "رسالة خطأ غير معروف"
+  },
+  "uploadFailed": "فشل في رفع الملف",
+  "@uploadFailed": {
+    "description": "رسالة فشل الرفع"
+  },
+
+  "home": "الرئيسية",
+  "@home": {
+    "description": "تسمية تبويب الرئيسية"
+  },
+  "file": "الملفات",
+  "@file": {
+    "description": "تسمية تبويب الملفات"
+  },
+  "profile": "الملف الشخصي",
+  "@profile": {
+    "description": "تسمية تبويب الملف الشخصي"
+  },
+
+  "connectionTimeoutError": "انتهت مهلة الاتصال. يرجى المحاولة مرة أخرى",
+  "@connectionTimeoutError": {
+    "description": "رسالة خطأ انتهاء مهلة الاتصال"
+  },
+  "sendTimeoutError": "انتهت مهلة الإرسال. يرجى المحاولة مرة أخرى",
+  "@sendTimeoutError": {
+    "description": "رسالة خطأ انتهاء مهلة الإرسال"
+  },
+  "receiveTimeoutError": "انتهت مهلة الاستقبال. يرجى المحاولة مرة أخرى",
+  "@receiveTimeoutError": {
+    "description": "رسالة خطأ انتهاء مهلة الاستقبال"
+  },
+  "badCertificateError": "شهادة الأمان غير صحيحة",
+  "@badCertificateError": {
+    "description": "رسالة خطأ الشهادة غير الصحيحة"
+  },
+  "cancelledRequestError": "تم إلغاء الطلب",
+  "@cancelledRequestError": {
+    "description": "رسالة خطأ إلغاء الطلب"
+  },
+  "connectionErrorMsg": "لا يوجد اتصال بالإنترنت. يرجى التحقق من الاتصال والمحاولة مرة أخرى",
+  "@connectionErrorMsg": {
+    "description": "رسالة خطأ عدم وجود اتصال بالإنترنت"
+  },
+  "unexpectedError": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى",
+  "@unexpectedError": {
+    "description": "رسالة خطأ غير متوقع"
+  },
+
+  "loginSuccessful": "تم تسجيل الدخول بنجاح",
+  "@loginSuccessful": {
+    "description": "رسالة نجاح تسجيل الدخول"
+  },
+  "loginError": "حدث خطأ في تسجيل الدخول، حاول مرة أخرى",
+  "@loginError": {
+    "description": "رسالة خطأ تسجيل الدخول"
+  },
+  "savedSuccessfully": "تم الحفظ بنجاح",
+  "@savedSuccessfully": {
+    "description": "رسالة نجاح الحفظ"
+  },
+  "saveFailed": "فشل الحفظ",
+  "@saveFailed": {
+    "description": "رسالة فشل الحفظ"
+  },
+  "saveError": "حدث خطأ، حاول مرة أخرى",
+  "@saveError": {
+    "description": "رسالة خطأ الحفظ"
+  },
+  "savingInProgress": "جاري الحفظ...",
+  "@savingInProgress": {
+    "description": "رسالة الحفظ قيد التنفيذ"
+  },
+  "verificationSuccessful": "تم التحقق من الرمز بنجاح",
+  "@verificationSuccessful": {
+    "description": "رسالة نجاح التحقق"
+  },
+  "verificationCodeIncorrect": "رمز التحقق غير صحيح، حاول مرة أخرى",
+  "@verificationCodeIncorrect": {
+    "description": "رسالة رمز التحقق غير صحيح"
+  },
+  "verificationCodeResent": "تم إعادة إرسال رمز التحقق بنجاح",
+  "@verificationCodeResent": {
+    "description": "رسالة نجاح إعادة إرسال الرمز"
+  },
+  "resendCodeFailed": "فشل في إعادة إرسال الرمز. يرجى المحاولة مرة أخرى.",
+  "@resendCodeFailed": {
+    "description": "رسالة فشل إعادة إرسال الرمز"
+  },
+  "sending": "جاري الإرسال...",
+  "@sending": {
+    "description": "رسالة الإرسال قيد التنفيذ"
+  },
+  "passwordChangeSuccessful": "تم تغيير كلمة المرور بنجاح",
+  "@passwordChangeSuccessful": {
+    "description": "رسالة نجاح تغيير كلمة المرور"
+  },
+  "passwordChangeError": "حدث خطأ في تغيير كلمة المرور، حاول مرة أخرى",
+  "@passwordChangeError": {
+    "description": "رسالة خطأ تغيير كلمة المرور"
+  },
+  "verificationCodeSentSuccessfully": "تم إرسال رمز التحقق بنجاح",
+  "@verificationCodeSentSuccessfully": {
+    "description": "رسالة نجاح إرسال رمز التحقق"
+  },
+  "forgotPasswordError": "حدث خطأ غير متوقع، حاول مرة أخرى",
+  "@forgotPasswordError": {
+    "description": "رسالة خطأ نسيان كلمة المرور"
+  },
+  "loginFailed": "فشل تسجيل الدخول",
+  "@loginFailed": {
+    "description": "رسالة فشل تسجيل الدخول"
+  },
+
+  "bloodTypeLabel": " فصيلة الدم: ",
+  "@bloodTypeLabel": {
+    "description": "تسمية فصيلة الدم مع نقطتين"
+  },
+  "heightLabel": " الطول: ",
+  "@heightLabel": {
+    "description": "تسمية الطول مع نقطتين"
+  },
+  "weightLabel": " الوزن: ",
+  "@weightLabel": {
+    "description": "تسمية الوزن مع نقطتين"
+  },
+
+  "fileSizeError": "الملفات يجب ألا تتعدى 25 ميجا",
+  "@fileSizeError": {
+    "description": "رسالة خطأ حجم الملف"
+  },
+  "filePathError": "مسار الملف غير صحيح",
+  "@filePathError": {
+    "description": "رسالة خطأ مسار الملف"
+  },
+  "uploadFailedUnexpectedResponse": "فشل في رفع الملف: استجابة غير متوقعة",
+  "@uploadFailedUnexpectedResponse": {
+    "description": "رسالة فشل الرفع - استجابة غير متوقعة"
+  },
+  "uploadFailedNoResponse": "فشل في رفع الملف: لا توجد استجابة",
+  "@uploadFailedNoResponse": {
+    "description": "رسالة فشل الرفع - لا توجد استجابة"
+  },
+  "uploadFailedGeneral": "فشل في رفع الملف: ",
+  "@uploadFailedGeneral": {
+    "description": "بادئة رسالة فشل الرفع العامة"
+  },
+  "uploadingFile": "جاري رفع: ",
+  "@uploadingFile": {
+    "description": "بادئة رسالة رفع الملف"
+  },
+
+  "dataLoadError": "خطأ في تحميل البيانات: ",
+  "@dataLoadError": {
+    "description": "بادئة رسالة خطأ تحميل البيانات"
+  },
+  "analyzeMedicalDocument": "تحليل المستند الطبي",
+  "@analyzeMedicalDocument": {
+    "description": "نص زر تحليل المستند"
+  },
+  "analyzingMedicalDocument": "جاري تحليل المستند الطبي...",
+  "@analyzingMedicalDocument": {
+    "description": "رسالة تحليل المستند قيد التنفيذ"
+  },
+  "analysisError": "حدث خطأ أثناء تحليل المستند",
+  "@analysisError": {
+    "description": "رسالة خطأ التحليل"
+  },
+  "pleaseRetry": "يرجى المحاولة مرة أخرى",
+  "@pleaseRetry": {
+    "description": "نص تعليمات إعادة المحاولة"
+  },
+  "retryLabel": "إعادة المحاولة",
+  "@retryLabel": {
+    "description": "نص زر إعادة المحاولة"
+  },
+  "noMedicalDataToShow": "لا توجد بيانات طبية للعرض",
+  "@noMedicalDataToShow": {
+    "description": "رسالة عدم وجود بيانات طبية"
+  },
+  "noExtractableInfo": "المستند لا يحتوي على معلومات طبية قابلة للاستخراج",
+  "@noExtractableInfo": {
+    "description": "رسالة عدم وجود معلومات قابلة للاستخراج"
+  },
+  "patientInfo": "معلومات المريض",
+  "@patientInfo": {
+    "description": "عنوان قسم معلومات المريض"
+  },
+  "unspecifiedPatient": "مريض غير محدد",
+  "@unspecifiedPatient": {
+    "description": "نص placeholder مريض غير محدد"
+  },
+  "genderLabel": "الجنس: ",
+  "@genderLabel": {
+    "description": "تسمية الجنس مع نقطتين"
+  },
+  "prescribedMedications": "الأدوية المصروفة",
+  "@prescribedMedications": {
+    "description": "عنوان قسم الأدوية المصروفة"
+  },
+  "unspecifiedMedication": "دواء غير محدد",
+  "@unspecifiedMedication": {
+    "description": "نص placeholder دواء غير محدد"
+  },
+  "unspecifiedDosage": "الجرعة غير محددة",
+  "@unspecifiedDosage": {
+    "description": "نص placeholder جرعة غير محددة"
+  },
+  "unspecified": "غير محدد",
+  "@unspecified": {
+    "description": "نص placeholder عام غير محدد"
+  },
+
+  "googleDriveLoginFailed": "فشل تسجيل الدخول في Google Drive",
+  "@googleDriveLoginFailed": {
+    "description": "رسالة فشل تسجيل الدخول في Google Drive"
+  },
+  "selectFilesFromGoogleDrive": "اختر ملفات من Google Drive",
+  "@selectFilesFromGoogleDrive": {
+    "description": "عنوان منتقي ملفات Google Drive"
+  },
+  "noFilesToShow": "لا توجد ملفات للعرض",
+  "@noFilesToShow": {
+    "description": "رسالة عدم وجود ملفات"
+  },
+  "noName": "بدون اسم",
+  "@noName": {
+    "description": "نص placeholder بدون اسم"
+  },
+  "filesSelected": "تم اختيار {count} ملف",
+  "@filesSelected": {
+    "description": "عدد الملفات المختارة",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "addFiles": "إضافة الملفات",
+  "@addFiles": {
+    "description": "نص زر إضافة الملفات"
+  },
+  "analyzeFile": "تحليل الملف الطبي",
+  "@analyzeFile": {
+    "description": "نص زر تحليل الملف"
+  },
+
+  "noEmergencyContacts": "لا توجد جهات طوارئ",
+  "@noEmergencyContacts": {
+    "description": "رسالة عدم وجود جهات طوارئ"
+  },
+  "emergencyContactDetails": "تفاصيل جهة الطوارئ",
+  "@emergencyContactDetails": {
+    "description": "عنوان شاشة تفاصيل جهة الطوارئ"
+  },
+  "nameLabel": "الاسم: ",
+  "@nameLabel": {
+    "description": "تسمية الاسم مع نقطتين"
+  },
+  "phoneLabel": "رقم الهاتف: ",
+  "@phoneLabel": {
+    "description": "تسمية الهاتف مع نقطتين"
+  },
+  "relationLabel": "صلة القرابة: ",
+  "@relationLabel": {
+    "description": "تسمية صلة القرابة مع نقطتين"
+  },
+  "deleteEmergencyContact": "حذف جهة الطوارئ",
+  "@deleteEmergencyContact": {
+    "description": "نص زر حذف جهة الطوارئ"
+  },
+  "errorOccurred": "حدث خطأ",
+  "@errorOccurred": {
+    "description": "رسالة خطأ عامة"
+  },
+
+  "pleaseEnterVerificationCode": "من فضلك أدخل رمز التحقق بالكامل",
+  "@pleaseEnterVerificationCode": {
+    "description": "رسالة إدخال رمز التحقق كاملاً"
+  },
+  "unexpectedErrorRetry": "حدث خطأ غير متوقع. الرجاء المحاولة مرة أخرى",
+  "@unexpectedErrorRetry": {
+    "description": "رسالة خطأ غير متوقع - إعادة المحاولة"
+  },
+  "invalidUserRole": "دور المستخدم غير صالح. يرجى المحاولة مرة أخرى.",
+  "@invalidUserRole": {
+    "description": "رسالة خطأ دور المستخدم غير صالح"
+  },
+  "registrationError": "حدث خطأ أثناء التسجيل: ",
+  "@registrationError": {
+    "description": "بادئة رسالة خطأ التسجيل"
+  },
+  "enterPhoneNumber": "أدخل رقم هاتفك",
+  "@enterPhoneNumber": {
+    "description": "نص placeholder إدخال رقم الهاتف"
+  },
+  "imageSelectedSuccessfully": "تم اختيار الصورة بنجاح",
+  "@imageSelectedSuccessfully": {
+    "description": "رسالة نجاح اختيار الصورة"
+  },
+  "changeImage": "تغيير الصورة",
+  "@changeImage": {
+    "description": "نص زر تغيير الصورة"
+  },
+  "maleGender": "ذكر",
+  "@maleGender": {
+    "description": "قيمة الجنس ذكر"
+  },
+  "femaleGender": "أنثى",
+  "@femaleGender": {
+    "description": "قيمة الجنس أنثى"
+  },
+  "pleaseUploadPersonalPhoto": "يرجى تحميل الصورة الشخصية",
+  "@pleaseUploadPersonalPhoto": {
+    "description": "رسالة التحقق من رفع الصورة الشخصية"
+  },
+  "pleaseUploadNationalId": "يرجى تحميل صورة الهوية",
+  "@pleaseUploadNationalId": {
+    "description": "رسالة التحقق من رفع صورة الهوية"
+  },
+  "passwordsDoNotMatchError": "كلمتا المرور غير متطابقتين",
+  "@passwordsDoNotMatchError": {
+    "description": "رسالة خطأ عدم تطابق كلمات المرور"
+  },
+  "pleaseEnterEmail": "من فضلك أدخل البريد الإلكتروني",
+  "@pleaseEnterEmail": {
+    "description": "رسالة التحقق من إدخال البريد الإلكتروني"
+  },
+  "pleaseEnterEmailAndPassword": "من فضلك أدخل البريد وكلمة المرور",
+  "@pleaseEnterEmailAndPassword": {
+    "description": "رسالة التحقق من إدخال البريد وكلمة المرور"
+  },
+
+  "documentDetails": "تفاصيل المستند",
+  "@documentDetails": {
+    "description": "عنوان شاشة تفاصيل المستند"
+  },
+  "unspecifiedDocument": "مستند غير محدد",
+  "@unspecifiedDocument": {
+    "description": "نص placeholder مستند غير محدد"
+  },
+  "fileTypeLabel": "نوع الملف",
+  "@fileTypeLabel": {
+    "description": "تسمية حقل نوع الملف"
+  },
+  "uploadDate": "تاريخ الرفع",
+  "@uploadDate": {
+    "description": "تسمية تاريخ الرفع"
+  },
+  "processingDate": "تاريخ المعالجة",
+  "@processingDate": {
+    "description": "تسمية تاريخ المعالجة"
+  },
+  "extractedMedicalData": "البيانات الطبية المستخرجة",
+  "@extractedMedicalData": {
+    "description": "عنوان قسم البيانات الطبية المستخرجة"
+  },
+  "extractionAccuracy": "دقة الاستخراج: ",
+  "@extractionAccuracy": {
+    "description": "تسمية دقة الاستخراج"
+  },
+  "patientId": "معرف المريض",
+  "@patientId": {
+    "description": "تسمية معرف المريض"
+  },
+  "status": "الحالة",
+  "@status": {
+    "description": "تسمية الحالة"
+  },
+  "active": "نشط",
+  "@active": {
+    "description": "قيمة حالة نشط"
+  },
+  "inactive": "غير نشط",
+  "@inactive": {
+    "description": "قيمة حالة غير نشط"
+  },
+  "name": "الاسم",
+  "@name": {
+    "description": "تسمية الاسم"
+  },
+  "reportType": "نوع التقرير",
+  "@reportType": {
+    "description": "تسمية نوع التقرير"
+  },
+  "reportStatus": "حالة التقرير",
+  "@reportStatus": {
+    "description": "تسمية حالة التقرير"
+  },
+  "summary": "الخلاصة",
+  "@summary": {
+    "description": "تسمية الخلاصة"
+  },
+  "reportDate": "تاريخ التقرير",
+  "@reportDate": {
+    "description": "تسمية تاريخ التقرير"
+  },
+  "purpose": "الغرض",
+  "@purpose": {
+    "description": "تسمية الغرض"
+  },
+  "identifier": "المعرف",
+  "@identifier": {
+    "description": "تسمية المعرف"
+  },
+  "resourceType": "نوع المورد",
+  "@resourceType": {
+    "description": "تسمية نوع المورد"
+  },
+  "additionalInfo": "معلومات إضافية",
+  "@additionalInfo": {
+    "description": "تسمية معلومات إضافية"
+  },
+  "documentId": "معرف المستند",
+  "@documentId": {
+    "description": "تسمية معرف المستند"
+  },
+
+  "badRequestError": "يرجى التحقق من البيانات المدخلة",
+  "@badRequestError": {
+    "description": "رسالة خطأ HTTP 400"
+  },
+  "unauthorizedError": "غير مخول للوصول. يرجى تسجيل الدخول مرة أخرى",
+  "@unauthorizedError": {
+    "description": "رسالة خطأ HTTP 401"
+  },
+  "forbiddenError": "ممنوع الوصول إلى هذا المورد",
+  "@forbiddenError": {
+    "description": "رسالة خطأ HTTP 403"
+  },
+  "notFoundError": "المورد المطلوب غير موجود",
+  "@notFoundError": {
+    "description": "رسالة خطأ HTTP 404"
+  },
+  "conflictError": "تعارض في البيانات. يرجى المحاولة مرة أخرى",
+  "@conflictError": {
+    "description": "رسالة خطأ HTTP 409"
+  },
+  "internalServerError": "خطأ داخلي في الخادم. يرجى المحاولة لاحقاً",
+  "@internalServerError": {
+    "description": "رسالة خطأ HTTP 500"
+  },
+  "serviceUnavailableError": "الخدمة غير متاحة حالياً. يرجى المحاولة لاحقاً",
+  "@serviceUnavailableError": {
+    "description": "رسالة خطأ HTTP 503"
+  },
+
+  "emailInvalidError": "البريد الإلكتروني غير صحيح",
+  "@emailInvalidError": {
+    "description": "رسالة خطأ API - البريد الإلكتروني غير صحيح"
+  },
+  "passwordRequiredError": "كلمة المرور مطلوبة",
+  "@passwordRequiredError": {
+    "description": "رسالة خطأ API - كلمة المرور مطلوبة"
+  },
+  "phoneInvalidError": "رقم الهاتف غير صحيح",
+  "@phoneInvalidError": {
+    "description": "رسالة خطأ API - رقم الهاتف غير صحيح"
+  },
+  "accountExistsError": "يوجد حساب مرتبط بهذا البريد الإلكتروني بالفعل",
+  "@accountExistsError": {
+    "description": "رسالة خطأ API - الحساب موجود"
+  },
+  "accountNotFoundError": "لم يتم العثور على حساب بهذا البريد الإلكتروني",
+  "@accountNotFoundError": {
+    "description": "رسالة خطأ API - الحساب غير موجود"
+  },
+  "invalidCredentialsError": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+  "@invalidCredentialsError": {
+    "description": "رسالة خطأ API - بيانات الاعتماد غير صحيحة"
+  },
+  "accountNotVerifiedError": "الحساب غير مفعل. يرجى التحقق من بريدك الإلكتروني",
+  "@accountNotVerifiedError": {
+    "description": "رسالة خطأ API - الحساب غير مفعل"
+  },
+  "verificationCodeInvalidError": "رمز التحقق غير صحيح",
+  "@verificationCodeInvalidError": {
+    "description": "رسالة خطأ API - رمز التحقق غير صحيح"
+  },
+  "verificationCodeExpiredError": "انتهت صلاحية رمز التحقق",
+  "@verificationCodeExpiredError": {
+    "description": "رسالة خطأ API - انتهت صلاحية رمز التحقق"
+  },
+  "uploadFailedRetry": "فشل في رفع الملف. يرجى المحاولة مرة أخرى",
+  "@uploadFailedRetry": {
+    "description": "رسالة خطأ API - فشل الرفع - إعادة المحاولة"
+  },
+  "fileSizeExceededError": "حجم الملف كبير جداً. الحد الأقصى 25 ميجابايت",
+  "@fileSizeExceededError": {
+    "description": "رسالة خطأ API - تجاوز حجم الملف"
+  },
+  "fileTypeNotSupportedError": "نوع الملف غير مدعوم. يرجى استخدام صور بصيغة JPEG أو PNG",
+  "@fileTypeNotSupportedError": {
+    "description": "رسالة خطأ API - نوع الملف غير مدعوم"
+  }
+}

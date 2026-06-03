@@ -53,11 +53,7 @@ extension StorageExtension on StorageService {
   UserRole? getUserRole() {
     final roleValue = get<String>(AppConstants.userRoleKey);
     if (roleValue == null) return null;
-
-    return UserRole.values.firstWhere(
-      (role) => role.value == roleValue,
-      orElse: () => UserRole.patient,
-    );
+    return UserRole.fromValue(roleValue);
   }
 
   String? getUserRoleValue() {
@@ -66,12 +62,12 @@ extension StorageExtension on StorageService {
 
   bool isDoctor() {
     final role = getUserRole();
-    return role == UserRole.healthcareProvider;
+    return role?.isHealthcareProvider ?? false;
   }
 
   bool isPatient() {
     final role = getUserRole();
-    return role == UserRole.patient;
+    return role?.isPatient ?? false;
   }
 
   Future<void> completeLogout() async {

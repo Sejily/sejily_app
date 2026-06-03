@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sejily/core/helpers/storage_extension.dart';
+import 'package:sejily/core/helpers/localization_extension.dart';
 import 'package:sejily/core/utils/app_colors.dart';
-import 'package:sejily/core/utils/app_strings.dart';
 import 'package:sejily/core/utils/app_text_styles.dart';
 import 'package:sejily/core/utils/app_assets.dart';
 import 'package:sejily/core/routes/routes.dart';
@@ -20,21 +20,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<Map<String, String>> onboardingData = [
+  List<Map<String, String>> get onboardingData => [
     {
       "image": Assets.onboard1,
-      "title": AppStrings.onboardingTitle1,
-      "subtitle": AppStrings.onboardingSubtitle1,
+      "title": context.loc.onboardingTitle1,
+      "subtitle": context.loc.onboardingSubtitle1,
     },
     {
       "image": Assets.onboard2,
-      "title": AppStrings.onBoardingTitle2,
-      "subtitle": AppStrings.onBoardingSubtitle2,
+      "title": context.loc.onBoardingTitle2,
+      "subtitle": context.loc.onBoardingSubtitle2,
     },
     {
       "image": Assets.onboard3,
-      "title": AppStrings.onBoardingTitle3,
-      "subtitle": AppStrings.onBoardingSubtitle3,
+      "title": context.loc.onBoardingTitle3,
+      "subtitle": context.loc.onBoardingSubtitle3,
     },
   ];
 
@@ -160,8 +160,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   CustomButton(
                     onPressed: () => _nextPage(Routes.selectRole),
                     text: _currentPage == onboardingData.length - 1
-                        ? AppStrings.newUser
-                        : AppStrings.next,
+                        ? context.loc.newUser
+                        : context.loc.next,
                   ),
 
                   const SizedBox(height: 12),
@@ -169,8 +169,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     onPressed: () => _skipLogic(Routes.login),
                     child: Text(
                       _currentPage == onboardingData.length - 1
-                          ? AppStrings.login
-                          : AppStrings.skip,
+                          ? context.loc.login
+                          : context.loc.skip,
                       style: AppTextStyles.regular16.copyWith(
                         color: AppColors.blackBlue,
                       ),
